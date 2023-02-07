@@ -1,0 +1,479 @@
+/*** 초기화 ***/
+* {margin: 0; padding: 0; font: normal 12px 고딕;}
+a {text-decoration: none; color: #111;}
+ul, ol {list-style: none;}
+html, body {height: 100%}
+
+#wrapper { 
+    height : auto;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+/*** 헤더 ***/
+header {
+    min-width: 1400px;
+    height: 120px;
+    box-sizing: border-box;
+    background: url(../img/admin_bg_body.jpg);
+    background-position: 0px -79px;
+}
+header > div {
+    width: 1400px;
+    height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+header > div > a {
+    display: inline-block;
+    position: relative;
+    top: 45px;
+}
+header > div > nav {
+    position: relative;
+    top: 45px;
+    color: #fff;
+    float: right;
+    font-size: 0;
+}
+
+header > div > nav > span {margin-right: 15px;}
+header > div > nav > a {
+    color: inherit;
+    padding: 0 6px;
+}
+
+header > div > nav > a:not(:last-child) {border-right: 1px solid #fff;}
+
+/*** 관리자 메인 ***/
+main {
+    height: auto;
+    box-sizing: border-box;
+}
+main > div {
+    width: 1400px;
+    height: auto;
+    box-sizing: border-box;
+    margin: 0 auto;
+    overflow: hidden;
+}
+main > div > aside {
+    width: 270px;
+    height: auto;
+    box-sizing: border-box;
+    float: left;
+    background: url('../img/admin_bg_aside.jpg');
+}
+main > div > aside > ul > li {
+    width: 100%;
+    min-height: 66px;
+    border-bottom: 1px solid #c0c0c0;;
+    box-sizing: border-box;
+}
+main > div > aside > #gnb > li > a {
+    display: inline-block;
+    width: 100%;
+    height: 66px;
+    text-indent: 10px;
+    line-height: 66px;
+    font-size: 14px;
+    font-weight: bold;
+}
+main > div > aside > #gnb > li > a > i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+main > div > aside > #gnb ol {display: none;}
+main > div > aside > #gnb ol > li > a {
+    display: block;
+    text-indent: 54px;
+    height: 30px;
+    line-height: 30px;
+}
+
+footer {
+    min-width: 1400px;
+    height: 60px;
+    box-sizing: border-box;
+    transform : translateY(-100%);
+    background: #0d3a46;
+}
+footer > div:nth-child(1) {
+    width: 1400px;
+    height: 60px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    display: block;
+}
+
+footer > div:nth-child(1) > p {
+    color: #fff;
+    font-weight: bold;
+    line-height: 55px;
+}
+
+footer > div:nth-child(2) {
+    width: 100%;
+    height: 40px;
+}
+
+footer > div:nth-child(2) > p {
+    text-align: center;
+    line-height: 40px;
+}
+
+
+/* 관리자 CS 공통 */
+#adminCS {
+    float: left;
+    width: 1130px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+#adminCS > nav {
+    box-sizing: border-box;
+    border-bottom: 2px solid #c0c0c0;
+    padding-bottom: 5px;
+    height: auto;
+}
+#adminCS > nav > h1 {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+#adminCS > nav > p {float: right; line-height: 34px;}
+#adminCS > nav > p > span {font-weight: bold;}
+
+#adminCS > select {
+    margin-top: 25px;
+    width: 110px;
+    border: 1px solid #d6d6d6;
+    box-sizing:border-box;
+    height: 30px;
+    text-indent: 10px;  
+}
+
+
+/* 공지사항 목록 */
+.notice-list > table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 2px solid #111;
+}
+.notice-list > table tr:first-child > th {
+    background: #f6f6f6;
+    padding: 15px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.notice-list > table tr:first-child > th > input[type=checkbox] {margin-top: 1.5px;}
+.notice-list > table tr > td {padding: 10px;}
+.notice-list > table tr:not(:first-child) > td:nth-child(4) {width: 300px; text-align: left;}
+.notice-list > table td {
+    border-bottom: 1px solid #e6e6e6;
+    text-align: center;
+}
+.notice-list > table td > img {width: 60px;}
+.notice-list > input[type=button] {
+    margin-top: 10px;
+    float: left;
+    background: #fff;
+    height: auto;
+    cursor: pointer;
+    text-indent: 0;
+    padding: 10px 15px;
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
+}
+
+.notice-list > input[type=submit] {
+    float: right;
+    padding: 10px 15px;
+    background: skyblue;
+    border: 1px solid #d6d6d6;
+    color: white;
+}
+.notice-list > .paging {
+    display: block;
+    width: auto;
+    height: 32px;
+    margin-top: 28px;
+    text-align: center;
+    padding-right: 90px;
+}
+.notice-list > .paging > a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #d6d6d6;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    color: #999;
+}
+
+
+.notice-list > .paging > .starton {
+    background-image: url('../img/admin_paging_end_on.JPG');
+    background-position: 3px 1px;
+    font-size: 0;
+}
+
+.notice-list > .paging > .startoff {
+    background-image: url('../img/admin_paging_end_off.JPG');
+    background-position: 5px 1px;
+    transform: rotate(180deg);
+    pointer-events: none;
+    font-size: 0;
+}
+
+.notice-list > .paging > .prevon {
+    background-image: url('../img/admin_paging_next_on.JPG');
+    background-position: 2px 3px;
+    font-size: 0;
+}
+
+.notice-list > .paging > .prevoff {
+    background-image: url('../img/admin_paging_next_off.JPG');
+    background-position: 4px 3px;
+    transform: rotate(180deg);
+    pointer-events: none;
+    font-size: 0;
+}
+
+.notice-list > .paging > .nexton {
+    background-image: url('../img/admin_paging_next_on.JPG');
+    background-position: 2px 3px;
+    transform: rotate(180deg);
+    font-size: 0;
+}
+
+.notice-list > .paging > .nextoff {
+    background-image: url('../img/admin_paging_next_off.JPG');
+    background-position: 4px 3px;
+    pointer-events: none;
+    font-size: 0;
+}
+
+.notice-list > .paging > .endon {
+    background-image: url('../img/admin_paging_end_on.JPG');
+    background-position: 3px 1px;
+    transform: rotate(180deg);
+    font-size: 0;
+}
+
+.notice-list > .paging > .endoff {
+    background-image: url('../img/admin_paging_end_off.JPG');
+    background-position: 5px 1px;
+    pointer-events: none;
+    font-size: 0;
+}
+.notice-list > .paging > a:not(.pg) {top: -4px;}
+.notice-list > .paging > a {margin-right: 2px;}
+.notice-list > .paging > a {position: relative;}
+.notice-list > .paging > .on {
+    border: 1px solid #6699cc;
+    background: #6699cc;
+    color: #fff;
+    font-weight: bold;
+}
+.notice-list > .paging > .pg:not(.on):hover {background-color: #e7f2fb;}
+p.ico  {
+    padding: 25px 50px;
+    margin-top: 50px;
+    border: 1px solid #8497BF;
+    background: no-repeat #A8B2C5 url('../img/admin_ico_info.png') scroll 15px 20px;
+}
+
+/* 공지사항 보기 */
+.notice-view > table {
+    margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 2px solid #111;
+}
+
+.notice-view > table tr {
+    width: 100%;
+    height: 60px;
+}
+.notice-view > table tr > td:nth-child(1) {
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+.notice-view > table tr > td:nth-child(2) {
+    padding-left: 20px;
+    font-size: 15px;
+}
+
+.notice-view > table td {
+    border-bottom: 1px solid #ccc;
+}
+.notice-view > table tr:nth-child(3) {}
+.notice-view > table tr > .content {
+    height: 300px;
+}
+.notice-view > table tr > .content > p {
+    font-size: 16px;
+    line-height: 50px;
+}
+.notice-view > input {
+    margin-top: 35px;   
+}
+
+/* 공지사항 글 쓰기 */
+<<<<<<< HEAD
+.notice-write > table {
+    margin-top: 50px;
+=======
+
+
+.notice-write > form >  table {
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid #111;
+}
+<<<<<<< HEAD
+.notice-write > table tr {
+    width: 100%;
+    height: 26px;
+}
+.notice-write > table td {
+=======
+.notice-write > form > table tr{
+    width: 100%;
+    height: 26px;
+}
+.notice-write > form > table td{
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    font-size: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+}
+<<<<<<< HEAD
+.notice-write > table td:first-child {
+    width: 100px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.notice-write > table input {
+    width: 60%;
+=======
+.notice-write > form > table td:first-child{
+    width: 100px;
+}
+.notice-write > form > table input {
+    width: 100%;
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    height: 40px;
+    font-size: 16px;
+    text-indent: 10px;
+    box-sizing: border-box;
+}
+<<<<<<< HEAD
+.notice-write > table select {
+=======
+.notice-write > form > table select {
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    width: 150px;
+    height: 40px;
+    text-indent: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+<<<<<<< HEAD
+.notice-write > table select *{
+    font-size: 16px;
+}
+.notice-write > table textarea {
+=======
+.notice-write > form > table select * {
+    font-size: 16px;
+}
+.notice-write > form > table textarea {
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+<<<<<<< HEAD
+.btnList{
+=======
+
+.notice-write > input:nth-of-type(1) {
+    margin-top: 50px;
+    float: right;
+}
+.notice-write > input:nth-of-type(2) {
+    display: block;
+    margin-top: 50px;
+    float: right;
+}
+
+
+.btnList{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+>>>>>>> 597329210484511480bf46123d13839657736af6
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+<<<<<<< HEAD
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+=======
+>>>>>>> 597329210484511480bf46123d13839657736af6
+}
+.btnDelete{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+.btnModify{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+
+<<<<<<< HEAD
+=======
+.btnWrite{
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+}
+
+>>>>>>> 597329210484511480bf46123d13839657736af6
+
+
+
+
+
+
+

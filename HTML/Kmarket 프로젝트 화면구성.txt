@@ -1,0 +1,37 @@
+케이마켓(kmarket) 프로젝트 구성
+스토리보드 참고
+
+/*** 조주영 ***/
+// main
+메인 : chhak.or.kr/Kmarket/index.html ○
+
+// product
+상품목록 : chhak.or.kr/Kmarket/product/list.html ○
+상품상세 : chhak.or.kr/Kmarket/product/view.html ○
+장바구니 : chhak.or.kr/Kmarket/product/cart.html ○
+주문결제 : chhak.or.kr/Kmarket/product/order.html ○
+주문완료 : chhak.or.kr/Kmarket/product/complete.html ○
+
+/*** 서정현 ***/
+//member
+로그인 : chhak.or.kr/Kmarket/member/login.html ○
+회원가입 : chhak.or.kr/Kmarket/member/join.html ○
+약관동의 : chhak.or.kr/Kmarket/member/signup.html ○
+회원가입 : chhak.or.kr/Kmarket/member/register.html (일반회원) ○
+회원가입 : chhak.or.kr/Kmarket/member/registerSeller.html (판매회원) ○
+
+// admin
+관리자 메인 : chhak.or.kr/Kmarket/admin/index.html ○
+상품관리/목록 : chhak.or.kr/Kmarket/admin/product/list.html ○
+상품관리/등록 : chhak.or.kr/Kmarket/admin/product/register.html ○
+
+/*** 조광호 ***/
+// cs 
+고객센터 메인 : chhak.or.kr/Kmarket/cs/index.html ○
+공지사항 목록 : chhak.or.kr/Kmarket/cs/notice/list.html ○
+공지사항 보기 : chhak.or.kr/Kmarket/cs/notice/view.html ○
+자주묻는질문 목록 : chhak.or.kr/Kmarket/cs/faq/list.html ○
+자주묻는질문 보기 : chhak.or.kr/Kmarket/cs/faq/view.html ○
+문의하기 목록 : chhak.or.kr/Kmarket/cs/qna/list.html ○
+문의하기 보기 : chhak.or.kr/Kmarket/cs/qna/view.html ○
+문의하기 쓰기 : chhak.or.kr/Kmarket/cs/qna/write.html ○
