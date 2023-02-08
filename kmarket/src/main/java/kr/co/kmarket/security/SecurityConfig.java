@@ -42,19 +42,19 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-    public PasswordEncoder PasswordEncoder () {
-		return NoOpPasswordEncoder.getInstance();
-    }
+//	@Bean
+//    public PasswordEncoder PasswordEncoder () {
+//		return NoOpPasswordEncoder.getInstance();
+//    }
 	
-	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
+//	@Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+//	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-		PasswordEncoder encoder = NoOpPasswordEncoder.getInstance();
+//		PasswordEncoder encoder = NoOpPasswordEncoder.getInstance();
 
 
 		UserDetails[] user = {
