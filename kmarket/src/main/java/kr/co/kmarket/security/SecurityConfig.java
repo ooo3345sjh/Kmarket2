@@ -47,10 +47,10 @@ public class SecurityConfig {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
 	
-	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
+//	@Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+//	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
