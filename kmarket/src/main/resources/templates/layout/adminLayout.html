@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>케이마켓::관리자</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href='@{/images/favicon.ico}'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="./js/gnb.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <div id="admin-wrapper">
+        <th:block th:replace="fragments/_header::admin_main_header"></th:block>
+        <main>
+            <th:block th:replace="fragments/_aside::admin_main_aside"></th:block>
+            <th:block layout:fragment="main"></th:block>
+        </main>
+        <th:block th:replace="fragments/_footer::admin_main_footer"></th:block>
+    </div>
+</body>
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function(){
+    var gnb = $('#gnb > li > a');
+
+    gnb.click(function(e){
+    e.preventDefault();
+
+    var isOpen = $(this).next().is(':visible');
+
+    if(isOpen){
+    // 현재 서브메뉴를 닫음
+    $(this).next().slideUp(200);
+    }else{
+    // 현재 서브메뉴를 펼침
+    $(this).next().slideDown(200);
+    }
+    });
+    });
+    </script>
+</th:block>
+</html>

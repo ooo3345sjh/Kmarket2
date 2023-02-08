@@ -76,4 +76,18 @@
         </div>
     </header>
 </th:block>
+<!-- admin header -->
+<th:block th:fragment="admin_main_header">
+    <header>
+        <div>
+            <a th:href="@{/admin}" class="logo"><img th:src="@{/images/admin_logo.png}" alt="admin_logo"/></a>
+            <p>
+                <span>홍길동님 반갑습니다.</span>
+                <a th:href="@{/}">HOME |</a>
+                <a th:href="@{#}">로그아웃 |</a>
+                <a th:href="@{#}">고객센터</a>
+            </p>
+        </div>
+    </header>
+</th:block>
 </html>
