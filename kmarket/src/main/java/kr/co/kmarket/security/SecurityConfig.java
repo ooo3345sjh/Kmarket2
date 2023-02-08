@@ -42,10 +42,10 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-    public PasswordEncoder PasswordEncoder () {
-		return NoOpPasswordEncoder.getInstance();
-    }
+//	@Bean
+//    public PasswordEncoder PasswordEncoder () {
+//		return NoOpPasswordEncoder.getInstance();
+//    }
 	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

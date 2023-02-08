@@ -41,13 +41,39 @@
                         <li><a href='#' id='discount'>할인상품</a></li>
                     </ul>
                     <ul>
-                        <li><a href='#'/>공지사항</a></li>
-                        <li><a href='#'/>자주묻는질문</a></li>
-                        <li><a href='#'/>문의하기</a></li>
-                        <li><a href='#'>고객센터</a></li>
+                        <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
+                        <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
+                        <li><a th:href="@{/cs/qna/list}">문의하기</a></li>
+                        <li><a th:href="@{/cs/cs_index}">고객센터</a></li>
                     </ul>
                 </div>
             </div>
         </header>
+</th:block>
+<th:block th:fragment="cs_header">
+    <header>
+        <div class="top">
+            <div>
+                <a href='#'>로그아웃</a>
+                <a href="#">마이페이지</a>
+                <a href='#'>관리자</a>
+                <a href='#'>로그아웃</a>
+                <a href="#">마이페이지</a>
+                <a href="#">로그인</a>
+                <a href="#">회원가입</a>
+                <a href="#">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    장바구니
+                </a>
+            </div>
+        </div>
+        <div class="logo">
+            <div>
+                <a href="#">
+                    <img th:src='@{/images/header_logo.png}' alt="로고">
+                </a>
+            </div>
+        </div>
+    </header>
 </th:block>
 </html>
