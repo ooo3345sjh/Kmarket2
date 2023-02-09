@@ -2,6 +2,7 @@ package kr.co.kmarket.security;
 
 
 import kr.co.kmarket.vo.UserVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -50,10 +52,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
 	
-	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
+//	@Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+//	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
@@ -82,12 +84,25 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 		return new InMemoryUserDetailsManager(user);
 	}
+
+
+	@Value("${spring.product.img}")
+	String uploadPath;
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/file/**")
+		.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
+
+//				.addResourceLocations("file:///D:/file/");
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")
 				.addResourceLocations("file:///Users/kimwoo2328/Desktop/Workspace/Kmarket2/kmarket/file/");
 
 //          .addResourceLocations("file:///D:/file/");
+
 	}
 }
 
