@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
 
-    @Value("${spring.servlet.multipart.location}")
+    @Value("${spring.product.img}")
     String uploadPath;
 
 
