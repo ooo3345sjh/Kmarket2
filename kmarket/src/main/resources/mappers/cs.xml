@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.CsDAO">
+    <insert id="insertCs" parameterType="kr.co.kmarket.vo.CsVO" useGeneratedKeys="true" keyProperty="csNo">
+        insert into `km_cs` set
+        `uid`= #{uid},
+        `cate1`= #{cate1},
+        `cate2`= #{cate2},
+        `type`= #{type},
+        `title`= #{title},
+        `content`= #{content},
+        `regip`= #{regip},
+        `rdate`= NOW(),
+        `hit`= #{hit},
+        `comment`= #{comment};
+    </insert>
+
+    <select id="selectnoti5" resultType="kr.co.kmarket.vo.CsVO">
+        select `cate1`,`cate2`,`title`,`rdate` from `km_cs`
+        WHERE `cate1` = 'notice'
+        ORDER BY `csNo` DESC
+        LIMIT 5;
+    </select>
+    <select id="selectqna5" resultType="kr.co.kmarket.vo.CsVO">
+        select `uid`,`cate1`,`cate2`,`type`,`title`,`rdate` from `km_cs`
+        WHERE `cate1` = 'qna'
+        ORDER BY `csNo` DESC
+        LIMIT 5;
+    </select>
+</mapper>
