@@ -35,9 +35,9 @@ public class AdminService {
         list = list.stream().map(p -> {
            int cate1 = p.getCate1();
            int cate2 = p.getCate2();
-           String thumb1 = uploadPath + cate1 + "/" + cate2 + "/" + p.getThumb1(); // /cate1/cate2/thumb1
-           String thumb2 = uploadPath + cate1 + "/" + cate2 + "/" + p.getThumb2();
-           String thumb3 = uploadPath + cate1 + "/" + cate2 + "/" + p.getThumb3();
+           String thumb1 = cate1 + "/" + cate2 + "/" + p.getThumb1(); // /cate1/cate2/thumb1
+           String thumb2 = cate1 + "/" + cate2 + "/" + p.getThumb2();
+           String thumb3 = cate1 + "/" + cate2 + "/" + p.getThumb3();
            p.setThumb1(thumb1);
            p.setThumb2(thumb2);
            p.setThumb3(thumb3);
