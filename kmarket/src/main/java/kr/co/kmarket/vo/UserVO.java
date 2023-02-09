@@ -1,5 +1,11 @@
 package kr.co.kmarket.vo;
 
+/*
+ * 날짜 : 2023/02/09
+ * 이름 : 서정현
+ * 내용 : 회원정보 객체
+ */
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

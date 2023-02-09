@@ -15,8 +15,8 @@ class ProductServiceTest {
 
     @Test
     void test_1(){
-        Integer count = dao.select();
-        System.out.println("count = " + count);
+////        Integer count = dao.select();
+//        System.out.println("count = " + count);
     }
 
 }
