@@ -4,7 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * @since 2023/02/08 라성준
+ * @param
+ * @return
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
