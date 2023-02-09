@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ProductDAO {
-    public int insertProduct(ProductVO vo);
-    public int updateProduct(ProductVO vo);
-    public int deleteProduct(int no);
-    public List<ProductVO> selectProducts(int start);
+    public void insertProduct(ProductVO vo);
+//    public int updateProduct(ProductVO vo);
+//    public int deleteProduct(int no);
+//    public List<ProductVO> selectProducts(int start);
 }

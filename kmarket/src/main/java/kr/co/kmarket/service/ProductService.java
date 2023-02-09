@@ -11,20 +11,18 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductDAO dao;
+//    @Autowired
+//    private ProductDAO dao;
+//
+//    @Autowired
+//    private ProductRepo repo;
 
-    @Autowired
-    private ProductRepo repo;
-
-    public void insertProduct(ProductVO vo){
-        dao.insertProduct(vo);
-    }
-
-    public void selectProduct () {}
-
-    public List<ProductVO> selectProducts(int start) {
-        return dao.selectProducts(start);
-    }
+//    public void insertProduct(ProductVO vo){ dao.insertProduct(vo); }
+//
+//    public void selectProduct () {}
+//
+//    public List<ProductVO> selectProducts(int start) {
+//        return dao.selectProducts(start);
+//    }
 
 }

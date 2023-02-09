@@ -3,30 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.ProductDAO">
-    <insert id="insert_product">
+    <insert id="insertProduct" parameterType="kr.co.kmarket.vo.ProductVO" useGeneratedKeys="true" keyProperty="prodNo">
         insert into `km_product` set
-        `cate1`=#{cate1},
-        `cate2`=#{cate2},
-        `prodName`=#{prodName},
-        `descript`=#{descript},
-        `company`=#{company},
-        `seller`=#{seller},
-        `price`=#{price},
-        `discount`=#{discount},
-        `point`=#{point},
-        `stock`=#{stock},
-        `delivery`=#{delivery},
-        `thumb1`=#{thumb1},
-        `thumb2`=#{thumb2},
-        `thumb3`=#{thumb3},
-        `detail`=#{detail},
-        `status`=#{status},
-        `duty`=#{duty},
-        `receipt`=#{receipt],
-        `bizType`=#{bizType},
-        `origin`=#{origin},
-        `ip`=#{ip},
-        `rdate=NOW();
+        `cate1`= #{cate1},
+        `cate2`= #{cate2},
+        `prodName`= #{prodName},
+        `descript`= #{descript},
+        `company`= #{company},
+        `seller`= #{seller},
+        `price`= #{price},
+        `discount`= #{discount},
+        `point`= #{point},
+        `stock`= #{stock},
+        `delivery`= #{delivery},
+        `thumb1`= #{thumb1},
+        `thumb2`= #{thumb2},
+        `thumb3`= #{thumb3},
+        `detail`= #{detail},
+        `status`= #{status},
+        `duty`= #{duty},
+        `receipt`= #{receipt},
+        `bizType`= #{bizType},
+        `origin`= #{origin},
+        `ip`= #{ip},
+        `rdate`= NOW();
     </insert>
-
 </mapper>

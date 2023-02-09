@@ -14,16 +14,16 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "insert_product")
+@Table(name = "km_product")
 public class ProductEntity {
 
     @Id
-    private int prodNO;
+    private int prodNo;
     private int cate1;
     private int cate2;
     private String prodName;
     private String descript;
-    private String Company;
+    private String company;
     private String seller;
     private int price;
     private int discount;
