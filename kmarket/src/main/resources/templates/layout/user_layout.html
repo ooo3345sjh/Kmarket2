@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>케이마켓:: 대한민국 1등 온라인 쇼핑몰</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <th:block th:replace="fragments/_header::user_header"></th:block>
+        <th:block layout:fragment="main"></th:block>
+    </div>
+</body>
+    <th:block th:replace="fragments/_footer::user_footer"></th:block>
+    <th:block layout:fragment="script"></th:block>
+</html>

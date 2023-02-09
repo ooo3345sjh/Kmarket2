@@ -1413,7 +1413,7 @@ footer > div > div > p > span {
     width: 18px;
     height: 18px;
     content: "";
-    background:url("../img/cs_sprites.png") no-repeat;
+    background:url("../images/cs_sprites.png") no-repeat;
     background-position: -230px -276px;
     background-size: 750px auto;
     vertical-align: top;
@@ -1455,7 +1455,7 @@ footer > div > div > p > span {
     height: 90px;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-repeat: no-repeat;
     background-size: 750px auto;
 }
@@ -1555,3 +1555,308 @@ footer > div > div > p > span {
     font-size: 23px;
 }
 /* cs sub 공통 */
+
+/*** 회원 ***/
+/* 로그인 */
+#member{
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#member > div {
+    width: 900px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+#member > div > nav {
+    box-sizing: border-box;
+    border-bottom: 2px solid #0e6ad3;
+    padding-bottom: 5px;
+}
+#member > div > nav > h1{
+    font-size: 24px;
+    display: inline-block;
+}
+#member > .login > nav > p{
+    float: right;
+    color: #888;
+    font-size: 11px;
+    line-height: 45px;
+}
+#member > .login > nav > p > span{font-weight: bold; vertical-align: middle;}
+#member > .login > form {
+    width: 100%;
+    height: 300px;
+    box-sizing: border-box;
+    padding-top: 80px;
+    padding-left: 22px;
+    position: relative;
+}
+#member > .login > form > table {
+    float: left;
+    border-collapse: collapse;
+}
+#member > .login > form > table td:nth-child(1){
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 5px;
+}
+#member > .login > form > table td{
+    padding: 2px;
+    position: relative;
+}
+#member > .login > form > table input{
+    width: 200px;
+    height: 31px;
+    padding: 0 13px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0075d4;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px #eee;
+}
+
+#member > .login > form > table td > i{
+	position: absolute;
+	left: 88%;
+	top: 12px;
+	color: gray;
+}
+
+#member > .login > form > input {
+    width: 97px;
+    height: 71px;
+    font-size: 0px;
+    background-image: url('../images/member_btn_login.gif');
+    margin-top: 3px;
+    margin-left: 5px;
+    float: left;
+    border: none;
+}
+#member > .login > form > div{
+    position: absolute;
+    font-size: 0;
+    top: 170px;
+    left: 91px;
+}
+#member > .login > form > div > label{
+    color: #676767;
+    font-weight: bold;
+}
+#member > .login > form > div > label > input {
+    position: relative;
+    top: 1.5px;
+}
+#member > .login > form > div > a{
+    height: 13px;
+    margin: 0;
+    padding: 0 6px;
+    color: #676767;
+    border-left: 1px solid #999;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+#member > .login > form > a {display: inline-block;}
+#member > .login > form > a > img{
+    position: absolute;
+    top: 21px;
+    right: 0PX;
+}
+#member > .login > img {
+    display: block;
+    margin: 36px auto;
+}
+/* 회원가입 - join */
+#member > .join{
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0 10px;
+    text-align: center;
+}
+#member > .join > img{
+    margin: auto;
+    display: block;
+}
+#member > .join > .type {
+    margin: 100px auto;
+    overflow: hidden;
+    display: inline-block;
+}
+#member > .join > .type > div {
+    float: left;
+    width: 420px;
+    height: 100%;
+    border: 1px solid #d5d5d5;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#member > .join >.type > div:nth-of-type(2) {margin-left: 80px;}
+#member > .join > .type > div > div {
+    padding: 33px;
+    text-align: center;
+    font-size: 0;
+}
+#member > .join > .type > div:nth-of-type > div > a {
+    display: inline-block;
+    height: 40px;
+}
+#member > .join > .type > div:nth-of-type(1) > div > a {margin-left: 30px;}
+#member > .join > .type > div:nth-of-type(2) > div > a {margin-left: 20px;}
+#member > .join > img:nth-of-type(2), #member > .join > img:nth-of-type(3){
+    margin-bottom: 20px;
+}
+
+/* 회원가입 - signup */
+#member > .signup > section {overflow: hidden;}
+#member > .signup > section:nth-of-type(4) {margin-bottom: 20px;}
+#member > .signup > section > h3 {margin-top: 20px;font-size: 14px;}
+#member > .signup > section > h3 > span.essential {color: #ef3f43;}
+#member > .signup > section > h3 > span.optional {color: #01c1c4;}
+#member > .signup > section > textarea {
+    margin-top: 10px;
+    width: 100%;
+    height: 160px;
+    border: 1px solid #bababa;
+    box-sizing: border-box;
+    resize: none;
+}
+#member > .signup > section > label {
+    margin-top: 5px;
+    font-size: 14px;
+    float: right;
+}
+#member > .signup > section > label > input {
+    position: relative;
+    top: 1.5px;
+    margin-right: 6px;
+}
+#member > .signup > .agreeBtn, #member > .register > form .registerBtn {
+    background: #ef3f43;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    padding: 10px 72px;
+    cursor: pointer;
+    display: block;
+    margin: 50px auto;
+    border-radius: 3px;
+}
+
+/* 회원가입 - register */
+#member > .register {}
+#member > .register > form section {}
+#member > .register > form section > table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid #b6bdc7;
+}
+#member > .register > form section > table > caption {
+    text-align: left;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+#member > .register > form section > table tr {border-bottom: 1px solid #dfe5ed;}
+#member > .register > form section > table th {
+    width: 200px;
+    height: 54px;
+    padding: 0 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: #f4f6f9;
+    text-align: left;
+}
+#member > .register > form section > table th > .essential{color: #ef3f43;}
+#member > .register > form section > table td {padding-left: 10px;}
+#member > .register > form section > table td > span {padding-left: 5px;}
+#member > .register > form section > table input {
+    vertical-align: middle;
+    padding: 0 5px;
+    height: 31px;
+    font-size: 14px;
+    border: 1px solid #dfe5ed;
+}
+
+#member > .register > form section > table div {
+	display: none;
+}
+
+#member > .register > form section > table label {font-size: 14px;}
+#member > .register > form section > table .radio input {
+    vertical-align: middle;
+    height: auto;
+}
+#member > .register > form section > table .addr > td {padding-top: 10px;}
+#member > .register > form section > table .addr > td > input {margin-bottom: 6px;}
+#member > .register > form section > table .addr > td > input:nth-of-type(2) {width: 370px;}
+#member > .register > form section > table .addr > td > input:nth-of-type(3) {width: 370px;}
+#member > .register > form section > table .addr > td > button {width: 126px;}
+
+#member > .register > form section > table .authBtn {
+    background: #3964e5;
+    border: none;
+    font-size: 15px;
+    color: #fff;
+    padding: 6px 15px;
+    cursor: pointer;
+    margin: 6px auto;
+    border-radius: 3px;
+}
+
+
+/* 회원가입 - registerSeller */
+#member > .registerSeller {}
+#member > .registerSeller > form section {}
+#member > .registerSeller > form section > table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid #b6bdc7;
+}
+#member > .registerSeller > form section > table > caption {
+    text-align: left;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+#member > .registerSeller > form section > table tr {border-bottom: 1px solid #dfe5ed;}
+#member > .registerSeller > form section > table th {
+    width: 200px;
+    height: 54px;
+    padding: 0 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: #f4f6f9;
+    text-align: left;
+}
+#member > .registerSeller > form section > table th > .essential{color: #ef3f43;}
+#member > .registerSeller > form section > table td {padding-left: 10px;}
+#member > .registerSeller > form section > table td > span {padding-left: 5px;}
+#member > .registerSeller > form section > table input {
+    vertical-align: middle;
+    padding: 0 5px;
+    height: 31px;
+    font-size: 14px;
+    border: 1px solid #dfe5ed;
+}
+#member > .registerSeller > form section > table label {font-size: 14px;}
+#member > .registerSeller > form section > table .radio input {
+    vertical-align: middle;
+    height: auto;
+}
+#member > .registerSeller > form section > table .addr > td {padding-top: 10px;}
+#member > .registerSeller > form section > table .addr > td > input {margin-bottom: 6px;}
+#member > .registerSeller > form section > table .addr > td > input:nth-of-type(2) {width: 126px;}
+#member > .registerSeller > form section > table .addr > td > input:nth-of-type(3) {width: 370px;}
+#member > .registerSeller > form section > table .addr > td > input:nth-of-type(4) {width: 370px;}
+
+

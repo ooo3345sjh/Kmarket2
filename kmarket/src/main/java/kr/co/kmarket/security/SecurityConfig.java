@@ -34,7 +34,8 @@ public class SecurityConfig {
 			)
 
 			// 로그인 설정
-			.formLogin()
+			.formLogin(
+			)
 
 			// 로그인 아웃 설정
 //			.logout()
@@ -48,10 +49,10 @@ public class SecurityConfig {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
 	
-//	@Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//	}
+	@Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
