@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/user_layout">
+<th:block layout:fragment="main">
+        <main id="member">
+            <div class="join">
+                <img th:src="@{/images/member_join_tit_welcome.gif}" alt="앞으로의 인터넷 쇼핑 케이마켓에 오신 것을 환영합니다.">
+                <div class="type">
+                    <div class="normal">
+                        <img th:src="@{/images/member_join_tit_normal.gif}" alt="구매회원 가입">
+                        <div>
+                            <img th:src="@{/images/member_join_txt_normal.gif}" alt="개인 구매회원(외국인 포함) 만14세 이상 가능">
+                            <a th:href="@{#}"><img th:src="@{/images/member_join_btn1.gif}" alt="회원가입"></a>
+                        </div>
+                    </div>
+                    <div class="seller">
+                        <img th:src="@{/images/member_join_tit_seller.gif}" alt="판매회원 가입/전환">
+                        <div>
+                            <img th:src="@{/images/member_join_txt_seller.gif}" alt="사업자 판매회원 사업자등록증을 보유한 사업자판매회원(구매도 가능)">
+                            <a th:href="@{#}"><img th:src="@{/images/member_join_btn2.gif}" alt="회원가입"></a>
+                        </div>
+                    </div>
+                </div>
+                <img th:src="@{/images/member_join_banner1.jpg}" class="banner" alt="신규회원을 위한 기분 좋은 혜택">
+                <img th:src="@{/images/member_join_banner2.jpg}" class="banner" alt="사업자회원을 위한 기분 좋은 혜택">
+            </div>
+        </main>
+</th:block>
+</html>

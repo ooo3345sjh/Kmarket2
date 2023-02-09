@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -33,7 +34,8 @@ public class SecurityConfig {
 			)
 
 			// 로그인 설정
-			.formLogin()
+			.formLogin(
+			)
 
 			// 로그인 아웃 설정
 //			.logout()
@@ -47,10 +49,10 @@ public class SecurityConfig {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
 	
-//	@Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//	}
+	@Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
@@ -76,7 +78,17 @@ public class SecurityConfig {
 					.roles("3")
 					.build()
 		};
+
 		return new InMemoryUserDetailsManager(user);
 	}
+
+	/*
+	@Bean
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/images/**")
+				.addResourceLocations("kmarket/file");
+	}
+
+	 */
 
 }
