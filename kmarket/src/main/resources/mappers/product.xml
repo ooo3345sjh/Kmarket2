@@ -3,29 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.ProductDAO">
-    <insert id="insertProduct" parameterType="kr.co.kmarket.vo.ProductVO" useGeneratedKeys="true" keyProperty="prodNo">
-        insert into `km_product` set
-        `cate1`= #{cate1},
-        `cate2`= #{cate2},
-        `prodName`= #{prodName},
-        `descript`= #{descript},
-        `company`= #{company},
-        `seller`= #{seller},
-        `price`= #{price},
-        `discount`= #{discount},
-        `point`= #{point},
-        `stock`= #{stock},
-        `delivery`= #{delivery},
-        `thumb1`= #{thumb1},
-        `thumb2`= #{thumb2},
-        `thumb3`= #{thumb3},
-        `detail`= #{detail},
-        `status`= #{status},
-        `duty`= #{duty},
-        `receipt`= #{receipt},
-        `bizType`= #{bizType},
-        `origin`= #{origin},
-        `ip`= #{ip},
-        `rdate`= NOW();
+    <!-- 상품 등록 -->
+    <insert id="INSERT_PRODUCT" parameterType="kr.co.kmarket.vo.ProductVO" useGeneratedKeys="true" keyProperty="prodNo">
+            insert into `km_product` set
+            `cate1`= #{cate1},
+            `cate2`= #{cate2},
+            `prodName`= #{prodName},
+            `descript`= #{descript},
+            `company`= #{company},
+            `seller`= #{seller},
+            `price`= #{price},
+            `discount`= #{discount},
+            `point`= #{point},
+            `stock`= #{stock},
+            `delivery`= #{delivery},
+            `thumb1`= #{thumb1},
+            `thumb2`= #{thumb2},
+            `thumb3`= #{thumb3},
+            `detail`= #{detail},
+            `status`= #{status},
+            `duty`= #{duty},
+            `receipt`= #{receipt},
+            `bizType`= #{bizType},
+            `origin`= #{origin},
+            `ip`= #{ip},
+            `rdate`= NOW();
     </insert>
+
+    <!-- 조건에 해당하는 한개의 상품 데이터 조회 -->
+    <select id="SELECT_PRODUCT" resultType="kr.co.kmarket.vo.ProductVO">
+            SELECT * FROM `km_product` WHERE `prodNo=`#{prodNo};
+    </select>
+
+    <!-- 상품 조회 리스트 -->
+     <select id="SELECT_PRODUCTS">
+            SELECT * FROM `km_product` ORDER BY `prodNo`=#{prodNo}
+            DESC LIMIT=#{start}, 10;
+     </select>
+
+    <!-- 상품 삭제 -->
+     <select id="DELETE_PRODUCT">
+            DELETE FROM `km_product` WHERE `prodNo`=#{prodNo};
+     </select>
+
 </mapper>

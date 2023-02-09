@@ -19,7 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.io.File;
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -86,6 +85,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 		return new InMemoryUserDetailsManager(user);
 	}
 
+
 	@Value("${spring.product.img}")
 	String uploadPath;
 
@@ -95,5 +95,14 @@ public class SecurityConfig implements WebMvcConfigurer {
 		.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
 
 //				.addResourceLocations("file:///D:/file/");
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/file/**")
+				.addResourceLocations("file:///Users/kimwoo2328/Desktop/Workspace/Kmarket2/kmarket/file/");
+
+//          .addResourceLocations("file:///D:/file/");
+
 	}
 }
+
