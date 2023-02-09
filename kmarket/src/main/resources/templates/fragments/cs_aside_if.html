@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>
@@ -15,14 +15,16 @@
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="wrapper">
-    <th:block th:replace="fragments/_header::cs_header"></th:block>
-    <main>
-        <th:block th:replace="fragments/cs_aside_if"></th:block>
-        <th:block layout:fragment="main"></th:block>
-    </main>
-</div>
+    <th:block th:if="${type == 'notice'}">
+      <th:block th:replace="fragments/cs_aside_notice::aside"></th:block>
+    </th:block>
+    <th:block th:if="${type == 'qna'}">
+      <th:block th:replace="fragments/cs_aside::qna"></th:block>
+    </th:block>
+    <th:block th:if="${type == 'faq'}">
+      <th:block th:replace="fragments/cs_aside::faq"></th:block>
+    </th:block>
+    <th:block th:if="${type == 'null'}">
+    </th:block>
 </body>
-<th:block th:replace="fragments/_footer::main_footer"></th:block>
-<!--<th:block layout:fragment="script"></th:block>-->
 </html>
