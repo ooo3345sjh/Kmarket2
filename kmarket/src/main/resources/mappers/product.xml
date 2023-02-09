@@ -41,9 +41,4 @@
             DESC LIMIT=#{start}, 10;
      </select>
 
-    <!-- 상품 삭제 -->
-     <select id="DELETE_PRODUCT">
-            DELETE FROM `km_product` WHERE `prodNo`=#{prodNo};
-     </select>
-
 </mapper>

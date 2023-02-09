@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
- * @since 2023/02/08 라성준
- * @param
- * @return
+ * productVo
+ * @since 2023/02/08
+ * @author 라성준
  */
 @Data
 @AllArgsConstructor
