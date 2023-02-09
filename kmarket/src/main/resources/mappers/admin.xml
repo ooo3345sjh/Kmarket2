@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.AdminDAO">
+    <select id="selectProductAdmin" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` order by `prodNo` desc limit 1, 10;
+    </select>
+
+</mapper>

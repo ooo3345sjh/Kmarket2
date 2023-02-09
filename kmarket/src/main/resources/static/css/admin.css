@@ -490,15 +490,13 @@ button[type=submit] {
     box-sizing: border-box;
 }
 #admin-cs-list > section > table  tr > td:nth-child(1) {width: 20px;}
-#admin-cs-list > section > table  tr > td:nth-child(2) {width: 40px;}
-#admin-cs-list > section > table  tr > td:nth-child(3) {width: 100px;}
-#admin-cs-list > section > table  tr > td:nth-child(5) {width: 60px;}
-#admin-cs-list > section > table  tr > td:nth-child(6) {width: 80px;}
-#admin-cs-list > section > table  tr > td:nth-child(7) {width: 80px;}
-#admin-cs-list > section > table  tr > td:nth-child(8) {width: 80px;}
-#admin-cs-list > section > table  tr > td:nth-child(9) {width: 80px;}
-#admin-cs-list > section > table  tr > td:nth-child(10) {width: 80px;}
-#admin-cs-list > section > table  tr > td:nth-child(11) {width: 100px;}
+#admin-cs-list > section > table  tr > td:nth-child(2) {width: 50px;}
+#admin-cs-list > section > table  tr > td:nth-child(3) {width: 50px;}
+#admin-cs-list > section > table  tr > td:nth-child(4) {width: 50px;}
+#admin-cs-list > section > table  tr > td:nth-child(5) {width: 400px;}
+#admin-cs-list > section > table  tr > td:nth-child(6) {width: 50px;}
+#admin-cs-list > section > table  tr > td:nth-child(7) {width: 50px;}
+#admin-cs-list > section > table  tr > td:nth-child(8) {width: 50px;}
 
 #admin-cs-list > section > table img.thumb {width: 60px;}
 

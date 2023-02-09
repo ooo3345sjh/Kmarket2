@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -76,7 +77,17 @@ public class SecurityConfig {
 					.roles("3")
 					.build()
 		};
+
 		return new InMemoryUserDetailsManager(user);
 	}
+
+	/*
+	@Bean
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/images/**")
+				.addResourceLocations("kmarket/file");
+	}
+
+	 */
 
 }
