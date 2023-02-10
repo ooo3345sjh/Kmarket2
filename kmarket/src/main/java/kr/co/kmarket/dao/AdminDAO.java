@@ -1,5 +1,6 @@
 package kr.co.kmarket.dao;
 
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,6 @@ import java.util.List;
 @Repository
 public interface AdminDAO {
     public void insertProductAdmin();
-    public List<ProductVO> selectProductAdmin();
+    public List<ProductVO> selectProductAdmin(SearchCondition sc);
+    public int countProductAdmin(SearchCondition sc);
 }

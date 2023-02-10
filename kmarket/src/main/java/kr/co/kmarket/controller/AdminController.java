@@ -1,6 +1,7 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.AdminService;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,10 @@ public class AdminController {
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(Model m) {
+    public String productList(Model m, SearchCondition sc) {
         log.info("adminController product list...");
 
-        List<ProductVO> products = service.selectProductAdmin();
+        List<ProductVO> products = service.selectProductAdmin(m, sc);
         m.addAttribute("products", products);
 
         return "admin/product/list";
