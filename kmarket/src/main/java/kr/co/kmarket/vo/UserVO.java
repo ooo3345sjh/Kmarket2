@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Slf4j
 @Data
+@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
