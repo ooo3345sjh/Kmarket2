@@ -28,19 +28,19 @@ public class SecurityConfig implements WebMvcConfigurer {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http
-			// 사이트 위변조 요청 방지
-			.csrf().disable()
-			
-			// 인가(접근권한) 설정
-			.authorizeHttpRequests(req ->
-				req.anyRequest().authenticated()
-			)
+				// 사이트 위변조 요청 방지
+				.csrf().disable()
 
-			// 로그인 설정
-			.formLogin(
-			)
+				// 인가(접근권한) 설정
+				.authorizeHttpRequests(req ->
+						req.anyRequest().authenticated()
+				)
 
-			// 로그인 아웃 설정
+				// 로그인 설정
+				.formLogin(
+				)
+
+		// 로그인 아웃 설정
 //			.logout()
 
 		;
@@ -51,7 +51,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 //    public PasswordEncoder PasswordEncoder () {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
-	
+
 //	@Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
@@ -64,45 +64,45 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 		UserDetails[] user = {
 				User.withDefaultPasswordEncoder()
-					.username("user")
-					.password("1234")
-					.roles("1")
-					.build()
+						.username("user")
+						.password("1234")
+						.roles("1")
+						.build()
 				,
 				User.withDefaultPasswordEncoder()
-					.username("seller")
-					.password("1234")
-					.roles("2")
-					.build()
+						.username("seller")
+						.password("1234")
+						.roles("2")
+						.build()
 				,
 				User.withDefaultPasswordEncoder()
-					.username("admin")
-					.password("1234")
-					.roles("3")
-					.build()
+						.username("admin")
+						.password("1234")
+						.roles("3")
+						.build()
 		};
 
 		return new InMemoryUserDetailsManager(user);
 	}
 
-
+	// spring boot에서 외부 경로 매핑하기
 	@Value("${spring.product.img}")
 	String uploadPath;
 
+
+	// windows 파일 경로 설정
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/file/**")
+//				.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
+//	}
+
+	// mac os 파일 경로 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")
-		.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
-
-//				.addResourceLocations("file:///D:/file/");
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/file/**")
-				.addResourceLocations("file:///Users/kimwoo2328/Desktop/Workspace/Kmarket2/kmarket/file/");
-
-//          .addResourceLocations("file:///D:/file/");
-
+				.addResourceLocations(uploadPath);
 	}
+
 }
 

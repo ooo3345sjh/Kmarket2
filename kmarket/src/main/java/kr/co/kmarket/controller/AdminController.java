@@ -35,8 +35,10 @@ public class AdminController {
     @GetMapping("/product/list")
     public String productList(Model m) {
         log.info("adminController product list...");
+
         List<ProductVO> products = service.selectProductAdmin();
         m.addAttribute("products", products);
+
         return "admin/product/list";
     }
 
