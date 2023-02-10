@@ -1,12 +1,11 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.UserService;
+import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -39,6 +38,27 @@ public class UserController {
         if("general".equals(type))
             return "user/registerGeneral";
 
-        return "user/registerSeller";
+        else if ("seller".equals(type))
+            return "user/registerSeller";
+
+        return null;
+    }
+
+    @ResponseBody
+    @GetMapping("/register/{uid}/check")
+    public int checkUid(@PathVariable String uid){
+        return userService.getDuplicateUserCount(uid);
+    }
+
+    @PostMapping("/register/{type}")
+    public String register(@PathVariable String type, UserVO user){
+
+        if("general".equals(type))
+            userService.saveGeneral(user);
+
+        else if ("seller".equals(type))
+            userService.saveGeneral(user);
+
+        return "redirect:/login";
     }
 }

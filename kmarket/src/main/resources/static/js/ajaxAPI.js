@@ -17,7 +17,7 @@ function ajaxAPI(url, jsonData, method) {
 
 		xhr.open(method, contextPath + url);
 		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader(header, token);
+//		xhr.setRequestHeader(header, token);
 		xhr.responseType = "json";
 
 		if(method == "get" || method == "GET")
