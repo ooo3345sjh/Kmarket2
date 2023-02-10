@@ -1,6 +1,5 @@
 package kr.co.kmarket.utils;
 
-import kr.co.kmarket.vo.SearchCondition;
 import lombok.Data;
 
 @Data

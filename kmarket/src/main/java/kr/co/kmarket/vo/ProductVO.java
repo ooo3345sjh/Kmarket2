@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ProductVO {
 
     private int prodNo;
-    private int cate1;
+    private Integer cate1;
     private int cate2;
     private String prodName;
     private String descript;
