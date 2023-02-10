@@ -51,10 +51,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 		return http.build();
 	}
 
-	@Bean
-    public PasswordEncoder PasswordEncoder () {
-		return new BCryptPasswordEncoder();
-    }
+//	@Bean
+//    public PasswordEncoder PasswordEncoder () {
+//		return new BCryptPasswordEncoder();
+//    }
 	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

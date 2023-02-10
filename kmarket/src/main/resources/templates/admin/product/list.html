@@ -12,7 +12,7 @@
             </nav>
             <!-- 상품목록 컨텐츠 시작 -->
             <section>
-                <form th:action="@{/product/list}">
+                <form th:action="@{/admin/product/list}">
                     <div>
                         <!--<th:block th:if="${sessMember.type eq 5}"></th:block>-->
                             <select name="searchField">
@@ -21,7 +21,7 @@
                                 <option value="seller" th:selected="${ph.sc.searchField == 'seller'}">판매자</option>
                             </select>
                         <input type="text" name="searchWord" placeholder="검색하기" th:value="${param.searchWord}"/>
-                        <input type="submit" value="검색하기"/>
+                        <input type="submit" class="searchButton" value="검색하기"/>
                     </div>
                 </form>
                 <table>
@@ -43,13 +43,13 @@
                         <tr th:each="product,i:${products}">
                             <td><input type="checkbox" name="상품코드"/></td>
                             <td><img th:src="@{/file/} + ${product.thumb1}" class="thumb"></td>
-                            <td>[[${product.prodNo}]]</td>
-                            <td>[[${product.prodName}]]</td>
+                            <td class="prodNo">[[${product.prodNo}]]</td>
+                            <td class="prodName">[[${product.prodName}]]</td>
                             <td>[[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]]</td> <!-- 세자리 수 콤마 -->
                             <td>[[${product.discount}]]</td>
                             <td>[[${product.point}]]</td>
                             <td>[[${product.stock}]]</td>
-                            <td>[[${product.seller}]]</td>
+                            <td class="seller">[[${product.seller}]]</td>
                             <td>[[${product.hit}]]</td>
                             <td>
                                 <a href="#">[삭제]</a>
@@ -60,17 +60,17 @@
 
                     <!-- 상품이 없을 경우 -->
                     <th:block th:if="${#lists.size(products) == 0}">
-                        <tr> <td colspan="5">등록된 상품이 없습니다.</td> </tr>
+                        <tr> <td colspan="11" class="noProduct">등록된 상품이 없습니다.</td> </tr>
                     </th:block>
 
                 </table>
 
-                <input type="button" value="선택삭제" />
+                <input type="button" value="선택삭제" id="deleteButton"/>
+                <input type="button" value="등록하기" id="registerButton"/>
 
                 <!-- 페이징 -->
                 <!-- 상품이 없을 경우 페이징 숨기기 -->
                 <div class="paging" th:style="${#lists.size(products) == 0 ? 'visibility:hidden;':''}"  th:object="${ph}">
-
                     <th:block th:if="*{showPrev}">
                         <a th:href="@{/admin/product/list} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">< 이전</a>
                     </th:block>
@@ -84,9 +84,7 @@
                     <th:block th:if="*{showNext}">
                         <a th:href="@{/admin/product/list} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음 ></a>
                     </th:block>
-
                 </div>
-
             </section>
             <p class="ico info">
                 <strong>Tip!</strong>
