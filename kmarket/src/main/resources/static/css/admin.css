@@ -384,16 +384,12 @@ button[type=submit] {
     float: right;
 }
 
-
-
 /* admin : product-register */
 #admin-product-register {}
 #admin-product-register input[type=submit] {
     float: right;
     width: 100px;
 }
-
-
 
 /* admin : product-list */
 #admin-product-list {}
@@ -433,24 +429,32 @@ button[type=submit] {
     margin-top: 10px;
 }
 
+#admin-product-list > section input:nth-of-type(2) {
+    width: 75px;
+    height: 30px;
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
+}
+
+/* list 페이징 */
 #admin-product-list .paging {
     width: 100%;
     padding: 30px 0;
     text-align: center;
 }
 
-#admin-product-list .paging > span > a {
+#admin-product-list .paging > a {
     color: #777;
-    font-family: "Malgun Gothic", Dotum, Tahoma, sans-serif;
+    font-family: "돋움", Dotum, Tahoma, sans-serif;
     font-size: 11px;
     letter-spacing: -1px;
 }
 
-#admin-product-list .paging > span > a:hover {
+#admin-product-list .paging > a:hover {
     text-decoration: underline;
 }
 
-#admin-product-list .paging > .num > a {
+#admin-product-list .paging > .num {
     display: inline-block;
     min-width: 14px;
     margin: 0 2px;
@@ -463,11 +467,11 @@ button[type=submit] {
     text-align: center;
     text-decoration: none;
 }
-#admin-product-list .paging > .num > a:hover {
+#admin-product-list .paging > .num:hover {
     border: 1px solid #454c5f;
     text-decoration: none;
 }
-#admin-product-list .paging > .num > a.on {
+#admin-product-list .paging > .current {
     color: #fe434c;
     font-weight: bold;
 }

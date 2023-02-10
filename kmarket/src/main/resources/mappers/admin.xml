@@ -3,8 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.AdminDAO">
-    <select id="selectProductAdmin" resultType="kr.co.kmarket.vo.ProductVO">
-        select * from `km_product` order by `prodNo` desc limit 1, 10;
+    <!-- admin 상품 조회 -->
+    <select id="selectProductAdmin" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product`
+        <include refid="searchCondition"/>
+        order by `prodNo` desc
+        limit #{offset}, 10;
     </select>
+
+    <!-- 상품 조회시 전체 상품 갯수 -->
+    <select id="countProductAdmin" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `km_product`
+        <include refid="searchCondition"/>
+    </select>
+
+    <!-- 검색 조건 -->
+    <sql id="searchCondition">
+        <if test="searchField != null">
+            <choose>
+                <when test='searchField == "prodName"'>
+                    AND `prodName` LIKE CONCAT('%', #{searchWord}, '%')
+                </when>
+                <when test='searchField == "prodNo"'>
+                    AND `prodNo` LIKE CONCAT('%', #{searchWord}, '%')
+                </when>
+                <when test='searchField == "seller"'>
+                    AND `seller` LIKE CONCAT('%', #{searchWord}, '%')
+                </when>
+            </choose>
+        </if>
+    </sql>
+
 
 </mapper>
