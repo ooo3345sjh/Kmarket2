@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 /**
  * productVo
  * @since 2023/02/08
@@ -16,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class ProductVO {
 
     private int prodNo;
-    private int cate1;
+    private Integer cate1;
     private int cate2;
     private String prodName;
     private String descript;
@@ -42,4 +45,7 @@ public class ProductVO {
     private String origin;
     private String ip;
     private String rdate;
+
+    private List<ProductVO> cateList;
+    private String type;
 }

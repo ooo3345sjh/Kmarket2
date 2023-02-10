@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.UserDAO">
+	<select id="selectCount" resultType="kr.co.kmarket.vo.UserVO">
+		select COUNT(*) from `km_member_uid` where `uid`=#{uid};
+	</select>
+
+	<insert id="insertGeneral" parameterType="kr.co.kmarket.vo.UserVO">
+		INSERT INTO `km_member_general` SET
+			`uid`= #{uid},
+			`pass`= #{pass},
+			`name`= #{name},
+			`gender`= #{gender},
+			`hp`= #{hp},
+			`email`= #{email},
+			`type`= #{type},
+			`zip`= #{zip},
+			`addr1`= #{addr1},
+			`addr2`= #{addr2},
+			`regip`= #{regip},
+			`rdate`= NOW()
+	</insert>
+	<insert id="inserSeller" parameterType="kr.co.kmarket.vo.UserVO">
+		INSERT INTO `km_member_seller` SET
+		`uid`= #{uid},
+		`pass`= #{pass},
+		`type`= #{type},
+		`zip`= #{zip},
+		`addr1`= #{addr1},
+		`addr2`= #{addr2},
+		`company`= #{company},
+		`ceo`= #{ceo},
+		`bizRegNum`= #{bizRegNum},
+		`comRegNum`= #{comRegNum},
+		`tel`= #{tel},
+		`manager`= #{manager},
+		`managerHp`= #{managerHp},
+		`fax`= #{fax},
+		`regip`= #{regip},
+		`rdate`= NOW()
+	</insert>
+	<insert id="insertUser">
+		INSERT INTO `km_member_uid` SET
+			`uid` = #{uid},
+			`type` = #{type}
+	</insert>
+
+	<select id="selectAllGeneralUser" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_general`
+	</select>
+
+	<select id="selectAllSellerUser" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_seller`
+	</select>
+
+	<delete id="deleteAllGeneralUser">
+		DELETE u.*, g.* FROM `km_member_uid` u
+		JOIN `km_member_general` g ON u.`uid` = g.`uid`
+	</delete>
+
+	<delete id="deleteAllSellerUser">
+		DELETE u.*, s.* FROM `km_member_uid` u
+		JOIN `km_member_seller` s ON u.`uid` = s.`uid`
+	</delete>
+</mapper>

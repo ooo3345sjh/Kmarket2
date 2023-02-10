@@ -384,16 +384,12 @@ button[type=submit] {
     float: right;
 }
 
-
-
 /* admin : product-register */
 #admin-product-register {}
 #admin-product-register input[type=submit] {
     float: right;
     width: 100px;
 }
-
-
 
 /* admin : product-list */
 #admin-product-list {}
@@ -416,7 +412,10 @@ button[type=submit] {
 #admin-product-list > section > table  tr > td:nth-child(1) {width: 20px;}
 #admin-product-list > section > table  tr > td:nth-child(2) {width: 80px;}
 #admin-product-list > section > table  tr > td:nth-child(3) {width: 80px;}
-#admin-product-list > section > table  tr > td:nth-child(4) {width: auto; text-align: left;}
+#admin-product-list > section > table  tr > td:nth-child(4) {
+    width: auto;
+    text-align: left;
+}
 #admin-product-list > section > table  tr > td:nth-child(5) {width: 80px;}
 #admin-product-list > section > table  tr > td:nth-child(6) {width: 80px;}
 #admin-product-list > section > table  tr > td:nth-child(7) {width: 80px;}
@@ -427,30 +426,69 @@ button[type=submit] {
 
 #admin-product-list > section > table img.thumb {width: 60px;}
 
+
 #admin-product-list > section input[type=button] {
-    float: left;
     width: 100px;
     margin-top: 10px;
 }
+/* 선택삭제 */
+#admin-product-list > section #deleteButton {
+    float: left;
+    background: #fff;
+    height:auto;
+    cursor:pointer;
+    text-indent: 0;
+    padding: 10px 15px;
+    border : 1px solid #d6d6d6;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+/* 등록하기 */
+#admin-product-list > section #registerButton {
+    float: right;
+    background: #fff;
+    height:auto;
+    cursor:pointer;
+    text-indent: 0;
+    padding: 10px 15px;
+    border : 1px solid #d6d6d6;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
 
+#admin-product-list > section input.searchButton {
+    width: 75px;
+    height: 30px;
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
+}
+
+/* 검색어 하이라이트 */
+.highlight {
+    background: #fff200;
+    color: #ee3c24;
+    display: inline-block;
+}
+
+/* list 페이징 */
 #admin-product-list .paging {
     width: 100%;
     padding: 30px 0;
     text-align: center;
 }
 
-#admin-product-list .paging > span > a {
+#admin-product-list .paging > a {
     color: #777;
-    font-family: "Malgun Gothic", Dotum, Tahoma, sans-serif;
+    font-family: "돋움", Dotum, Tahoma, sans-serif;
     font-size: 11px;
     letter-spacing: -1px;
 }
 
-#admin-product-list .paging > span > a:hover {
+#admin-product-list .paging > a:hover {
     text-decoration: underline;
 }
 
-#admin-product-list .paging > .num > a {
+#admin-product-list .paging > .num {
     display: inline-block;
     min-width: 14px;
     margin: 0 2px;
@@ -463,14 +501,15 @@ button[type=submit] {
     text-align: center;
     text-decoration: none;
 }
-#admin-product-list .paging > .num > a:hover {
+#admin-product-list .paging > .num:hover {
     border: 1px solid #454c5f;
     text-decoration: none;
 }
-#admin-product-list .paging > .num > a.on {
+#admin-product-list .paging > .current {
     color: #fe434c;
     font-weight: bold;
 }
+
 
 /* admin cs list */
 #admin-cs-list > section > div  {

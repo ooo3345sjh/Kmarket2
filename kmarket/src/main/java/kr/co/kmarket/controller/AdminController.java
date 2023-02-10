@@ -1,15 +1,21 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.AdminService;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 * 날짜 : 2023/02/09
@@ -33,10 +39,15 @@ public class AdminController {
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(Model m) {
+    public String productList(Model m, SearchCondition sc, @AuthenticationPrincipal User user) {
         log.info("adminController product list...");
 
-        List<ProductVO> products = service.selectProductAdmin();
+        List<GrantedAuthority> roles = user.getAuthorities().stream().collect(Collectors.toList());
+        System.out.println("user = " + user);
+        System.out.println("roles = " + roles);
+        
+        
+        List<ProductVO> products = service.selectProductAdmin(m, sc);
         m.addAttribute("products", products);
 
         return "admin/product/list";
