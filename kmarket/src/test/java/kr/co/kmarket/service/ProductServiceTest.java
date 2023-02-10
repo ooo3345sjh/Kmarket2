@@ -18,12 +18,13 @@ class ProductServiceTest {
 
     @Value("${spring.servlet.multipart.location}")
     String uploadPath;
+
     @Test
     void test_1(){
         // 프로젝트 디렉토리에 대해 상대 경로
-        File configFile = new File(uploadPath+"/file");
+        File configFile = new File(uploadPath + "/file");
 
-        System.out.println(configFile.exists());
+        System.out.println(configFile.isDirectory());
     }
 
 }

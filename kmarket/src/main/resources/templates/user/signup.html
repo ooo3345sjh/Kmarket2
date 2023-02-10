@@ -8,28 +8,59 @@
                 <nav>
                     <h1>약관동의</h1>
                 </nav>
-                <section>
+                <section th:if="${type.equals('general')}">
                     <h3><span class="essential">(필수)</span> 케이마켓 이용약관</h3>
-                    <textarea name="terms" readonly></textarea>
+                    <textarea name="terms" readonly th:text="${terms.terms}"></textarea>
+                    <label><input type="checkbox" name="agree1">동의합니다.</label>
+                </section>
+                <section th:if="${type.equals('seller')}">
+                    <h3><span class="essential">(필수)</span> 케이마켓 이용약관</h3>
+                    <textarea name="terms" readonly th:text="${terms.tax}"></textarea>
                     <label><input type="checkbox" name="agree1">동의합니다.</label>
                 </section>
                 <section>
                     <h3><span class="essential">(필수)</span> 전자금융거래 이용약관</h3>
-                    <textarea name="v" readonly></textarea>
+                    <textarea name="finance" readonly th:text="${terms.finance}"></textarea>
                     <label><input type="checkbox" name="agree2">동의합니다.</label>
                 </section>
                 <section>
                     <h3><span class="essential">(필수)</span> 개인정보 수집동의</h3>
-                    <textarea name="privacy" readonly></textarea>
+                    <textarea name="privacy" readonly th:text="${terms.privacy}"></textarea>
                     <label><input type="checkbox" name="agree3">동의합니다.</label>
                 </section>
                 <section>
                     <h3><span class="optional">(선택)</span> 위치정보 이용약관</h3>
-                    <textarea name="location" readonly></textarea>
+                    <textarea name="location" readonly th:text="${terms.location}"></textarea>
                     <label><input type="checkbox" name="agree4">동의합니다.</label>
                 </section>
-                <input type="button" class="agreeBtn" value="동의하기">
+                <input type="button" class="agreeBtn" value="동의하기" onclick="return nextBtn()">
             </div>
         </main>
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            function nextBtn(){
+                let termsCheckBox = document.querySelector("input[name=agree1]");
+                let financeCheckBox = document.querySelector("input[name=agree2]");
+                let privacyCheckBox = document.querySelector("input[name=agree3]");
+
+                if(!termsCheckBox.checked){
+                    alert('케이마켓 이용약관을 동의해주세요.');
+                    return false;
+                }
+
+                if(!financeCheckBox.checked){
+                    alert('전자금융거래 이용약관을 동의해주세요.');
+                    return false;
+                }
+
+                if(!privacyCheckBox.checked){
+                    alert('개인정보 수집동의를 동의해주세요.');
+                    return false;
+                }
+
+                location.href = contextPath + "register/[[${type}]]";
+            }
+        </script>
     </th:block>
 </html>

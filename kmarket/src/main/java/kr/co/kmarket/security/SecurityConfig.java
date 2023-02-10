@@ -32,16 +32,19 @@ public class SecurityConfig implements WebMvcConfigurer {
 			.csrf().disable()
 			
 			// 인가(접근권한) 설정
-			.authorizeHttpRequests(req ->
-				req.anyRequest().authenticated()
+			.authorizeHttpRequests(req -> req
+					.mvcMatchers("/join", "/signup/**", "/register/**", "/terms", "/logout").permitAll()
+					.anyRequest().authenticated()
 			)
 
 			// 로그인 설정
-			.formLogin(
+			.formLogin(login->login
+					.loginPage("/login").permitAll()
+					.defaultSuccessUrl("/")
 			)
 
 			// 로그인 아웃 설정
-//			.logout()
+			.logout()
 
 		;
 		return http.build();
@@ -52,16 +55,13 @@ public class SecurityConfig implements WebMvcConfigurer {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
 	
-//	@Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//	}
+	@Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-//		PasswordEncoder encoder = NoOpPasswordEncoder.getInstance();
-
-
 		UserDetails[] user = {
 				User.withDefaultPasswordEncoder()
 					.username("user")
@@ -86,23 +86,15 @@ public class SecurityConfig implements WebMvcConfigurer {
 	}
 
 
-	@Value("${spring.product.img}")
+	@Value("${myapp.uploadPath}")
 	String uploadPath;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")
-		.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
+				.addResourceLocations(uploadPath);
 
 //				.addResourceLocations("file:///D:/file/");
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/file/**")
-				.addResourceLocations("file:///Users/kimwoo2328/Desktop/Workspace/Kmarket2/kmarket/file/");
-
-//          .addResourceLocations("file:///D:/file/");
-
 	}
 }
 

@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
 
-    @Value("${spring.product.img}")
-    String uploadPath;
-
-
     @Autowired
     private AdminDAO dao;
 
