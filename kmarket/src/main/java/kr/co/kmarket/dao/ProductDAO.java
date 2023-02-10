@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 /**
+ * productDAO
  * @since 2023/02/08 라성준
  */
 @Mapper
@@ -14,6 +15,8 @@ import java.util.List;
 public interface ProductDAO {
     public void insertProduct(ProductVO vo);
     public List<ProductVO> selectProducts(@Param("cate1") int cate1, @Param("cate2")int cate2, @Param("sort") String sort, @Param("start") int start);
+    List<ProductVO> selectCate() throws Exception;
+    List<ProductVO> selectCate2() throws Exception;
     //public int selectCountTotalProduct() {}
     public int updateProduct(ProductVO vo);
     public int deleteProduct(int no);

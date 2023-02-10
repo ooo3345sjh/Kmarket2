@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * product service
  * @since 2023/02/08
@@ -51,8 +54,6 @@ public class ProductService {
     //   return total;
     //  }
 
-
-
     /**
      * product update service
      * @since 2023/02/08
@@ -60,6 +61,31 @@ public class ProductService {
      */
     public int updateProduct(ProductVO vo) {
         return dao.updateProduct(vo);
+    }
+
+    /**
+     * @since 2023/02/10
+     * @author 라성준
+     * @throws Exception
+     */
+    public Map<String, List<ProductVO>> selectCate() throws Exception {
+        List<ProductVO> cateList = dao.selectCate();
+        // 이미지 파일 경로 설정
+        cateList = cateList.stream().map(p -> {
+            int cate1 = p.getCate1();
+            int cate2 = p.getCate2();
+            String thumb1 = cate1 + "/" + cate2 + "/" + p.getThumb1(); // /cate1/cate2/thumb1
+            String thumb2 = cate1 + "/" + cate2 + "/" + p.getThumb2();
+            String thumb3 = cate1 + "/" + cate2 + "/" + p.getThumb3();
+            p.setThumb1(thumb1);
+            p.setThumb2(thumb2);
+            p.setThumb3(thumb3);
+            return p;
+        }).collect(Collectors.toList());
+
+        System.out.println("a" + cateList);
+        return cateList.stream().collect(Collectors.groupingBy(ProductVO::getType));
+
     }
 
 }
