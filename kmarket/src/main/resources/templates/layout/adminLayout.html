@@ -26,23 +26,53 @@
 <th:block layout:fragment="script">
     <script>
     $(document).ready(function(){
-    var gnb = $('#gnb > li > a');
+        var gnb = $('#gnb > li > a');
 
-    gnb.click(function(e){
-    e.preventDefault();
+        gnb.click(function(e){
+            e.preventDefault();
 
-    var isOpen = $(this).next().is(':visible');
+            var isOpen = $(this).next().is(':visible');
 
-    if(isOpen){
-    // 현재 서브메뉴를 닫음
-    $(this).next().slideUp(200);
-    }else{
-    // 현재 서브메뉴를 펼침
-    $(this).next().slideDown(200);
-    }
+            if(isOpen){
+                // 현재 서브메뉴를 닫음
+                $(this).next().slideUp(200);
+                }else{
+                // 현재 서브메뉴를 펼침
+                $(this).next().slideDown(200);
+                }
+        });
     });
-    });
 
+    // 검색어 하이라이트 이벤트
+    const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
+    const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
+
+
+    $(function (){
+        if(searchField.options[searchField.selectedIndex].value === "prodName"){
+            $('.prodName').highlight(searchWord.value);
+        }
+        else if(searchField.options[searchField.selectedIndex].value === "prodNo"){
+            $('.prodNo').highlight(searchWord.value);
+        }
+        else if(searchField.options[searchField.selectedIndex].value === "seller"){
+            $('.seller').highlight(searchWord.value);
+        }
+    })
+
+    window.onload = function (){
+        const articlesLink = document.querySelectorAll(".title");
+
+        articlesLink.forEach((link) => {
+
+            // 조회수 올리는 이벤트
+            link.addEventListener("click", function (e){
+                let no = link.getAttribute("data-no");
+                ajaxAPI("gnb/hit/" + no, {no:no}, "POST")
+            });
+        });
+    };
     </script>
+    <script th:src="@{/js/jquery.highlight-5.js}"></script>
 </th:block>
 </html>

@@ -6,6 +6,7 @@
     <!-- admin 상품 조회 -->
     <select id="selectProductAdmin" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.ProductVO">
         select * from `km_product`
+        where 1=1
         <include refid="searchCondition"/>
         order by `prodNo` desc
         limit #{offset}, 10;
@@ -14,6 +15,7 @@
     <!-- 상품 조회시 전체 상품 갯수 -->
     <select id="countProductAdmin" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM `km_product`
+        where 1=1
         <include refid="searchCondition"/>
     </select>
 
@@ -32,6 +34,10 @@
                 </when>
             </choose>
         </if>
+    </sql>
+
+    <sql id="sellerType2">
+        where
     </sql>
 
 
