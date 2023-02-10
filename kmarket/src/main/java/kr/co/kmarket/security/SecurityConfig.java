@@ -64,37 +64,45 @@ public class SecurityConfig implements WebMvcConfigurer {
 	public InMemoryUserDetailsManager userDetailsService() {
 		UserDetails[] user = {
 				User.withDefaultPasswordEncoder()
-					.username("user")
-					.password("1234")
-					.roles("1")
-					.build()
+						.username("user")
+						.password("1234")
+						.roles("1")
+						.build()
 				,
 				User.withDefaultPasswordEncoder()
-					.username("seller")
-					.password("1234")
-					.roles("2")
-					.build()
+						.username("seller")
+						.password("1234")
+						.roles("2")
+						.build()
 				,
 				User.withDefaultPasswordEncoder()
-					.username("admin")
-					.password("1234")
-					.roles("3")
-					.build()
+						.username("admin")
+						.password("1234")
+						.roles("3")
+						.build()
 		};
 
 		return new InMemoryUserDetailsManager(user);
 	}
 
-
-	@Value("${myapp.uploadPath}")
+	// spring boot에서 외부 경로 매핑하기
+	@Value("${spring.product.img}")
 	String uploadPath;
 
+
+	// windows 파일 경로 설정
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/file/**")
+//				.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
+//	}
+
+	// mac os 파일 경로 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")
 				.addResourceLocations(uploadPath);
-
-//				.addResourceLocations("file:///D:/file/");
 	}
+
 }
 

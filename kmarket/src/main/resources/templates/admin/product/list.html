@@ -41,7 +41,7 @@
                         <td><img th:src="@{/file/} + ${product.thumb1}" class="thumb"></td>
                         <td>[[${product.prodNo}]]</td>
                         <td>[[${product.prodName}]]</td>
-                        <td>[[${product.price}]]</td>
+                        <td>[[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]]</td> <!-- 세자리 수 콤마 -->
                         <td>[[${product.discount}]]</td>
                         <td>[[${product.point}]]</td>
                         <td>[[${product.stock}]]</td>
