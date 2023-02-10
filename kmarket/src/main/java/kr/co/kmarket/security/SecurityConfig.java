@@ -28,20 +28,23 @@ public class SecurityConfig implements WebMvcConfigurer {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http
-				// 사이트 위변조 요청 방지
-				.csrf().disable()
+			// 사이트 위변조 요청 방지
+			.csrf().disable()
+			
+			// 인가(접근권한) 설정
+			.authorizeHttpRequests(req -> req
+					.mvcMatchers("/join", "/signup/**", "/register/**", "/terms", "/logout").permitAll()
+					.anyRequest().authenticated()
+			)
 
-				// 인가(접근권한) 설정
-				.authorizeHttpRequests(req ->
-						req.anyRequest().authenticated()
-				)
+			// 로그인 설정
+			.formLogin(login->login
+					.loginPage("/login").permitAll()
+					.defaultSuccessUrl("/")
+			)
 
-				// 로그인 설정
-				.formLogin(
-				)
-
-		// 로그인 아웃 설정
-//			.logout()
+			// 로그인 아웃 설정
+			.logout()
 
 		;
 		return http.build();
@@ -51,17 +54,14 @@ public class SecurityConfig implements WebMvcConfigurer {
 //    public PasswordEncoder PasswordEncoder () {
 //		return NoOpPasswordEncoder.getInstance();
 //    }
-
-//	@Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//	}
+	
+	@Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-//		PasswordEncoder encoder = NoOpPasswordEncoder.getInstance();
-
-
 		UserDetails[] user = {
 				User.withDefaultPasswordEncoder()
 						.username("user")
