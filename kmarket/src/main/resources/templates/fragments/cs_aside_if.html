@@ -15,16 +15,16 @@
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <th:block th:if="${type == 'notice'}">
-      <th:block th:replace="fragments/cs_aside_notice::aside"></th:block>
+    <th:block th:if="${cate1 == 'notice'}">
+      <th:block th:replace="fragments/cs_aside::notice"></th:block>
     </th:block>
-    <th:block th:if="${type == 'qna'}">
+    <th:block th:if="${cate1 == 'qna'}">
       <th:block th:replace="fragments/cs_aside::qna"></th:block>
     </th:block>
-    <th:block th:if="${type == 'faq'}">
+    <th:block th:if="${cate1 == 'faq'}">
       <th:block th:replace="fragments/cs_aside::faq"></th:block>
     </th:block>
-    <th:block th:if="${type == 'null'}">
+    <th:block th:if="${cate1 == 'null'}">
     </th:block>
 </body>
 </html>
