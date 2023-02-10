@@ -5,58 +5,64 @@
 <th:block layout:fragment="main">
 
     <article>
-        <nav>
+        <th:block th:switch="${cate2}">
+        <nav th:case=null>
             <h1>전체</h1>
             <h2>공지사항 전체 내용입니다.</h2>
         </nav>
+        <nav th:case="service">
+            <h1>고객서비스</h1>
+            <h2>고객서비스 관련 내용입니다.</h2>
+        </nav>
+        <nav th:case="safeDeal">
+            <h1>안전거래</h1>
+            <h2>안전거래 관련 내용입니다.</h2>
+        </nav>
+        <nav th:case="xproduct">
+            <h1>위해상품</h1>
+            <h2>위해상품 관련 내용입니다.</h2>
+        </nav>
+        <nav th:case="great">
+            <h1>이벤트당첨</h1>
+            <h2>이벤트당첨 관련 내용입니다.</h2>
+        </nav>
         <table>
-            <tr>
-                <td><a th:href="@{/cs/notice/view}">[안내] 해외결제 사칭 문자 주의</a></td>
-                <td>2022.11.21</td>
+        <!-- 게시글이 있는 경우 -->
+        <th:block th:if="${#lists.size(articles) != 0}">
+            <tr th:each="article,i:${articles}" th:object="${ph}">
+                <td>[[*{totalCnt-sc.offset} - ${i.index}]]</td>
+                <td>
+                    <a th:href="@{/cs/notice/view} + ${ph.sc.getcsQueryString(ph.sc.page, article.csNo)}"
+                       th:text="|${article.title}|" class="title" th:data-no="${article.csNo}"></a>
+                    <!--/* <span th:if="${article.comment gt 0}" th:text="|[${article.comment}]|"></span> */-->
+                    <!--/*<img th:if="${article.file gt 0}" style="" alt="파일" th:src="@{/images/file.jpg}" /> */-->
+                    <!--/*<input type="hidden" class="content" th:value="${article.content}">*/-->
+                </td>
+                <!--/*<td class="nick">[[${article.nick}]]</td>*/-->
+                <!--/*<td>[[${#dates.format(article.rdate, 'yy-MM-dd')}]]</td>*/-->
             </tr>
-            <tr>
-                <td><a href="#">[발표] 치킨 매우 맛있는 이유</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[안내] CJ대한통운 반품/교환 수거지 지연 안내</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[안내] 해외 면세점 특별약관 개정</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[안내] 위치정보 이용 약관 개정 공지</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[발표]『써모스 상품 구매』 이벤트 당첨자</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">한국소비자원, '22년 OECD 글로벌 제품안전 캠페인</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[점검] G마켓 사이트 이용 일시 중단</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[안내] 구매회원 이용약관 개정</a></td>
-                <td>2022.11.21</td>
-            </tr>
-            <tr>
-                <td><a href="#">[안내] 씨티은행 시스템 점검에 따른 계좌, 체크카드결제 서비스 일시 중단</a></td>
-                <td>2022.11.21</td>
-            </tr>
+        </th:block>
+        <!-- 게시글이 없는 경우 -->
+        <th:block th:if="${#lists.size(articles) == 0}">
+            <tr> <td colspan="5">등록된 게시글이 없습니다.</td> </tr>
+        </th:block>
         </table>
-        <div class="page">
-            <a href="#" class="prev">이전</a>
-            <a href="#" class="num on">1</a>
-            <a href="#" class="num">2</a>
-            <a href="#" class="num">3</a>
-            <a href="#" class="next">다음</a>
+        <!-- 게시글이 없는 경우 페이지 넘버 숨기기 -->
+        <div class="page" th:style="${#lists.size(articles) == 0 ? 'visibility:hidden;':''}" th:object="${ph}">
+
+            <th:block th:if="*{showPrev}">
+                <a th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(ph.beginPage-1)}" class="prev">이전</a>
+            </th:block>
+
+            <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
+                <a  th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
+                    [[${num}]]
+                </a>
+            </th:block>
+
+            <th:block th:if="*{showNext}">
+                <a th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(ph.endPage+1)}" class="next">다음</a>
+            </th:block>
         </div>
     </article>
     </section>

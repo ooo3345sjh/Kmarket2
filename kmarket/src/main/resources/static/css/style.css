@@ -1659,7 +1659,7 @@ footer > div > div > p > span {
     border-bottom: 1px solid #ccc;
 }
 #cs > .notice > .list > article > table td:last-child {
-    text-align: center;
+    text-align: left;
     font-size: 14px;
 }
 #cs > .notice > .list > article > table a {
@@ -2412,4 +2412,54 @@ footer > div > div > p > span {
 #member > .registerSeller > form section > table .addr > td > input:nth-of-type(3) {width: 370px;}
 #member > .registerSeller > form section > table .addr > td > input:nth-of-type(4) {width: 370px;}
 
+/* 버튼 공통 */
+.btnWrite {
+    float: right;
+    padding: 10px 20px;
+    text-align: center;
+    margin-top: -48px;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    border-radius: 2px;
+    font-size: 20px;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.btnList {
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    margin: 40px auto 0;
+    border: 1px solid #ccc;
+    border-radius: 34px;
+    font-size: 16px;
+    color: #000;
+    line-height: 58px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.btnList:hover {
+    background-color: #f7f7f7;
+}
+
+.btnSubmit {
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    margin: 40px auto 0;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    border-radius: 34px;
+    font-size: 16px;
+    color: #fff;
+    line-height: 58px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.btnSubmit:hover {
+    background-color: #0954f6;
+}
 

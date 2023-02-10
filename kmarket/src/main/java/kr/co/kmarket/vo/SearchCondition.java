@@ -13,6 +13,8 @@ public class SearchCondition {
     private Integer pageSize = 10;
     private String group;
     private String cate;
+    private String cate1;
+    private String cate2;
     private Integer no = 0;
     private String searchField;
     private String searchWord;
@@ -53,5 +55,23 @@ public class SearchCondition {
 
     public void setPage(Integer page) {
         this.page = page == 0 ? 1:page;
+    }
+
+    public String getcsQueryString(Integer page){
+        // ?page=1&pageSize=10&option="T"&keyword="title"
+        return getcsQueryString(page, no);
+    }
+    public String getcsQueryString(Integer page, Integer no){
+        // ?page=1&pageSize=10&option="T"&keyword="title"
+        UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
+                .queryParam("cate1", cate1)
+                .queryParam("cate2", cate2)
+                .queryParam("page", page);
+
+
+        if (no != null && no != 0)
+            builder.queryParam("csNo", no);
+
+        return builder.toUriString();
     }
 }

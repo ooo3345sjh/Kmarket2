@@ -1,7 +1,9 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.CsService;
+import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.vo.CsVO;
+import kr.co.kmarket.vo.SearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,15 @@ import javax.management.Attribute;
 import javax.sound.midi.Soundbank;
 import java.awt.print.Printable;
 import java.util.List;
-
+/*
+ * 날짜 : 2023/02/09
+ * 이름 : 김동민
+ * 내용 : cs controller
+ * */
 @Controller
 public class CsController {
+
+    public PageHandler ph;
 
     @Autowired
     private CsService service;
@@ -31,16 +39,25 @@ public class CsController {
         return "cs/cs_index";
     }
     @GetMapping("cs/notice/list")
-    public String notice_list(Model m,String cate1){
-        m.addAttribute("type",cate1);
+    public String notice_list(Model m, String cate1, String cate2, SearchCondition sc){
+        service.selectnotice(m,sc);
+
+        m.addAttribute("cate2",cate2);
+        m.addAttribute("cate1",cate1);
         return "cs/notice/list";
     }
     @GetMapping("cs/notice/view")
-    public String notice_view(){
+    public String notice_view(Model m,String csNo,String cate1, String cate2){
+        CsVO article = service.selectarticle(csNo);
+        m.addAttribute("csNo",csNo);
+        m.addAttribute("article",article);
+        m.addAttribute("cate2",cate2);
+        m.addAttribute("cate1",cate1);
         return "cs/notice/view";
     }
     @GetMapping("cs/faq/list")
-    public String faq_list(){
+    public String faq_list(Model m,String cate1){
+        m.addAttribute("type",cate1);
         return "cs/faq/list";
     }
     @GetMapping("cs/faq/view")
@@ -49,7 +66,8 @@ public class CsController {
     }
 
     @GetMapping("cs/qna/list")
-    public String qna_list(){
+    public String qna_list(Model m,String cate1){
+        m.addAttribute("type",cate1);
         return "cs/qna/list";
     }
     @GetMapping("cs/qna/view")

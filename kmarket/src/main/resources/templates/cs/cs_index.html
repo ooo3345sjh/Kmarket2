@@ -20,7 +20,7 @@
                 </ul>
             </section>
             <section class="faq">
-                <h1>자주 묻는 질문<a th:href="@{/cs/faq/list}">전체보기</a></h1>
+                <h1>자주 묻는 질문<a th:href="@{/cs/faq/list(cate1='faq')}">전체보기</a></h1>
                 <ol>
                     <li>
                         <a href="#"><span>회원</span></a>
@@ -49,7 +49,7 @@
             <section class="qna">
                 <h1>
                     문의하기
-                    <a th:href="@{/cs/qna/list}">전체보기</a>
+                    <a th:href="@{/cs/qna/list(cate1='qna')}">전체보기</a>
                 </h1>
                 <ul>
                     <th:block th:each="qna,i:${qna5}">

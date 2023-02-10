@@ -16,17 +16,34 @@
         `hit`= #{hit},
         `comment`= #{comment};
     </insert>
-
+    <!-- cs main notice 5개 출력-->
     <select id="selectnoti5" resultType="kr.co.kmarket.vo.CsVO">
         select `cate1`,`cate2`,`title`,`rdate` from `km_cs`
         WHERE `cate1` = 'notice'
         ORDER BY `csNo` DESC
         LIMIT 5;
     </select>
+    <!-- cs main qna 5개 출력-->
     <select id="selectqna5" resultType="kr.co.kmarket.vo.CsVO">
         select `uid`,`cate1`,`cate2`,`type`,`title`,`rdate` from `km_cs`
         WHERE `cate1` = 'qna'
         ORDER BY `csNo` DESC
         LIMIT 5;
+    </select>
+    <!-- cs 게시물 select all -->
+    <select id="selectnotice" parameterType="kr.co.kmarket.vo.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+        WHERE `cate1`='notice'
+        ORDER BY `csNo` DESC
+        LIMIT #{offset}, 10;
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `km_cs`
+        WHERE `cate1`=#{cate1};
+    </select>
+    <select id="selectarticle" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+        WHERE `csNo`=#{csNo};
     </select>
 </mapper>

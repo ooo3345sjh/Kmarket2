@@ -38,13 +38,14 @@ public class SecurityConfig implements WebMvcConfigurer {
 			)
 
 			// 로그인 설정
-			.formLogin(login->login
-					.loginPage("/login").permitAll()
-					.defaultSuccessUrl("/")
+			.formLogin(
+//					login->login
+//					.loginPage("/login").permitAll()
+//					.defaultSuccessUrl("/")
 			)
 
 			// 로그인 아웃 설정
-			.logout()
+//			.logout()
 
 		;
 		return http.build();
