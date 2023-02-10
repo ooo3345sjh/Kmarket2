@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 /**
- * @since 2023/02/08 라성준
- * @param
- * @return
+ * product service
+ * @since 2023/02/08
+ * @author 라성준
  */
 @Service
 public class ProductService {
@@ -18,17 +18,32 @@ public class ProductService {
    @Autowired
    private ProductDAO dao;
 
-    @Autowired
-    private ProductRepo repo;
+   @Autowired
+   private ProductRepo repo;
 
+    /**
+     * product insert service
+     * @since 2023/02/08
+     * @author 라성준
+     */
     public void insertProduct(ProductVO vo){
         dao.insertProduct(vo);
     }
 
+    /**
+     * product select service
+     * @since 2023/02/08
+     * @author 라성준
+     */
     public void selectProduct () {}
 
-    public List<ProductVO> selectProducts(int start) {
-        return dao.selectProducts(start);
+    /**
+     * product list service
+     * @since 2023/02/09
+     * @author 라성준
+     */
+    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start) {
+        return dao.selectProducts(cate1, cate2, sort, start);
     }
 
     //public int selectCountTotalProduct() {
@@ -36,10 +51,13 @@ public class ProductService {
     //   return total;
     //  }
 
-    public int deleteProduct (int prodNo) {
-        return dao.deleteProduct(prodNo);
-    }
 
+
+    /**
+     * product update service
+     * @since 2023/02/08
+     * @author 라성준
+     */
     public int updateProduct(ProductVO vo) {
         return dao.updateProduct(vo);
     }
