@@ -11,6 +11,8 @@ import kr.co.kmarket.entity.TermsEntity;
 import kr.co.kmarket.repository.TermsRepo;
 import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,9 +46,18 @@ public class UserService {
      * @param user 회원등록할 객체
      * @return 등록된 행 갯수
      */
+    public int saveUser(@Param(value = "uid") String uid, @Param(value = "type") Integer type){
+        return userDAO.insertUser(uid, type);
+    }
+
+    /**
+     * @param user 회원등록할 객체
+     * @return 등록된 행 갯수
+     */
     public int saveGeneral(UserVO user){
         return userDAO.insertGeneral(user);
     }
+
 
     /**
      * @param user 회원등록할 객체
@@ -64,7 +75,6 @@ public class UserService {
     }
 
     /**
-     *
      * @return 모든 판매자 회원 정보 객체 리스트
      */
     public List<UserVO> findAllSeller(){

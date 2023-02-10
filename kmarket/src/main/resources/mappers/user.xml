@@ -43,25 +43,20 @@
 	</insert>
 	<insert id="insertUser">
 		INSERT INTO `km_member_uid` SET
-			`uid` = #{uid}
+			`uid` = #{uid},
 			`type` = #{type}
 	</insert>
 
-	<select id="selectAllGeneralUser">
+	<select id="selectAllGeneralUser" resultType="kr.co.kmarket.vo.UserVO">
 		SELECT * FROM `km_member_general`
 	</select>
 
-	<select id="selectAllSellerUser">
+	<select id="selectAllSellerUser" resultType="kr.co.kmarket.vo.UserVO">
 		SELECT * FROM `km_member_seller`
 	</select>
 
-	<select id="selectAll">
-		SELECT * FROM ``
-
-	</select>
-
 	<delete id="deleteAllGeneralUser">
-		DELETE u.*, g.*, s.* FROM `km_member_uid` u
+		DELETE u.*, g.* FROM `km_member_uid` u
 		JOIN `km_member_general` g ON u.`uid` = g.`uid`
 	</delete>
 

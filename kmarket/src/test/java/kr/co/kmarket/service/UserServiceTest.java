@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +27,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("1. 일반 회원등록")
+    @Transactional
     void test_1(){
         UserVO user = UserVO.builder()
                         .uid("user")
@@ -39,21 +43,24 @@ class UserServiceTest {
         int result = service.saveGeneral(user);
         assertThat(result).isEqualTo(1);
 
-        UserVO admin = UserVO.builder()
-                .uid("admin")
-                .name("세종대왕")
-                .pass(passwordEncoder.encode("1234"))
-                .type(3)
-                .hp("010-8282-5353")
-                .email("5555@naver.com")
-                .gender(1)
-                .regip("0:0:0:0:0:0:0:1")
-                .build();
-
-        result = service.saveGeneral(user);
+        result = service.saveUser(user.getUid(), user.getType());
         assertThat(result).isEqualTo(1);
 
 
+
+//        UserVO admin = UserVO.builder()
+//                .uid("admin")
+//                .name("세종대왕")
+//                .pass(passwordEncoder.encode("1234"))
+//                .type(3)
+//                .hp("010-8282-5353")
+//                .email("5555@naver.com")
+//                .gender(1)
+//                .regip("0:0:0:0:0:0:0:1")
+//                .build();
+//
+//        result = service.saveGeneral(admin);
+//        assertThat(result).isEqualTo(1);
     }
 
     @Test
@@ -84,9 +91,11 @@ class UserServiceTest {
     @Test
     @DisplayName("3. 모든 회원 조회")
     void test_3(){
-        service.findAllGeneral();
+        List<UserVO> general = service.findAllGeneral();
+        List<UserVO> seller = service.findAllSeller();
 
-        System.out.println("service = " + service);
+        assertThat(general.size()).isEqualTo(2);
+        assertThat(seller.size()).isEqualTo(1);
     }
 
 }
