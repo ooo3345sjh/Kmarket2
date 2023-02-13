@@ -3,6 +3,7 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.repository.ProductRepo;
 import kr.co.kmarket.vo.ProductVO;
+import kr.co.kmarket.vo.Product_cate1VO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-   @Autowired
+
+    @Autowired
    private ProductDAO dao;
 
    @Autowired
@@ -87,5 +89,7 @@ public class ProductService {
         return cateList.stream().collect(Collectors.groupingBy(ProductVO::getType));
 
     }
+
+
 
 }

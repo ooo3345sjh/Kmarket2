@@ -1,8 +1,10 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.service.MainService;
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate1VO;
+import kr.co.kmarket.vo.Product_cate2VO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +26,16 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    private ProductService service;
+    private MainService service;
 
     @GetMapping(value = {"/", "/index"})
     public String index(Model m) {
-        List<Product_cate1VO> cate1s = service.selectCate1s;
-
-
+        List<Product_cate1VO> cate1s = service.selectCate1s();
+        List<Product_cate2VO> cate2s = service.selectCate2s();
+        List<ProductVO> bests = service.selectProductBest();
+        m.addAttribute("cate1s", cate1s);
+        m.addAttribute("cate2s", cate2s);
+        m.addAttribute("bests", bests);
         return "index";
     }
 

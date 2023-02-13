@@ -30,7 +30,7 @@ public class UserService {
 
     private final TermsRepo termsRepo;
     private final UserDAO userDAO;
-//    private final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     /**
      *
@@ -82,7 +82,7 @@ public class UserService {
         // 유저 regip 저장 및 패스워드 인코딩
         String regip = getWebAuthenticationDetails().getRemoteAddress();
         user.setRegip(regip);
-//        user.setPass(encoder.encode(user.getPassword()));
+        user.setPass(encoder.encode(user.getPassword()));
     }
 
 
