@@ -4,9 +4,11 @@ import kr.co.kmarket.dao.AdminDAO;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
+import kr.co.kmarket.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class AdminService {
     }
 
     // 상품 조회
-    public void selectProductAdmin(Model m, SearchCondition sc) {
+    public void selectProductAdmin(Model m, SearchCondition sc, @AuthenticationPrincipal UserVO user) {
 
         int totalCnt = dao.countProductAdmin(sc); // 전체 상품 갯수
 
@@ -43,6 +45,10 @@ public class AdminService {
         if(sc.getPage() > totalPage) sc.setPage(totalPage);
 
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
+
+        // SearchCondition에 uid, type 담기
+        sc.setType(user.getType());
+        sc.setUid(user.getUid());
 
         List<ProductVO> list = dao.selectProductAdmin(sc); // 상품 조회
 
@@ -62,6 +68,11 @@ public class AdminService {
 
         m.addAttribute("ph", pageHandeler);
         m.addAttribute("products", list);
-
     }
+
+    // 상품 삭제
+    public int deleteProduct(int prodNo) {
+        return dao.deleteProduct(prodNo);
+    }
+
 }

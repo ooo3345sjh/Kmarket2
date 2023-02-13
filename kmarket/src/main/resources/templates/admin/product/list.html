@@ -25,7 +25,7 @@
                 </form>
                 <table>
                     <tr>
-                        <th><input type="checkbox" name="allCheck" value="all"/></th>
+                        <th><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"/></th>
                         <th>이미지</th>
                         <th>상품코드</th>
                         <th>상품명</th>
@@ -51,7 +51,7 @@
                             <td class="seller">[[${product.seller}]]</td>
                             <td>[[${product.hit}]]</td>
                             <td>
-                                <a href="#">[삭제]</a>
+                                <a href="#" class="remove" th:data-no="${product.prodNo}">[삭제]</a>
                                 <a href="#">[수정]</a>
                             </td>
                         </tr>
@@ -64,7 +64,7 @@
 
                 </table>
 
-                <input type="button" value="선택삭제" id="deleteButton"/>
+                <input type="button" value="선택삭제" id="deleteButton" onclick="checkDelete()"/>
                 <input type="button" value="등록하기" id="registerButton"/>
 
                 <!-- 페이징 -->

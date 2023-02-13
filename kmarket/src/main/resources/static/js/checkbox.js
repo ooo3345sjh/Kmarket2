@@ -23,4 +23,3 @@ $(function(){
     let rowCount = checkObj.length;
 
     */
-});
