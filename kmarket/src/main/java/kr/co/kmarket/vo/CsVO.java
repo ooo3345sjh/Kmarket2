@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class CsVO {
 
-    private int csNo;
+    private Integer csNo;
     private String uid;
     private String cate1;
     private String cate2;

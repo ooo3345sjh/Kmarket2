@@ -10,7 +10,7 @@
                         <p>홈<span>></span>공지사항</p>
                     </div>
                 </nav>
-                <section th:classappend="${csNo}==null?'list':'view'">
+                <section th:classappend="${sc.no}==null?'list':'view'">
                     <aside>
                         <h2>공지사항</h2>
                             <ul>
@@ -31,7 +31,7 @@
             </div>
         </nav>
 
-        <section class="list">
+        <section th:classappend="${sc.no}==null?'list':'view'">
             <aside>
                 <h2>자주묻는 질문</h2>
                 <ul>
@@ -53,7 +53,7 @@
                 <p>홈<span>></span>문의하기</p>
             </div>
         </nav>
-        <section class="list">
+        <section th:classappend="${sc.no}=='null'?'list':'view'">
             <aside>
                 <h2>문의하기</h2>
                 <ul>
@@ -66,4 +66,6 @@
                     <li><a href="#">안전거래</a></li>
                 </ul>
             </aside>
+</th:block>
+<th:block th:fragment="null">
 </th:block>
