@@ -14,7 +14,6 @@
             <section>
                 <form th:action="@{/admin/product/list}">
                     <div>
-                        <!--<th:block th:if="${sessMember.type eq 5}"></th:block>-->
                             <select name="searchField">
                                 <option value="prodName" th:selected="${ph.sc.searchField == 'prodName'}">상품명</option>
                                 <option value="prodNo" th:selected="${ph.sc.searchField == 'prodNo'}">상품코드</option>
@@ -26,7 +25,7 @@
                 </form>
                 <table>
                     <tr>
-                        <th><input type="checkbox" name="allCheck"/></th>
+                        <th><input type="checkbox" name="allCheck" value="all"/></th>
                         <th>이미지</th>
                         <th>상품코드</th>
                         <th>상품명</th>
@@ -41,7 +40,7 @@
                     <!-- 게시글이 있는 경우 -->
                     <th:block th:if="${#lists.size(products) != 0}">
                         <tr th:each="product,i:${products}">
-                            <td><input type="checkbox" name="상품코드"/></td>
+                            <td><input type="checkbox" name="check"/></td>
                             <td><img th:src="@{/file/} + ${product.thumb1}" class="thumb"></td>
                             <td class="prodNo">[[${product.prodNo}]]</td>
                             <td class="prodName">[[${product.prodName}]]</td>

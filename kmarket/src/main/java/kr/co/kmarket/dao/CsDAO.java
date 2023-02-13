@@ -1,7 +1,7 @@
 package kr.co.kmarket.dao;
 
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
-import kr.co.kmarket.vo.SearchCondition;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

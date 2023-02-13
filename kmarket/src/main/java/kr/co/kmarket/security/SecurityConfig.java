@@ -81,6 +81,12 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.password("1234")
 						.roles("3")
 						.build()
+				,
+				User.withDefaultPasswordEncoder()
+						.username("a102")
+						.password("1234")
+						.roles("2")
+						.build()
 		};
 
 		return new InMemoryUserDetailsManager(user);

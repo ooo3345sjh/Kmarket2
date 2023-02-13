@@ -2,8 +2,8 @@ package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.utils.PageHandler;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
-import kr.co.kmarket.vo.SearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +40,7 @@ public class CsController {
     }
     @GetMapping("cs/notice/list")
     public String notice_list(Model m, String cate1, String cate2, SearchCondition sc){
-        service.selectnotice(m,sc);
+        service.selectnotice(m, sc);
 
         m.addAttribute("cate2",cate2);
         m.addAttribute("cate1",cate1);

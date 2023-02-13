@@ -7,6 +7,7 @@ import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -31,7 +32,7 @@ public class AdminService {
     }
 
     // 상품 조회
-    public List<ProductVO> selectProductAdmin(Model m, SearchCondition sc) {
+    public void selectProductAdmin(Model m, SearchCondition sc) {
 
         int totalCnt = dao.countProductAdmin(sc); // 전체 상품 갯수
 
@@ -60,7 +61,7 @@ public class AdminService {
         // System.out.println("list : " + list);
 
         m.addAttribute("ph", pageHandeler);
+        m.addAttribute("products", list);
 
-        return list;
     }
 }

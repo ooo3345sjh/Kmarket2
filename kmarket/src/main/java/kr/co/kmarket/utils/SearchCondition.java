@@ -11,18 +11,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SearchCondition {
     private Integer page = 1;
     private Integer pageSize = 10;
-<<<<<<< HEAD:kmarket/src/main/java/kr/co/kmarket/vo/SearchCondition.java
+//<<<<<<< HEAD:kmarket/src/main/java/kr/co/kmarket/vo/SearchCondition.java
     private String group;
     private String cate;
     private String cate1;
     private String cate2;
-=======
+//=======
 //    private String group;
 //    private String cate;
->>>>>>> 278603b87cf596d5c5a11105e75f6fe3ac20b9d0:kmarket/src/main/java/kr/co/kmarket/utils/SearchCondition.java
+//>>>>>>> 278603b87cf596d5c5a11105e75f6fe3ac20b9d0:kmarket/src/main/java/kr/co/kmarket/utils/SearchCondition.java
     private Integer no = 0;
     private String searchField;
     private String searchWord;
+
+    // 추가 필드
+    private int type;
+    private String uid;
 
 
     public String getQueryString(Integer page){

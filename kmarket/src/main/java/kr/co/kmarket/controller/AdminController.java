@@ -39,16 +39,10 @@ public class AdminController {
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(Model m, SearchCondition sc, @AuthenticationPrincipal User user) {
-        log.info("adminController product list...");
+    public String productList(Model m, SearchCondition sc) { // @AuthenticationPrincipal User user
 
-        List<GrantedAuthority> roles = user.getAuthorities().stream().collect(Collectors.toList());
-        System.out.println("user = " + user);
-        System.out.println("roles = " + roles);
-        
-        
-        List<ProductVO> products = service.selectProductAdmin(m, sc);
-        m.addAttribute("products", products);
+        log.info("adminController product list...");
+        service.selectProductAdmin(m, sc);
 
         return "admin/product/list";
     }
