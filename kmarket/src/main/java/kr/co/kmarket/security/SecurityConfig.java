@@ -33,28 +33,28 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/join", "/signup/**", "/register/**", "/terms", "/logout").permitAll()
+					.mvcMatchers("/join", "/signup/**", "/register/**", "/terms", "/logout", "/", "/auth").permitAll()
 					.anyRequest().authenticated()
 			)
 
 			// 로그인 설정
 			.formLogin(
-//					login->login
-//					.loginPage("/login").permitAll()
-//					.defaultSuccessUrl("/")
+					login->login
+					.loginPage("/login").permitAll()
+					.defaultSuccessUrl("/")
 			)
 
 			// 로그인 아웃 설정
-//			.logout()
+			.logout()
 
 		;
 		return http.build();
 	}
 
-//	@Bean
-//    public PasswordEncoder PasswordEncoder () {
-//		return new BCryptPasswordEncoder();
-//    }
+	@Bean
+    public PasswordEncoder PasswordEncoder () {
+		return new BCryptPasswordEncoder();
+    }
 	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

@@ -31,7 +31,7 @@
         LIMIT 5;
     </select>
     <!-- cs 게시물 select all -->
-    <select id="selectnotice" parameterType="kr.co.kmarket.vo.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectnotice" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
         WHERE `cate1`='notice'
         ORDER BY `csNo` DESC

@@ -35,7 +35,7 @@ public class UserVO implements UserDetails {
     private int gender;
     private String hp;
     private String email;
-    private int type;
+    private int type = 1;
     private int point;
     private int level;
     private String zip;

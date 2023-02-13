@@ -13,17 +13,24 @@ import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
+@Transactional(rollbackOn = Exception.class)
 public class UserService {
 
     private final TermsRepo termsRepo;
     private final UserDAO userDAO;
+    private final PasswordEncoder encoder;
 
     /**
      *
@@ -43,7 +50,9 @@ public class UserService {
     }
 
     /**
-     * @param user 회원등록할 객체
+     * 
+     * @param uid 회원 아이디
+     * @param type 회원 타입(구매자:1, 판매자:2, 관리자:3)
      * @return 등록된 행 갯수
      */
     public int saveUser(@Param(value = "uid") String uid, @Param(value = "type") Integer type){
@@ -55,17 +64,28 @@ public class UserService {
      * @return 등록된 행 갯수
      */
     public int saveGeneral(UserVO user){
-        return userDAO.insertGeneral(user);
+        settingUser(user);
+        return userDAO.insertGeneral(user) == 1? userDAO.insertUser(user.getUid(), user.getType()) : 0;
     }
-
 
     /**
      * @param user 회원등록할 객체
      * @return 등록된 행 갯수
      */
     public int saveSeller(UserVO user){
-        return userDAO.inserSeller(user);
+        settingUser(user);
+        user.setType(2); // 판매자는 type : 2
+        return userDAO.inserSeller(user) == 1? userDAO.insertUser(user.getUid(), user.getType()) : 0;
     }
+
+    private void settingUser(UserVO user) {
+        // 유저 regip 저장 및 패스워드 인코딩
+        String regip = getWebAuthenticationDetails().getRemoteAddress();
+        user.setRegip(regip);
+        user.setPass(encoder.encode(user.getPassword()));
+    }
+
+
 
     /**
      * @return 모든 일반, 관리자 회원 정보 객체 리스트
@@ -79,5 +99,41 @@ public class UserService {
      */
     public List<UserVO> findAllSeller(){
         return userDAO.selectAllSellerUser();
+    }
+
+    /**
+     * @return 모든 일반, 관리자 회원 정보 삭제한 행의 갯수
+     */
+    public int deleteAllGeneralUser(){
+        return userDAO.deleteAllGeneralUser();
+    }
+
+    /**
+     * @return 모든 판매자 회원 정보 삭제한 행의 갯수
+     */
+    public int deleteAllSellerUser(){
+        return userDAO.deleteAllSellerUser();
+    }
+
+    /**
+     * @return 아아디에 해당하는 일반, 관리자 회원 객체
+     */
+    public UserVO findGeneralUser(String uid){
+        return userDAO.selectGeneralUser(uid);
+    };
+
+    /**
+     * @return 아아디에 해당하는 판매자 회원 객체
+     */
+    public UserVO findSellerUser(String uid){
+        return userDAO.selectSellerUser(uid);
+    };
+
+    private Authentication getAuthentication(){
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    private WebAuthenticationDetails getWebAuthenticationDetails(){
+        return (WebAuthenticationDetails)getAuthentication().getDetails();
     }
 }
