@@ -31,12 +31,14 @@ public class MainController {
 
     @GetMapping(value = {"/", "/index"})
     public String index(Model m) {
+
         List<Product_cate1VO> cate1s = service.selectCate1s();
         List<Product_cate2VO> cate2s = service.selectCate2s();
         List<ProductVO> bests = service.selectProductBest();
         m.addAttribute("cate1s", cate1s);
         m.addAttribute("cate2s", cate2s);
         m.addAttribute("bests", bests);
+
 
         return "index";
     }

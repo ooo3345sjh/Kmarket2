@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/jquery.highlight-5.js}"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
@@ -23,29 +24,29 @@
     </div>
 </body>
 <th:block layout:fragment="script">
-    <script type="text/javascript">
+    <script>
+////////////////////////////////////////////////////////////////
     $(document).ready(function(){
-        var gnb = $('#gnb > li > a');
+    var gnb = $('#gnb > li > a');
 
-        gnb.click(function(e){
-            e.preventDefault();
+    gnb.click(function(e){
+        e.preventDefault();
 
-            var isOpen = $(this).next().is(':visible');
+        var isOpen = $(this).next().is(':visible');
 
-            if(isOpen){
-                // 현재 서브메뉴를 닫음
-                $(this).next().slideUp(200);
-                }else{
-                // 현재 서브메뉴를 펼침
-                $(this).next().slideDown(200);
-                }
-        });
+        if(isOpen){
+            // 현재 서브메뉴를 닫음
+            $(this).next().slideUp(200);
+        }else{
+            // 현재 서브메뉴를 펼침
+            $(this).next().slideDown(200);
+        }
     });
-
+});
+////////////////////////////////////////////////////////////////
     // 검색어 하이라이트 이벤트
     const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
     const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
-
 
     $(function (){
         if(searchField.options[searchField.selectedIndex].value === "prodName"){
@@ -58,7 +59,7 @@
             $('.seller').highlight(searchWord.value);
         }
     })
-
+////////////////////////////////////////////////////////////////
     window.onload = function (){
         const articlesLink = document.querySelectorAll(".title");
 
@@ -71,14 +72,95 @@
             });
         });
     };
+////////////////////////////////////////////////////////////////
+    // 체크박스 모두 선택
+    function selectAll(selectAll) {
+        // alert('hi');
+        const checkboxes = document.getElementsByName('check');
 
-    $('input[name=allCheck]').on('click', function() {
-        alert('hi');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+////////////////////////////////////////////////////////////////
+    $(function() {
+        let checkObj = document.getElementsByName('check');
+        let rowCount = checkObj.length;
+
+        // 단일 체크 처리
+        $("input[name='check']").click(function() {
+            if($("input[name='check']:checked").length == rowCount) {
+                $("input[name='allCheck']")[0].checked = true;
+            } else {
+                $("input[name='allCheck']")[0].checked = false;
+            }
+        });
     });
+////////////////////////////////////////////////////////////////
+    // 선택삭제 눌려서 삭제 처리
+    function checkDelete() {
+        let url = '/kmarket/admin/product/deleteSelectedProduct';
+        let valueArr = new Array();
+        let list = $("input[name='check']");
 
-}
+        for (let i=0; i<list.length; i++) {
+            if (list[i].checked){
+                valueArr.push(list[i].value);
+            }
+        }
+
+        if (valueArr.length == 0) {
+            alert('선택된 상품이 없습니다.');
+        } else {
+            let chk = confirm('정말 삭제하시겠습니까?');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                traditional: true,
+                data: {valueArr: valueArr},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.result > 0) {
+                        alert('삭제되었습니다.');
+                        location.replace("/kmarket/admin/product/list");
+                    } else {
+                        alert('삭제에 실패했습니다.');
+                    }
+                }
+            });
+        }
+    }
+////////////////////////////////////////////////////////////////
+$(function() {
+    // 상품 삭제
+    $(document).on('click', '.remove', function(e) {
+        e.preventDefault();
+        console.log('delete');
+        let isDeleteOK = confirm('정말 삭제하시겠습니까?');
+
+        if(isDeleteOK) {
+            let prod = $(this).closest('tr');
+            let prodNo = $(this).attr('data-no');
+            console.log(prodNo);
+
+            $.ajax({
+                url: '/kmarket/admin/product/deleteProduct',
+                type: 'get',
+                data: {'prodNo': prodNo},
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    if(data.result > 0) {
+                        alert('상품이 삭제되었습니다.');
+                        prod.hide();
+                    }
+                }
+            });
+        }
+    });
+});
+
+
     </script>
-    <script th:src="@{/js/jquery.highlight-5.js}"></script>
-    <script th:src="@{/js/checkbox.js}"></script>
 </th:block>
 </html>

@@ -30,7 +30,6 @@ public class UserService {
     private final TermsRepo termsRepo;
     private final UserDAO userDAO;
     private final PasswordEncoder encoder;
-
     private final EmailService emailService;
 
 

@@ -19,4 +19,5 @@ public interface AdminDAO {
 //    public void insertProductAdmin();
     public List<ProductVO> selectProductAdmin(SearchCondition sc);
     public int countProductAdmin(SearchCondition sc);
+    public int deleteProduct(int prodNo);
 }
