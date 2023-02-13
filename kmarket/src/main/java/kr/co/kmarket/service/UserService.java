@@ -11,7 +11,6 @@ import kr.co.kmarket.entity.TermsEntity;
 import kr.co.kmarket.repository.TermsRepo;
 import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +31,10 @@ public class UserService {
     private final UserDAO userDAO;
     private final PasswordEncoder encoder;
 
+    private final EmailService emailService;
+
+
     /**
-     *
      * @return 약관 데이터
      */
     public TermsEntity getTerms(){
@@ -41,16 +42,41 @@ public class UserService {
     }
 
     /**
-     * 
      * @param uid 조회할 아이디
      * @return 조회된 행 갯수 반환
      */
     public int getDuplicateUserCount(String uid){
-        return userDAO.selectCount(uid);
+        return userDAO.countByUid(uid);
     }
 
     /**
-     * 
+     * @param email 조회할 이메일
+     * @return 조회된 행 갯수 반환
+     */
+    public int getDuplicateEmailCount(String email){
+        return userDAO.countByEmail(email);
+    }
+
+    /**
+     * @param table 조회할 테이블
+     * @param hp 조회할 번호
+     * @return 조회된 행 갯수 반환
+     */
+    public int getDuplicateHpCount(String table, String hp){
+        return userDAO.countByHp(table, hp);
+    }
+
+    /**
+     * @param map 클라이언트에 전송할 모델객체
+     */
+    public void sendEmail(Map map){
+        int result = getDuplicateEmailCount((String)map.get("email"));
+        map.put("result", result);
+
+        if(result == 0) emailService.send(map);
+    }
+
+    /**
      * @param uid 회원 아이디
      * @param type 회원 타입(구매자:1, 판매자:2, 관리자:3)
      * @return 등록된 행 갯수
@@ -84,8 +110,6 @@ public class UserService {
         user.setRegip(regip);
         user.setPass(encoder.encode(user.getPassword()));
     }
-
-
 
     /**
      * @return 모든 일반, 관리자 회원 정보 객체 리스트

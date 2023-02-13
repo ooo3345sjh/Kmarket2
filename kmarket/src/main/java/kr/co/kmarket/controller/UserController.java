@@ -19,6 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -79,9 +82,40 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/register/{uid}/check")
-    public int checkUid(@PathVariable String uid){
-        return userService.getDuplicateUserCount(uid);
+    @GetMapping("/register/{uid}/checkId")
+    public Map checkUid(@PathVariable String uid){
+        log.info("UserController GET checkUid...");
+
+        Map map = new HashMap();
+        map.put("result", userService.getDuplicateUserCount(uid));
+
+        return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/register/sendEmail")
+    public Map sendEmail(@RequestBody Map map){
+        log.info("UserController POST sendEmail...");
+
+        // 메일 전송
+        userService.sendEmail(map);
+
+        return map;
+    }
+
+    @ResponseBody
+    @GetMapping("/register/checkHp/{type}")
+    public Map checkHp(@RequestParam String hp, @PathVariable String type){
+        log.info("UserController GET checkHp...");
+
+        log.info("hp : " + hp);
+        log.info("type : " + type);
+        // 메일 전송
+//        userService.getDuplicateHpCount(type, hp);
+
+        Map map = new HashMap();
+        map.put("result", 1);
+        return map;
     }
 
 

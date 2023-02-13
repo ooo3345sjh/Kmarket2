@@ -3,8 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.UserDAO">
-	<select id="selectCount" resultType="kr.co.kmarket.vo.UserVO">
-		select COUNT(*) from `km_member_uid` where `uid`=#{uid};
+	<select id="countByUid" parameterType="String" resultType="int">
+		SELECT COUNT(*) from `km_member_uid` where `uid`=#{uid};
+	</select>
+
+	<select id="countByEmail" parameterType="String" resultType="int">
+		SELECT COUNT(*) from `km_member_general` where `email`=#{email};
+	</select>
+
+	<select id="countByHp" parameterType="String" resultType="int">
+		SELECT COUNT(*) from ${table} where `hp`=#{hp};
 	</select>
 
 	<insert id="insertGeneral" parameterType="kr.co.kmarket.vo.UserVO">
