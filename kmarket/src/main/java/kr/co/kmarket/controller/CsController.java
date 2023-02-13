@@ -2,8 +2,8 @@ package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.utils.PageHandler;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
-import kr.co.kmarket.vo.SearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

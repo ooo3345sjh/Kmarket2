@@ -13,7 +13,7 @@
     </select>
 
     <!-- 상품 조회시 전체 상품 갯수 -->
-    <select id="countProductAdmin" resultType="java.lang.Integer">
+    <select id="countProductAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
         SELECT COUNT(*) FROM `km_product`
         where 1=1
         <include refid="searchCondition"/>
