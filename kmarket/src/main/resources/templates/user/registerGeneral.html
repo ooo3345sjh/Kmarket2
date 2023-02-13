@@ -74,11 +74,11 @@
                             </th>
                             <td>
                                 <input type="email" name="email" placeholder="이메일 입력" required/>
-                                <button type="button" class="authBtn" id="btnCode">인증번호 전송</button>
+                                <button type="button" class="authBtn" id="btnEmailAuth">인증번호 전송</button>
                                 <span class="msgEmail"></span><br/>
                                 <div class="emailAuth">
-                                    <input type="text" name="code" id="code" placeholder="인증번호 입력"/>
-                                    <button type="button" class="emailAuthBtn" id="btnConfirm">인증번호 확인</button>
+                                    <input type="text" name="emailAuthCode" id="code" placeholder="인증번호 입력" readonly/>
+                                    <button type="button" class="authBtn" id="btnEmailConfirm">인증번호 확인</button>
                                     <span class="msg_emailAuth"></span>
                                 </div>
                             </td>
@@ -114,7 +114,7 @@
     </main>
 </th:block>
 <th:block layout:fragment="script">
-    <!--    <script th:src="@{/js/register.js}"></script>-->
+    <script th:src="@{/js/register.js}"></script>
     <script>
 
 

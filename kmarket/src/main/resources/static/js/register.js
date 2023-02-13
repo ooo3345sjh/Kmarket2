@@ -6,11 +6,22 @@ window.onload = function() {
 
 	/* 변수 선언 Start */
 
+	const uri = new URL(window.location.href); // URL 객체 생성
+    const uriPath = uri.pathname;
+    let type;
+
+    if(uriPath.includes("general")){
+        type = "general";
+    } else {
+        type = "seller";
+    }
+
 	// Validation Check
 	let uidOk = false;
 	let passOk = false;
 	let confirmPassOk = false;
 	let nameOk = false;
+	let genderOk = false;
 	let emailOk = false;
 	let emailAuthOk = false;
 	let hpOk = false;
@@ -27,9 +38,9 @@ window.onload = function() {
 	let receiveEmailCode = null;
 
 	// Input
-	const inputUid = document.querySelector('input[name=km_uid]');
-	const inputPass = document.querySelector('input[name=km_pass]');
-	const inputConfirmPass = document.querySelector('input[name=km_confirmPass]');
+	const inputUid = document.querySelector('input[name=uid]');
+	const inputPass = document.querySelector('input[name=pass]');
+	const inputConfirmPass = document.querySelector('input[name=confirmPass]');
 	const inputName = document.querySelector('input[name=name]');
 	const inputEmail = document.querySelector('input[name=email]');
 	const inputEmailCode = document.querySelector('input[name=emailAuthCode]');
@@ -39,17 +50,16 @@ window.onload = function() {
 	// Button
 	const btnEmailAuth = document.getElementById('btnEmailAuth');		// 이메일 인증번호 받기
 	const btnEmailConfirm = document.getElementById('btnEmailConfirm'); // 이메일 인증코드 확인
-	const btnSearchAddr = document.getElementById('btnSearchAddr'); // 이메일 인증코드 확인
+	const btnSearchAddr = document.getElementById('btnSearchAddr'); // 주소 찾기 버튼
 
 	// Validation Result 
 	const resultUid = document.querySelector('.msgId');
-	const resultPass = document.querySelector('.resultPass');
-	const resultConfirmPass = document.querySelector('.resultConfirmPass');
-	const resultName = document.querySelector('.resultName');
-	const resultNick = document.querySelector('.resultNick');
-	const resultEmail = document.querySelector('.resultEmail');
-	const resultEmailCode = document.querySelector('.resultEmailCode');
-	const resultHp = document.querySelector('.resultHp');
+	const resultPass = document.querySelector('.msgPass');
+	const resultConfirmPass = document.querySelector('.msgConfirmPass');
+	const resultName = document.querySelector('.msgName');
+	const resultEmail = document.querySelector('.msgEmail');
+	const resultEmailCode = document.querySelector('.msg_emailAuth');
+	const resultHp = document.querySelector('.msgHp');
 
 	/* 변수 선언 End */
 
@@ -69,11 +79,11 @@ window.onload = function() {
 			return;
 		}
 
-        const url = "/register/" + uid + "/check";
+        const url = "register/" + uid + "/checkId";
 
 		// AJAX 전송
-		ajaxAPI(url, jsonData, "get").then((response) => {
-
+		ajaxAPI(url, null, "get").then((response) => {
+            console.log(response);
 			if (response == null)
 				alert('Request fail...');
 
@@ -115,7 +125,6 @@ window.onload = function() {
 				resultConfirmPass.innerText = "";
 			}
 		}
-
 	});
 
 	// 패스워드 확인 입력
@@ -189,11 +198,9 @@ window.onload = function() {
 		resultEmail.innerText = "이메일 전송 중...";
 		resultEmail.style.color = "green";
 
-		let jsonData = {
-			"email": email
-		};
+		const jsonData = {"email": email};
 
-		ajaxAPI("user/checkEmail", jsonData, "post").then((response) => {
+		ajaxAPI("register/sendEmail", jsonData, "POST").then((response) => {
 			console.log(response);
 
 			if (response == null) {
@@ -296,10 +303,11 @@ window.onload = function() {
 		}
 		
 		// AJAX 전송
-
 		let jsonData = { "hp":hp }
-		 
-		ajaxAPI("user/checkHp", jsonData, "post").then((response) => {
+
+		const url = "register/checkHp/" + type;
+
+		ajaxAPI(url, jsonData, "get").then((response) => {
 
 			if (response == null)
 				alert('Request fail...');
