@@ -11,8 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SearchCondition {
     private Integer page = 1;
     private Integer pageSize = 10;
-//    private String group;
-//    private String cate;
     private String cate1;
     private String cate2;
     private Integer no = 0;
@@ -28,8 +26,8 @@ public class SearchCondition {
     public String getQueryString(Integer page, Integer no){
         // ?page=1&pageSize=10&option="T"&keyword="title"
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
-//                .queryParam("group", group)
-//                .queryParam("cate", cate)
+                .queryParam("cate1", cate1)
+                .queryParam("cate2", cate2)
                 .queryParam("page", page);
 
 
@@ -59,21 +57,4 @@ public class SearchCondition {
         this.page = page == 0 ? 1:page;
     }
 
-    public String getcsQueryString(Integer page){
-        // ?page=1&pageSize=10&option="T"&keyword="title"
-        return getcsQueryString(page, no);
-    }
-    public String getcsQueryString(Integer page, Integer no){
-        // ?page=1&pageSize=10&option="T"&keyword="title"
-        UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
-                .queryParam("cate1", cate1)
-                .queryParam("cate2", cate2)
-                .queryParam("page", page);
-
-
-        if (no != null && no != 0)
-            builder.queryParam("csNo", no);
-
-        return builder.toUriString();
-    }
 }

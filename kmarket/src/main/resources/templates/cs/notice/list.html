@@ -32,7 +32,7 @@
             <tr th:each="article,i:${articles}" th:object="${ph}">
                 <td>[[*{totalCnt-sc.offset} - ${i.index}]]</td>
                 <td>
-                    <a th:href="@{/cs/notice/view} + ${ph.sc.getcsQueryString(ph.sc.page, article.csNo)}"
+                    <a th:href="@{/cs/notice/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
                        th:text="|${article.title}|" class="title" th:data-no="${article.csNo}"></a>
                     <!--/* <span th:if="${article.comment gt 0}" th:text="|[${article.comment}]|"></span> */-->
                     <!--/*<img th:if="${article.file gt 0}" style="" alt="파일" th:src="@{/images/file.jpg}" /> */-->
@@ -51,17 +51,17 @@
         <div class="page" th:style="${#lists.size(articles) == 0 ? 'visibility:hidden;':''}" th:object="${ph}">
 
             <th:block th:if="*{showPrev}">
-                <a th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(ph.beginPage-1)}" class="prev">이전</a>
+                <a th:href="@{/cs/notice/list} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">이전</a>
             </th:block>
 
             <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
-                <a  th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
+                <a  th:href="@{/cs/notice/list} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
                     [[${num}]]
                 </a>
             </th:block>
 
             <th:block th:if="*{showNext}">
-                <a th:href="@{/cs/notice/list} + ${ph.sc.getcsQueryString(ph.endPage+1)}" class="next">다음</a>
+                <a th:href="@{/cs/notice/list} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음</a>
             </th:block>
         </div>
     </article>
