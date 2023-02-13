@@ -29,40 +29,43 @@ public class CsController {
 
     @Autowired
     private CsService service;
-
+    /*
+     이름 : 김동민
+     내용 : 고객센터 메인화면
+     */
     @GetMapping("cs/cs_index")
     public String index(Model m,SearchCondition sc){
-
-        List<CsVO> noti = service.selectnoti5();
-        List<CsVO> qna5 = service.selectqna5();
-        m.addAttribute("noti", noti);
-        m.addAttribute("qna5", qna5);
-
-
+        List<CsVO> cate5 = service.select5();
+        m.addAttribute("sc",sc);
+        m.addAttribute("cate5", cate5);
         return "cs/cs_index";
     }
+    /*
+     이름 : 김동민
+     내용 : 고객센터 공지사항 목록
+     */
     @GetMapping("cs/notice/list")
     public String notice_list(Model m, SearchCondition sc){
-        service.selectnotice(m,sc);
-//        sc.setCate1("notice");
-        log.info(sc.toString());
+        service.selectarticles(m,sc);
         m.addAttribute("sc",sc);
-
-
         return "cs/notice/list";
     }
+    /*
+     이름 : 김동민
+     내용 : 고객센터 공지사항 상세
+     */
     @GetMapping("cs/notice/view")
-    public String notice_view(Model m,String csNo,String cate1, String cate2){
-        CsVO article = service.selectarticle(csNo);
-        m.addAttribute("csNo",csNo);
+    public String notice_view(Model m,Integer no,SearchCondition sc){
+        sc.setNo(no);
+        CsVO article = service.selectarticle(no);
         m.addAttribute("article",article);
-        m.addAttribute("cate2",cate2);
-        m.addAttribute("cate1",cate1);
+        m.addAttribute("sc",sc);
         return "cs/notice/view";
     }
     @GetMapping("cs/faq/list")
-    public String faq_list(Model m,String cate1){
-        m.addAttribute("type",cate1);
+    public String faq_list(Model m,SearchCondition sc){
+        service.selectarticles(m,sc);
+        m.addAttribute("sc",sc);
         return "cs/faq/list";
     }
     @GetMapping("cs/faq/view")
@@ -71,12 +74,17 @@ public class CsController {
     }
 
     @GetMapping("cs/qna/list")
-    public String qna_list(Model m,String cate1){
-        m.addAttribute("type",cate1);
+    public String qna_list(Model m,SearchCondition sc){
+        service.selectarticles(m,sc);
+        m.addAttribute("sc",sc);
         return "cs/qna/list";
     }
     @GetMapping("cs/qna/view")
-    public String qna_view(){
+    public String qna_view(Model m,Integer no,SearchCondition sc){
+        sc.setNo(no);
+        CsVO article = service.selectarticle(no);
+        m.addAttribute("article",article);
+        m.addAttribute("sc",sc);
         return "cs/qna/view";
     }
     @GetMapping("cs/qna/write")

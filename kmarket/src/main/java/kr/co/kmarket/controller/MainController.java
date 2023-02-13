@@ -28,7 +28,7 @@ public class MainController {
 
     @GetMapping(value = {"/", "/index"})
     public String index(Model m) {
-        List<Product_cate1VO> cate1s = service.selectCate1s;
+        //List<Product_cate1VO> cate1s = service.selectCate1s;
 
 
         return "index";

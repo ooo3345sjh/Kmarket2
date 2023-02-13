@@ -11,9 +11,9 @@
             <section class="notice">
                 <h1>공지사항<a th:href="@{/cs/notice/list(cate1='notice')}">전체보기</a></h1>
                 <ul>
-                    <th:block th:each="notice,i:${noti}">
-                        <li>
-                            <a th:href="@{/cs/notice/view}" class="title" th:text="${notice.title}"></a>
+                    <th:block th:each="notice,i:${cate5}">
+                        <li th:if="${notice.cate1}=='notice'">
+                            <a th:href="@{/cs/notice/view(cate1=${notice.cate1},cate2=${notice.cate2},no=${notice.csNo})}" class="title" th:text="${notice.title}"></a>
                             <span class="date" th:text="|${#strings.substring(notice.rdate,2,10)}|"/>
                         </li>
                     </th:block>
@@ -52,9 +52,9 @@
                     <a th:href="@{/cs/qna/list(cate1='qna')}">전체보기</a>
                 </h1>
                 <ul>
-                    <th:block th:each="qna,i:${qna5}">
-                        <li>
-                            <a th:href="@{/cs/qna/view}" class="title" th:text="|[${qna.type}] ${qna.title}|"></a>
+                    <th:block th:each="qna,i:${cate5}">
+                        <li th:if="${qna.cate1}=='qna'">
+                            <a th:href="@{/cs/qna/view(cate1=${qna.cate1},cate2=${qna.cate2},no=${qna.csNo})}" class="title" th:text="|[${qna.type}] ${qna.title}|"></a>
                             <p>
                                 <span class="uid" th:text="|${#strings.substring(qna.uid,0,3)}**|"></span>
                                 <span class="date" th:text="${#strings.substring(qna.rdate,2,10)}"></span>
