@@ -32,6 +32,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final EmailService emailService;
 
+
     /**
      * @return 약관 데이터
      */

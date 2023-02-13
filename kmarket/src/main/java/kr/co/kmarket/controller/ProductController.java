@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-
+/**
+ * product 컨트롤러
+ * @since 2023/02/10
+ * @author 라성준
+ */
 @Controller
 public class ProductController {
 
@@ -16,7 +20,7 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping("product/list")
-    public String list(Model model, int cate1, int cate2, String sort) {
+    public String list() {
         return "product/list";
     }
 
