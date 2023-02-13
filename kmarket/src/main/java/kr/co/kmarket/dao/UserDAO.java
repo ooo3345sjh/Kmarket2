@@ -28,5 +28,6 @@ public interface UserDAO {
     public int deleteAllGeneralUser();
     public UserVO selectGeneralUser(@Param(value = "uid") String uid);
     public UserVO selectSellerUser(@Param(value = "uid") String uid);
+    public UserVO selectUser(@Param(value = "uid") String uid);
     public void update();
 }

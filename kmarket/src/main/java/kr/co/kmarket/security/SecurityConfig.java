@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig implements WebMvcConfigurer {
 
+	UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -33,7 +35,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/join", "/signup/**", "/register/**", "/terms", "/logout", "/", "/auth").permitAll()
+					.mvcMatchers("/join", "/signup/*", "/register/*", "/terms", "/logout", "/", "/auth").permitAll()
 					.anyRequest().authenticated()
 			)
 
@@ -61,30 +63,30 @@ public class SecurityConfig implements WebMvcConfigurer {
        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails[] user = {
-				User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("1234")
-						.roles("1")
-						.build()
-				,
-				User.withDefaultPasswordEncoder()
-						.username("seller")
-						.password("1234")
-						.roles("2")
-						.build()
-				,
-				User.withDefaultPasswordEncoder()
-						.username("admin")
-						.password("1234")
-						.roles("3")
-						.build()
-		};
-
-		return new InMemoryUserDetailsManager(user);
-	}
+//	@Bean
+//	public InMemoryUserDetailsManager userDetailsService() {
+//		UserDetails[] user = {
+//				User.withDefaultPasswordEncoder()
+//						.username("user")
+//						.password("1234")
+//						.roles("1")
+//						.build()
+//				,
+//				User.withDefaultPasswordEncoder()
+//						.username("seller")
+//						.password("1234")
+//						.roles("2")
+//						.build()
+//				,
+//				User.withDefaultPasswordEncoder()
+//						.username("admin")
+//						.password("1234")
+//						.roles("3")
+//						.build()
+//		};
+//
+//		return new InMemoryUserDetailsManager(user);
+//	}
 
 	// spring boot에서 외부 경로 매핑하기
 	@Value("${spring.product.img}")
