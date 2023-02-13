@@ -4,6 +4,7 @@ import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.List;
  * 이름 : 김동민
  * 내용 : cs controller
  * */
+@Slf4j
 @Controller
 public class CsController {
 
@@ -27,11 +29,10 @@ public class CsController {
     private CsService service;
 
     @GetMapping("cs/cs_index")
-    public String index(Model m){
+    public String index(Model m,SearchCondition sc){
 
         List<CsVO> noti = service.selectnoti5();
         List<CsVO> qna5 = service.selectqna5();
-
         m.addAttribute("noti", noti);
         m.addAttribute("qna5", qna5);
 
@@ -39,11 +40,12 @@ public class CsController {
         return "cs/cs_index";
     }
     @GetMapping("cs/notice/list")
-    public String notice_list(Model m, String cate1, String cate2, SearchCondition sc){
+    public String notice_list(Model m, SearchCondition sc){
         service.selectnotice(m,sc);
+//        sc.setCate1("notice");
+        log.info(sc.toString());
+        m.addAttribute("sc",sc);
 
-        m.addAttribute("cate2",cate2);
-        m.addAttribute("cate1",cate1);
         return "cs/notice/list";
     }
     @GetMapping("cs/notice/view")
