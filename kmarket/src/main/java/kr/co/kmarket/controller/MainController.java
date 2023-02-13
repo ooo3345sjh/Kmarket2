@@ -2,9 +2,9 @@ package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.ProductVO;
-import kr.co.kmarket.vo.Product_cate1VO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +28,14 @@ public class MainController {
 
     @GetMapping(value = {"/", "/index"})
     public String index(Model m) {
-        List<Product_cate1VO> cate1s = service.selectCate1s;
-
-
+//        List<Product_cate1VO> cate1s = service.selectCate1s;
         return "index";
     }
 
     @ResponseBody
     @GetMapping("auth")
-    public String auth(){
-        return SecurityContextHolder.getContext().getAuthentication().toString();
+    public Authentication auth(){
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }
