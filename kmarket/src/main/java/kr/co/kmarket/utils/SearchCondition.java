@@ -17,6 +17,10 @@ public class SearchCondition {
     private String searchField;
     private String searchWord;
 
+    // 추가 필드
+    private int type;
+    private String uid;
+
 
     public String getQueryString(Integer page){
         // ?page=1&pageSize=10&option="T"&keyword="title"

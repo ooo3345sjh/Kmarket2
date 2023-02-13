@@ -88,6 +88,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 //		return new InMemoryUserDetailsManager(user);
 //	}
 
+
 	// spring boot에서 외부 경로 매핑하기
 	@Value("${spring.product.img}")
 	String uploadPath;

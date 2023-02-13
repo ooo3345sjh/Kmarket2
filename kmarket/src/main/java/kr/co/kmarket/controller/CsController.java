@@ -4,7 +4,9 @@ import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +47,7 @@ public class CsController {
 //        sc.setCate1("notice");
         log.info(sc.toString());
         m.addAttribute("sc",sc);
+
 
         return "cs/notice/list";
     }
