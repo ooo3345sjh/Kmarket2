@@ -16,7 +16,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface AdminDAO {
-    public void insertProductAdmin();
+//    public void insertProductAdmin();
     public List<ProductVO> selectProductAdmin(SearchCondition sc);
     public int countProductAdmin(SearchCondition sc);
 }

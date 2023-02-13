@@ -9,18 +9,18 @@
                     <h1>로그인</h1>
                     <p>HOME > <span>로그인</span></p>
                 </nav>
-                <form action="#">
+                <form th:action="@{/login}" method="post">
                     <table>
                         <tr>
                             <td>아이디</td>
                             <td>
-                                <input type="text" placeholder="아이디 입력">
+                                <input name="username" type="text" placeholder="아이디 입력">
                             </td>
                         </tr>
                         <tr>
                             <td>비밀번호</td>
                             <td>
-                                <input type="text" placeholder="비밀번호 입력">
+                                <input name="password" type="password" placeholder="비밀번호 입력">
                             </td>
                         </tr>
                     </table>

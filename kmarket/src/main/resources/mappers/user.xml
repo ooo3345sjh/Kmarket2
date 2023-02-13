@@ -55,6 +55,21 @@
 		SELECT * FROM `km_member_seller`
 	</select>
 
+	<select id="selectGeneralUser" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_general`
+		WHERE `uid` = #{uid}
+	</select>
+
+	<select id="selectSellerUser" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_seller`
+		WHERE `uid` = #{uid}
+	</select>
+
+	<select id="selectUser" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_uid`
+		WHERE `uid` = #{uid}
+	</select>
+
 	<delete id="deleteAllGeneralUser">
 		DELETE u.*, g.* FROM `km_member_uid` u
 		JOIN `km_member_general` g ON u.`uid` = g.`uid`

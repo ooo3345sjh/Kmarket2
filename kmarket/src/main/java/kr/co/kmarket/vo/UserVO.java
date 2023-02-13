@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,7 +36,7 @@ public class UserVO implements UserDetails {
     private int gender;
     private String hp;
     private String email;
-    private int type;
+    private int type = 1;
     private int point;
     private int level;
     private String zip;
