@@ -1,5 +1,11 @@
 package kr.co.kmarket.security;
 
+/**
+ * 날짜 : 2023/02/13
+ * 이름 : 서정현
+ * 내용 : 시큐리티 유저 서비스
+ */
+
 import kr.co.kmarket.dao.UserDAO;
 import kr.co.kmarket.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;

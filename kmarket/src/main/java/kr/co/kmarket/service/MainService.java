@@ -3,6 +3,7 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.MainDAO;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate1VO;
+import kr.co.kmarket.vo.Product_cate2VO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,10 @@ public class MainService {
         return dao.selectCate1s();
     }
 
+    public List<Product_cate2VO> selectCate2s() {
+        return dao.selectCate2s();
+    }
+
     public List<ProductVO> selectProductBest() {
         List<ProductVO> bests = dao.selectProductBest();
         for (ProductVO best : bests) {
@@ -29,4 +34,5 @@ public class MainService {
         }
         return bests;
     }
+
 }

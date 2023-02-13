@@ -35,7 +35,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/join", "/signup/*", "/register/*", "/terms", "/logout", "/", "/auth").permitAll()
+					.mvcMatchers("/join", "/signup/*", "/register/**", "/terms", "/logout", "/", "/auth").permitAll()
 					.anyRequest().authenticated()
 			)
 
