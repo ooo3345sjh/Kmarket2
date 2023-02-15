@@ -19,5 +19,8 @@ public interface MainDAO {
 
     public List<Product_cate1VO> selectCate1s();
     public List<Product_cate2VO> selectCate2s();
+    public List<Product_cate2VO> selectCate2WithCate1(int cate1);
     public List<ProductVO> selectProductBest();
+    public List<ProductVO> selectProductMode(String mode);
+
 }

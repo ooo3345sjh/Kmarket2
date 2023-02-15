@@ -18,4 +18,24 @@
         SELECT prodNo, Cate1, Cate2, prodName, price, discount, thumb1 FROM km_product ORDER BY sold DESC LIMIT 5;
     </select>
 
+    <!-- 카테고리 1 ,2 값 불러오기 -->
+    <select id="selectCate2WithCate1" resultType="kr.co.kmarket.vo.Product_cate2VO">
+        SELECT * FROM km_product_cate2 WHERE cate1 = #{cate1};
+    </select>
+
+    <!-- 카테고리별 상품 8개 불러오기 -->
+    <select id="selectProductMode" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT
+                prodNo,
+                Cate1,
+                Cate2,
+                prodName,
+                descript,
+                price,
+                discount,
+                delivery,
+                thumb2
+        FROM km_product ORDER BY ${mode} DESC LIMIT 8;
+    </select>
+
 </mapper>
