@@ -1,25 +1,24 @@
-/**
- *
- */
 
-$('input[name=allCheck]').on('click', function() {
-    alert('hi');
-});
+    // 체크박스 모두 선택
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('check');
 
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
 
-/* 체크박스 모두 선택
-function selectAll(selectAll) {
-    const checkboxes
-        =
-    document.getElementsByName('check');
+    $(function() {
+        let checkObj = document.getElementsByName('check');
+        let rowCount = checkObj.length;
 
-    checkboxes.forEach((checkbox)) => {
-        checkbox.checked = selectAll.checked;
-    })
-}
+        // 단일 체크 처리
+        $("input[name='check']").click(function() {
+            if($("input[name='check']:checked").length == rowCount) {
+                $("input[name='allCheck']")[0].checked = true;
+            } else {
+                $("input[name='allCheck']")[0].checked = false;
+            }
+        });
+    });
 
-$(function(){
-    let checkObj = document.getElementByName('check');
-    let rowCount = checkObj.length;
-
-    */

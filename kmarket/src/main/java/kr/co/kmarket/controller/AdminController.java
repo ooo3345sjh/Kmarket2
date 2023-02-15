@@ -12,11 +12,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.validation.Valid;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -42,17 +41,17 @@ public class AdminController {
     // 상품현황
     @GetMapping("/product/list")
     public String productList(Model m, SearchCondition sc, @AuthenticationPrincipal UserVO user) {
-        log.info("adminController product list...");
+        log.info("productList...");
 
         service.selectProductAdmin(m, sc, user);
 
         return "admin/product/list";
     }
 
-    // 상품 삭제
+    // 상품삭제
     @ResponseBody
     @GetMapping("/product/deleteProduct")
-    public Map deleteProduct(@RequestParam int prodNo) {
+    public Map deleteProduct(@RequestParam String prodNo) {
         log.info("deleteProduct...");
         // System.out.println("prodNo = " + prodNo);
         int result = service.deleteProduct(prodNo);
@@ -64,23 +63,59 @@ public class AdminController {
         return map;
     }
 
-    // 체크된 모든 상품 삭제
+    // 상품 삭제(체크 박스)
+    @ResponseBody
     @PostMapping("/product/deleteSelectedProduct")
-    public String deleteSelectedProduct(@PathVariable("valueArr") String[] ajaxMsg) {
+    public Map deleteSelectedProduct(@RequestParam("valueArr") String[] ajaxMsg) {
         log.info("deleteSelectedProduct...");
 
         int size = ajaxMsg.length;
         int result = 0;
-        for (int i = 0; i < size; i++) {
-//            result = service.deleteSelectedProduct(ajaxMsg[i]);
+        // System.out.println("ajaxMsg: " + ajaxMsg);
+        for (int i=0; i<size; i++) {
+            result = service.deleteProduct(ajaxMsg[i]);
         }
-        return null;
+
+        Map map = new HashMap();
+        map.put("result", result);
+
+        return map;
     }
 
+    // 상품수정
+    @ResponseBody
+    @PostMapping("/product/modifyProduct")
+    public Map modifyProduct(@RequestBody ProductVO product) {
+        log.info("Modifying product...");
 
-    // 상품등록
+        System.out.println("product : " + product);
+
+        int result = service.modifyProduct(product);
+
+        Map map = new HashMap();
+        map.put("result", result);
+        return map;
+    }
+
+    // 상품등록 화면
     @GetMapping("/product/register")
     public String register() {
+        return "admin/product/register";
+    }
+
+    // 상품등록
+    @PostMapping("/product/register")
+    public String register(ProductVO product, @AuthenticationPrincipal UserVO user) {
+        log.info("register product...");
+
+        product.setSeller(user.getUid());
+        product.setIp(user.getRegip());
+        System.out.println("product = " + product);
+
+        // Arrays.stream(product.getFile()).map(p -> p.getOriginalFilename()).forEach(s -> System.out.println("s = " + s));
+        int result = service.insertProductAdmin(product);
+
+
         return "admin/product/register";
     }
 
