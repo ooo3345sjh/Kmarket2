@@ -1,11 +1,6 @@
 package kr.co.kmarket.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
-
+import lombok.*;
 import java.util.List;
 
 /**
@@ -13,6 +8,9 @@ import java.util.List;
  * @since 2023/02/08
  * @author 라성준
  */
+@Getter
+@Setter
+@ToString
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,6 +45,9 @@ public class ProductVO {
     private String ip;
     private String rdate;
 
+    // 추가 필드
     private List<ProductVO> cateList;
     private String type;
+    private int disPrice; // 할인율 적용 값
+
 }
