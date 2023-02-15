@@ -1413,7 +1413,7 @@ footer > div > div > p > span {
     width: 18px;
     height: 18px;
     content: "";
-    background:url("../img/cs_sprites.png") no-repeat;
+    background:url("../images/cs_sprites.png") no-repeat;
     background-position: -230px -276px;
     background-size: 750px auto;
     vertical-align: top;
@@ -1455,7 +1455,7 @@ footer > div > div > p > span {
     height: 90px;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-repeat: no-repeat;
     background-size: 750px auto;
 }
@@ -1682,12 +1682,12 @@ footer > div > div > p > span {
 }
 #cs > .notice > .list > article > .page > .prev {
     font-size: 0;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-position: -706px -652px;
 }
 #cs > .notice > .list > article > .page > .next {
     font-size: 0;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-position: -628px -652px;
 }
 #cs > .notice > .list > article > .page > .num {}
@@ -2018,12 +2018,12 @@ footer > div > div > p > span {
 }
 #cs > .qna > .list > article > .page > .prev{
     font-size: 0;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-position: -706px -652px;
 }
 #cs > .qna > .list > article > .page > .next{
     font-size: 0;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../images/cs_sprites.png");
     background-position: -628px -652px;
 }
 #cs > .qna > .list > article > .page > .num{}
@@ -2330,6 +2330,7 @@ footer > div > div > p > span {
 #member > .register > form section > table th > .essential{color: #ef3f43;}
 #member > .register > form section > table td {padding-left: 10px;}
 #member > .register > form section > table td span {padding-left: 5px; color: red;}
+#member > .register > form section > table#seller td span {padding-left: 5px; color: black;}
 #member > .register > form section > table input {
     width: 163px;
     vertical-align: middle;

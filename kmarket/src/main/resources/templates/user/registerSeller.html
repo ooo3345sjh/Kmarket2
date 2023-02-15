@@ -8,7 +8,7 @@
             <nav>
                 <h1>판매자 회원가입</h1>
             </nav>
-            <form th:action='@{#}' method="post">
+            <form name="form" th:action='@{/register/seller}' method="post">
             <section>
                 <table>
                     <caption>필수 정보입력</caption>
@@ -19,7 +19,7 @@
                         </th>
                         <td>
                             <input type="text" name="uid" placeholder="아이디 입력" required>
-                            <span class="msgId">영문, 숫자로 4~12자까지 설정해 주세요.</span>
+                            <span class="msgId"></span>
                         </td>
                     </tr>
                     <tr>
@@ -29,7 +29,7 @@
                         </th>
                         <td>
                             <input type="password" name="pass" placeholder="비밀번호 입력" required>
-                            <span class="msgPass1">영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
+                            <span class="msgPass"></span>
                         </td>
                     </tr>
                     <tr>
@@ -39,13 +39,13 @@
                         </th>
                         <td>
                             <input type="password" name="confirmPass" placeholder="비밀번호 확인" required>
-                            <span class="msgPass2">비밀번호 재입력</span>
+                            <span class="msgConfirmPass"></span>
                         </td>
                     </tr>
                 </table>
             </section>
             <section>
-                <table>
+                <table id="seller">
                     <caption>판매자 정보입력</caption>
                     <tr>
                         <th>
@@ -113,7 +113,7 @@
                         </th>
                         <td>
                             <input type="text" name="zip" id="zip" placeholder="우편번호" readonly/>
-                            <button type="button" class="authBtn" onclick="zipcode()">우편번호 찾기</button><br/>
+                            <button type="button" class="authBtn" onclick="zipcode()" id="btnSearchAddr">우편번호 찾기</button><br/>
                             <input type="text" name="addr1" id="addr1" placeholder="주소를 검색하세요."/><br/>
                             <input type="text" name="addr2" id="addr2" placeholder="상세주소를 입력하세요."/>
                         </td>
@@ -129,7 +129,7 @@
                             이름
                         </th>
                         <td>
-                            <input type="text" name="manager" placeholder="이름 입력" required>
+                            <input type="text" name="manager" class="name" placeholder="이름 입력" required>
                             <span class="msgName"></span>
                         </td>
                     </tr>
@@ -139,8 +139,8 @@
                             휴대폰
                         </th>
                         <td>
-                            <input type="tel" name="managerHp" maxlength="13" placeholder="휴대폰 번호 입력" required>
-                            <span class="msgHp">( - ) 포함 13자리를 입력하세요.</span>
+                            <input type="tel" name="managerHp" class="hp" maxlength="13" placeholder="(-) 포함 13자리를 입력하세요." required>
+                            <span class="msgHp"></span>
                         </td>
                     </tr>
                 </table>
@@ -149,5 +149,10 @@
             </form>
         </div>
     </main>
+</th:block>
+<th:block layout:fragment="script">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <script th:src="@{/js/register.js}"></script>
 </th:block>
 </html>

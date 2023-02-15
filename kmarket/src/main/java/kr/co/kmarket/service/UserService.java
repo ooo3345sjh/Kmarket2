@@ -11,6 +11,7 @@ import kr.co.kmarket.entity.TermsEntity;
 import kr.co.kmarket.repository.TermsRepo;
 import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackOn = Exception.class)
@@ -57,11 +59,22 @@ public class UserService {
     }
 
     /**
-     * @param table 조회할 테이블
-     * @param hp 조회할 번호
+     * @param type "general" 또는 "seller"
+     * @param hp 조회할 전화번호
      * @return 조회된 행 갯수 반환
      */
-    public int getDuplicateHpCount(String table, String hp){
+    public int getDuplicateHpCount(String type, String hp) throws Exception{
+        
+        // type -> table명으로 변환 작업
+        String table = null;
+        switch (type){
+            case "general": table = "km_member_general"; break;
+            case "seller": table = "km_member_seller"; break;
+        }
+
+        // type이 null이면 에러
+        if(table == null) throw new Exception("no matching type");
+
         return userDAO.countByHp(table, hp);
     }
 
