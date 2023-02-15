@@ -18,6 +18,7 @@
 <div id="wrapper">
     <th:block th:replace="fragments/_header::cs_header"></th:block>
     <main>
+        <th:block th:replace="fragments/cs_aside::aside_common"></th:block>
         <th:block th:replace="fragments/cs_aside_if"></th:block>
         <th:block layout:fragment="main"></th:block>
     </main>
