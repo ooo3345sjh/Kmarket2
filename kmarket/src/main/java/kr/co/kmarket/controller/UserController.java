@@ -108,13 +108,18 @@ public class UserController {
     public Map checkHp(@RequestParam String hp, @PathVariable String type){
         log.info("UserController GET checkHp...");
 
-        log.info("hp : " + hp);
-        log.info("type : " + type);
+        int result = 0;
+
         // 메일 전송
-//        userService.getDuplicateHpCount(type, hp);
+        try {
+            result = userService.getDuplicateHpCount(type, hp);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            result = -1;
+        }
 
         Map map = new HashMap();
-        map.put("result", 1);
+        map.put("result", result);
         return map;
     }
 

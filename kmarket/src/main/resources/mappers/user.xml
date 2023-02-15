@@ -12,7 +12,13 @@
 	</select>
 
 	<select id="countByHp" parameterType="String" resultType="int">
-		SELECT COUNT(*) from ${table} where `hp`=#{hp};
+		SELECT COUNT(*) from `${table}`
+		<if test="table == 'km_member_general'">
+			where `hp`=#{hp};
+		</if>
+		<if test="table == 'km_member_seller'">
+			where `managerHp`=#{hp};
+		</if>
 	</select>
 
 	<insert id="insertGeneral" parameterType="kr.co.kmarket.vo.UserVO">
