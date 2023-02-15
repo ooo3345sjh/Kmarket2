@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:fragment="main_aside">
     <!-- 카테고리/베스트 상품 영역 -->
-    <aside th:fragment="mainAside(cate1s, cate2s, bests)">
+    <aside>
         <!-- 카테고리 -->
         <ul class="category">
             <li>
@@ -164,82 +164,18 @@
             </h1>
             <ol>
                 <li th:each="best:${bests}">
-                    <a href="#">
+                    <a th:href="@{/product/view(cate1 = ${best.Cate1}, cate2 = ${best.Cate2}, prodNo = ${best.prodNo})}">
                         <div class="thumb">
-                            <i>1</i>
-                            <img th:src="@{bests}" alt="item1">
+                            <i th:text="${bestStat.count}">1</i>
+                            <img th:src="@{#}" alt="item1">
                         </div>
                         <h2 th:text="${best.prodName}">상품명</h2>
-                        <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
+                        <div class="org_price" th:if="${best.discount gt 0}">
+                            <del th:text="${#numbers.formatInteger(best.price, 1, 'COMMA')}">30,000</del>
+                            <span th:text="${best.discount + '%'}">10%</span>
                         </div>
                         <div class="dis_price">
-                            <ins>27,000</ins>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="thumb">
-                            <i>2</i>
-                            <img th:src="@{https://via.placeholder.com/50}" alt="item1">
-                        </div>
-                        <h2>상품명</h2>
-                        <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
-                        </div>
-                        <div class="dis_price">
-                            <ins>27,000</ins>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="thumb">
-                            <i>3</i>
-                            <img th:src="@{https://via.placeholder.com/50}" alt="item1">
-                        </div>
-                        <h2>상품명</h2>
-                        <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
-                        </div>
-                        <div class="dis_price">
-                            <ins>27,000</ins>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="thumb">
-                            <i>4</i>
-                            <img th:src="@{https://via.placeholder.com/50}" alt="item1">
-                        </div>
-                        <h2>상품명</h2>
-                        <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
-                        </div>
-                        <div class="dis_price">
-                            <ins>27,000</ins>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="thumb">
-                            <i>5</i>
-                            <img th:src="@{https://via.placeholder.com/50}" alt="item1">
-                        </div>
-                        <h2>상품명</h2>
-                        <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
-                        </div>
-                        <div class="dis_price">
-                            <ins>27,000</ins>
+                            <ins th:text="${#numbers.formatInteger(best.disPrice, 1, 'COMMA')}">27,000</ins>
                         </div>
                     </a>
                 </li>

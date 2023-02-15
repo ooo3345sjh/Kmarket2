@@ -1,7 +1,6 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.MainService;
-import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate1VO;
 import kr.co.kmarket.vo.Product_cate2VO;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * 메인 컨트롤러
@@ -34,11 +33,21 @@ public class MainController {
 
         List<Product_cate1VO> cate1s = service.selectCate1s();
         List<Product_cate2VO> cate2s = service.selectCate2s();
+
         List<ProductVO> bests = service.selectProductBest();
+        List<ProductVO> hits = service.selectProductMode("hit");
+        List<ProductVO> discounts = service.selectProductMode("discount");
+        List<ProductVO> recommends = service.selectProductMode("review");
+        List<ProductVO> news = service.selectProductMode("rdate");
+
+
         m.addAttribute("cate1s", cate1s);
         m.addAttribute("cate2s", cate2s);
         m.addAttribute("bests", bests);
-
+        m.addAttribute("hits", hits);
+        m.addAttribute("recommends", recommends);
+        m.addAttribute("news" , news);
+        m.addAttribute("discounts", discounts);
 
         return "index";
     }
