@@ -1,7 +1,6 @@
 package kr.co.kmarket.vo;
 
 import lombok.*;
-
 import java.util.List;
 
 /**
