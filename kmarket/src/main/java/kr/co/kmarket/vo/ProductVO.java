@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,4 +49,8 @@ public class ProductVO {
 
     private List<ProductVO> cateList;
     private String type;
+
+    // 관리자 상품 등록 MultipartFile 추가 필드
+    private MultipartFile[] file;
+
 }

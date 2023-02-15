@@ -40,11 +40,11 @@
                     <!-- 게시글이 있는 경우 -->
                     <th:block th:if="${#lists.size(products) != 0}">
                         <tr th:each="product,i:${products}">
-                            <td><input type="checkbox" name="check"/></td>
+                            <td><input type="checkbox" name="check" th:value="${product.prodNo}"/></td>
                             <td><img th:src="@{/file/} + ${product.thumb1}" class="thumb"></td>
                             <td class="prodNo">[[${product.prodNo}]]</td>
                             <td class="prodName">[[${product.prodName}]]</td>
-                            <td>[[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]]</td> <!-- 세자리 수 콤마 -->
+                            <td>[[${product.price}]]</td> <!-- 세자리 수 콤마 [[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]] -->
                             <td>[[${product.discount}]]</td>
                             <td>[[${product.point}]]</td>
                             <td>[[${product.stock}]]</td>
@@ -52,7 +52,7 @@
                             <td>[[${product.hit}]]</td>
                             <td>
                                 <a href="#" class="remove" th:data-no="${product.prodNo}">[삭제]</a>
-                                <a href="#">[수정]</a>
+                                <a href="#" class="modify" th:data-no="${product.prodNo}">[수정]</a>
                             </td>
                         </tr>
                     </th:block>

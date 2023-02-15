@@ -3,6 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.AdminDAO">
+
+    <insert id="insertProductAdmin">
+        insert into `km_product` set
+            `cate1` = #{cate1},
+            `cate2` = #{cate2},
+            `prodName` = #{prodName},
+            `descript` = #{descript},
+            `company` = #{company},
+            `seller` = #{seller},
+            `price` = #{price},
+            `discount` = #{discount},
+            `point` = #{point},
+            `stock` = #{stock},
+            `delivery` = #{delivery},
+            `thumb1` = #{thumb1},
+            `thumb2` = #{thumb2},
+            `thumb3` = #{thumb3},
+            `detail` = #{detail},
+            `status` = #{status},
+            `duty` = #{duty},
+            `receipt` = #{receipt},
+            `bizType` = #{bizType},
+            `origin` = #{origin},
+            `ip` = #{ip},
+            `rdate` = NOW();
+    </insert>
+
     <!-- admin 상품 조회 -->
     <select id="selectProductAdmin" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.ProductVO">
         select a.*, b.uid from `km_product` as a
@@ -46,8 +73,21 @@
         </if>
     </sql>
 
+    <!-- 상품 정보 수정 -->
+    <update id="modifyProduct" parameterType="kr.co.kmarket.vo.ProductVO">
+        update `km_product` set `prodName` = #{prodName},
+                                `price` = #{price},
+                                `discount` = #{discount},
+                                `point` = #{point},
+                                `stock` = #{stock}
+                                where `prodNo` = #{prodNo};
+    </update>
+
+    <!-- 상품 삭제 -->
     <delete id="deleteProduct">
         delete from `km_product` where `prodNo` = #{prodNo};
     </delete>
+
+
 
 </mapper>

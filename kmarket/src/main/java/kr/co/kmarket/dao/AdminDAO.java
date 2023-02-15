@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /*
  * 날짜 : 2023/02/09
@@ -16,8 +17,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface AdminDAO {
-//    public void insertProductAdmin();
+    public int insertProductAdmin(ProductVO product);
     public List<ProductVO> selectProductAdmin(SearchCondition sc);
     public int countProductAdmin(SearchCondition sc);
-    public int deleteProduct(int prodNo);
+    public int deleteProduct(String prodNo);
+    public int modifyProduct(ProductVO product);
 }
