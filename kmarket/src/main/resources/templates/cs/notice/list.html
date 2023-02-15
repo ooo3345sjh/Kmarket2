@@ -5,8 +5,8 @@
 <th:block layout:fragment="main">
 
     <article>
-        <th:block th:switch="${cate2}">
-        <nav th:case=null>
+        <th:block th:switch="${sc.cate2}">
+        <nav th:case="all">
             <h1>전체</h1>
             <h2>공지사항 전체 내용입니다.</h2>
         </nav>
@@ -26,21 +26,17 @@
             <h1>이벤트당첨</h1>
             <h2>이벤트당첨 관련 내용입니다.</h2>
         </nav>
+        </th:block>
         <table>
         <!-- 게시글이 있는 경우 -->
         <th:block th:if="${#lists.size(articles) != 0}">
-            <tr th:each="article,i:${articles}" th:object="${ph}">
-                <td>[[*{totalCnt-sc.offset} - ${i.index}]]</td>
-                <td>
-                    <a th:href="@{/cs/notice/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
-                       th:text="|${article.title}|" class="title" th:data-no="${article.csNo}"></a>
-                    <!--/* <span th:if="${article.comment gt 0}" th:text="|[${article.comment}]|"></span> */-->
-                    <!--/*<img th:if="${article.file gt 0}" style="" alt="파일" th:src="@{/images/file.jpg}" /> */-->
-                    <!--/*<input type="hidden" class="content" th:value="${article.content}">*/-->
-                </td>
-                <!--/*<td class="nick">[[${article.nick}]]</td>*/-->
-                <!--/*<td>[[${#dates.format(article.rdate, 'yy-MM-dd')}]]</td>*/-->
-            </tr>
+                <tr th:each="article,i:${articles}" th:object="${ph}">
+                    <td>[[*{totalCnt-sc.offset} - ${i.index}]]</td>
+                    <td>
+                        <a th:href="@{/cs/notice/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
+                           th:text="|${article.title}|" class="title" th:data-no="${article.csNo}"></a>
+                    </td>
+                </tr>
         </th:block>
         <!-- 게시글이 없는 경우 -->
         <th:block th:if="${#lists.size(articles) == 0}">

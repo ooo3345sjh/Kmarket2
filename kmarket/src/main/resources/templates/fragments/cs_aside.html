@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<th:block th:fragment="notice">
-
-        <section id="cs">
+<th:block th:fragment="aside_common">
+    <section id="cs">
+        <th:block th:switch="${sc.cate1}">
+            <th:block th:case="notice">
             <div class="notice">
                 <nav>
                     <div>
-                        <p>홈<span>></span>공지사항</p>
+                        <p>홈<span>></span>공지사항<span>></span><span th:if="${sc.cate2}!='null'">[[${sc.cate2}]]</span></p>
                     </div>
                 </nav>
-                <section th:classappend="${sc.no}==null?'list':'view'">
-                    <aside>
-                        <h2>공지사항</h2>
-                            <ul>
-                                <li th:classappend="${cate2}==null?'on':''"><a th:href="@{/cs/notice/list(cate1='notice')}">전체</a></li>
-                                <li th:classappend="${cate2}=='service'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='service')}">고객서비스</a></li>
-                                <li th:classappend="${cate2}=='safeDeal'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='safeDeal')}">안전거래</a></li>
-                                <li th:classappend="${cate2}=='xproduct'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='xproduct')}">위해상품</a></li>
-                                <li th:classappend="${cate2}=='great'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='great')}">이벤트당첨</a></li>
-                            </ul>
-                    </aside>
+            </th:block>
+            <th:block th:case="qna">
+            <div th:class="qna">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>문의하기<span>></span><span th:if="${sc.cate2}!='null'">[[${sc.cate2}]]</span></p>
+                    </div>
+                </nav>
+            </th:block>
+            <th:block th:case="faq">
+            <div class="faq">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>자주 묻는 질문<span>></span><span th:if="${sc.cate2}!='null'">[[${sc.cate2}]]</span></p>
+                    </div>
+                </nav>
+            </th:block>
+        </th:block>
+        <section th:classappend="${#lists.isEmpty(article)}?'list':'view'">
+</th:block>
+<th:block th:fragment="notice">
+    <aside>
+        <h2>공지사항</h2>
+            <ul>
+                <li th:classappend="${sc.cate2}=='all'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='all')}">전체</a></li>
+                <li th:classappend="${sc.cate2}=='service'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='service')}">고객서비스</a></li>
+                <li th:classappend="${sc.cate2}=='safeDeal'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='safeDeal')}">안전거래</a></li>
+                <li th:classappend="${sc.cate2}=='xproduct'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='xproduct')}">위해상품</a></li>
+                <li th:classappend="${sc.cate2}=='great'?'on':''"><a th:href="@{/cs/notice/list(cate1='notice',cate2='great')}">이벤트당첨</a></li>
+            </ul>
+    </aside>
 </th:block>
 <th:block th:fragment="faq">
-<section id="cs">
-    <div class="faq">
-        <nav>
-            <div>
-                <p>홈<span>></span>자주묻는 질문</p>
-            </div>
-        </nav>
-
-        <section th:classappend="${sc.no}==null?'list':'view'">
-            <aside>
-                <h2>자주묻는 질문</h2>
-                <ul>
-                    <li class="on"><a href="#">회원</a></li>
-                    <li><a href="#">쿠폰/이벤트</a></li>
-                    <li><a href="#">주문/결제</a></li>
-                    <li><a href="#">배송</a></li>
-                    <li><a href="#">취소/반품/교환</a></li>
-                    <li><a href="#">여행/숙박/항공</a></li>
-                    <li><a href="#">안전거래</a></li>
-                </ul>
-            </aside>
+    <aside>
+        <h2>자주묻는 질문</h2>
+            <ul>
+                <li th:classappend="${sc.cate2}=='user'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='user')}">회원</a></li>
+                <li th:classappend="${sc.cate2}=='coupon'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='coupon')}">쿠폰/이벤트</a></li>
+                <li th:classappend="${sc.cate2}=='order'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='order')}">주문/결제</a></li>
+                <li th:classappend="${sc.cate2}=='delivery'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='delivery')}">배송</a></li>
+                <li th:classappend="${sc.cate2}=='cancel'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='cancel')}">취소/반품/교환</a></li>
+                <li th:classappend="${sc.cate2}=='travel'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='travel')}">여행/숙박/항공</a></li>
+                <li th:classappend="${sc.cate2}=='safeDeal'?'on':''"><a th:href="@{/cs/faq/list(cate1='faq',cate2='safeDeal')}">안전거래</a></li>
+            </ul>
+    </aside>
 </th:block>
 <th:block th:fragment="qna">
-<section id="cs">
-    <div class="qna">
-        <nav>
-            <div>
-                <p>홈<span>></span>문의하기</p>
-            </div>
-        </nav>
-        <section th:classappend="${sc.no}=='null'?'list':'view'">
             <aside>
                 <h2>문의하기</h2>
                 <ul>

@@ -33,7 +33,8 @@ public class CsController {
      이름 : 김동민
      내용 : 고객센터 메인화면
      */
-    @GetMapping("cs/cs_index")
+
+    @GetMapping("cs")
     public String index(Model m,SearchCondition sc){
         List<CsVO> cate5 = service.select5();
         m.addAttribute("sc",sc);
@@ -45,8 +46,9 @@ public class CsController {
      내용 : 고객센터 공지사항 목록
      */
     @GetMapping("cs/notice/list")
-    public String notice_list(Model m, SearchCondition sc){
+    public String notice_list(Model m,SearchCondition sc){
         service.selectarticles(m,sc);
+
         m.addAttribute("sc",sc);
         return "cs/notice/list";
     }

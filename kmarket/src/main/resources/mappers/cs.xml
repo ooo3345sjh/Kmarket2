@@ -27,13 +27,19 @@
     <select id="selectarticles" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
         WHERE `cate1`=#{cate1}
+        <include refid="cate2"/>
         ORDER BY `csNo` DESC
         LIMIT #{offset}, 10;
     </select>
-
+    <sql id="cate2">
+        <if test="!cate2.equals('all')">
+            AND `cate2` = #{cate2}
+        </if>
+    </sql>
     <select id="countAll" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM `km_cs`
-        WHERE `cate1`=#{cate1};
+        WHERE `cate1`=#{cate1}
+        <include refid="cate2"/>;
     </select>
     <select id="selectarticle" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
