@@ -46,4 +46,6 @@
             SELECT b.* FROM (SELECT 'best' AS `type`, a.* FROM `km_product` a ORDER BY `sold` DESC LIMIT 5) as b;
     </select>
 
+
+
 </mapper>

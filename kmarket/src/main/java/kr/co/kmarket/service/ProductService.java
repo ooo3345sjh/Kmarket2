@@ -2,10 +2,15 @@ package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.repository.ProductRepo;
+import kr.co.kmarket.utils.PageHandler;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate1VO;
+import kr.co.kmarket.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +28,6 @@ public class ProductService {
     @Autowired
    private ProductDAO dao;
 
-   @Autowired
-   private ProductRepo repo;
 
     /**
      * product insert service
@@ -40,7 +43,8 @@ public class ProductService {
      * @since 2023/02/08
      * @author 라성준
      */
-    public void selectProduct () {}
+    public void selectProduct () {
+    }
 
     /**
      * product list service
@@ -48,13 +52,10 @@ public class ProductService {
      * @author 라성준
      */
     public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start) {
-        return dao.selectProducts(cate1, cate2, sort, start);
+        return dao.selectProducts();
     }
 
-    //public int selectCountTotalProduct() {
-    //  int total = dao.selectCountTotalProduct();
-    //   return total;
-    //  }
+
 
     /**
      * product update service
@@ -84,8 +85,8 @@ public class ProductService {
             p.setThumb3(thumb3);
             return p;
         }).collect(Collectors.toList());
+        System.out.println("catelist : " + cateList);
 
-        System.out.println("a" + cateList);
         return cateList.stream().collect(Collectors.groupingBy(ProductVO::getType));
 
     }
