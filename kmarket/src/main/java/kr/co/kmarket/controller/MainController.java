@@ -52,6 +52,7 @@ public class MainController {
         return "index";
     }
 
+
     @ResponseBody
     @GetMapping("auth")
     public Authentication auth(){

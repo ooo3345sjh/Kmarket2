@@ -108,13 +108,10 @@ public class AdminController {
     public String register(ProductVO product, @AuthenticationPrincipal UserVO user) {
         log.info("register product...");
 
-        product.setSeller(user.getUid());
-        product.setIp(user.getRegip());
-        System.out.println("product = " + product);
+        product.setSeller("a101"); // 로그인 된 판매자의 uid 추가 (seller로 로그인하고 user.getId()로 바꾸어주기)
+        product.setIp(user.getRegip()); // regip 추가
 
-        // Arrays.stream(product.getFile()).map(p -> p.getOriginalFilename()).forEach(s -> System.out.println("s = " + s));
-        int result = service.insertProductAdmin(product);
-
+        int result = service.insertProductAdmin(product); // 상품 등록
 
         return "admin/product/register";
     }

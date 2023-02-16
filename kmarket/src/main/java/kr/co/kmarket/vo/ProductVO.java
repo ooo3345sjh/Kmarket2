@@ -51,9 +51,7 @@ public class ProductVO {
     // 추가 필드
     private List<ProductVO> cateList;
     private String type;
-
-    // 관리자 상품 등록 MultipartFile 추가 필드
-    private MultipartFile[] file;
+    private MultipartFile[] file; // 관리자 상품 등록 MultipartFile 추가 필드
     private int disPrice; // 할인율 적용 값
 
 

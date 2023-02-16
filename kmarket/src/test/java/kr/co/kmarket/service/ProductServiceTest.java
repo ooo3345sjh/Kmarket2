@@ -38,6 +38,7 @@ class ProductServiceTest {
     @Test
     void test_2() throws Exception {
         Map<String, List<ProductVO>> map = service.selectCate();
+
         System.out.println(map);
 
 

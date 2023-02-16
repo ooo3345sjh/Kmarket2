@@ -41,9 +41,15 @@
                     <th:block th:if="${#lists.size(products) != 0}">
                         <tr th:each="product,i:${products}">
                             <td><input type="checkbox" name="check" th:value="${product.prodNo}"/></td>
-                            <td><img th:src="@{/file/} + ${product.thumb1}" class="thumb"></td>
+                            <td>
+                                <a th:href="@{/product/list(prodNo=${product.prodNo})}">
+                                    <img th:src="@{/file/} + ${product.thumb1}" class="thumb">
+                                </a>
+                            </td>
                             <td class="prodNo">[[${product.prodNo}]]</td>
-                            <td class="prodName">[[${product.prodName}]]</td>
+                            <td class="prodName">
+                                <a th:href="@{/product/list(prodNo=${product.prodNo})}" th:text="|${product.prodName}|"></a>
+                            </td>
                             <td>[[${product.price}]]</td> <!-- 세자리 수 콤마 [[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]] -->
                             <td>[[${product.discount}]]</td>
                             <td>[[${product.point}]]</td>
@@ -65,7 +71,7 @@
                 </table>
 
                 <input type="button" value="선택삭제" id="deleteButton" onclick="checkDelete()"/>
-                <input type="button" value="등록하기" id="registerButton"/>
+                <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/product/register}'|"/>
 
                 <!-- 페이징 -->
                 <!-- 상품이 없을 경우 페이징 숨기기 -->

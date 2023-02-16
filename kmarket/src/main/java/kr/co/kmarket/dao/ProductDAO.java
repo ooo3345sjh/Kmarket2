@@ -1,5 +1,6 @@
 package kr.co.kmarket.dao;
 
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,10 +15,10 @@ import java.util.List;
 @Repository
 public interface ProductDAO {
     public void insertProduct(ProductVO vo);
-    public List<ProductVO> selectProducts(@Param("cate1") int cate1, @Param("cate2")int cate2, @Param("sort") String sort, @Param("start") int start);
+    public List<ProductVO> selectProducts();
     List<ProductVO> selectCate() throws Exception;
     List<ProductVO> selectCate2() throws Exception;
-    //public int selectCountTotalProduct() {}
+
     public int updateProduct(ProductVO vo);
-    public int deleteProduct(int no);
+
 }
