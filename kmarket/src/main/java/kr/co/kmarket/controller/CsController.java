@@ -71,7 +71,11 @@ public class CsController {
         return "cs/faq/list";
     }
     @GetMapping("cs/faq/view")
-    public String faq_view(){
+    public String faq_view(Model m,Integer no,SearchCondition sc){
+        sc.setNo(no);
+        CsVO article = service.selectarticle(no);
+        m.addAttribute("article",article);
+        m.addAttribute("sc",sc);
         return "cs/faq/view";
     }
 

@@ -2,6 +2,8 @@ package kr.co.kmarket.vo;
 
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 /**
