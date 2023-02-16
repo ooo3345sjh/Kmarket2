@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/user_layout">
+<th:block layout:fragment="main">
+    <main id="member">
+        <section class="find findId">
+            <form name="form" th:action='@{/user/findId/result}' method="post">
+                <input type="hidden" name="findId_Pw" value="true">
+                <table border="0">
+                    <caption>아이디 찾기</caption>
+                    <tr>
+                        <td>이름</td>
+                        <td>
+                            <input type="text" name="name" class="val" placeholder="이름 입력"/>
+                            <span class="msgName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td>
+                            <div>
+                                <input type="email" name="email" placeholder="이메일 입력"/>
+                                <button type="button" class="btnAuth" id="btnEmailAuth">인증번호 받기</button>
+                                <span class="msgEmail"></span><br/>
+                            </div>
+                            <div>
+                                <input type="text" name="emailAuthCode" id="auth" readonly placeholder="인증번호 입력"/>
+                                <button type="button" class="btnConfirm" id="btnEmailConfirm">확인</button>
+                                <span class="msg_emailAuth"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <p>
+                회원가입시 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.<br>
+                인증번호를 입력 후 확인 버튼을 누르세요.
+            </p>
+
+            <div>
+                <a th:href='@{/user/login}' class="btn btnCancel">취소</a>
+                <a th:href='@{/user/findId/result}' class="btn btnNext">다음</a>
+            </div>
+        </section>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/emailAuth.js}"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            const reName = /^[가-힣]+$/;
+            const inputName = document.querySelector('input[name=name]');
+            const resultName = document.querySelector('.msgName');
+            let nameOk = false;
+
+            // 이름 입력
+            inputName.addEventListener('focusout', function() {
+                let name = this.value;
+
+                if (name == ""){
+                    resultName.innerText = "필수 정보입니다.";
+                    nameOk = false;
+                }
+
+                else if (!reName.test(name)){
+                    resultName.innerText = "한글을 사용하세요. (영문, 특수기호, 공백 사용 불가)";
+                    nameOk = false;
+                }
+
+                else {
+                    resultName.innerText = "";
+                    nameOk = true;
+                }
+
+            });
+
+            let url = "user/findId";
+            let emailAUthOk = emailAuth(url);
+
+            const btnNext = document.querySelector('.btnNext');
+
+            btnNext.addEventListener('click', function(e){
+                //e.preventDefault();
+
+
+            });
+
+        }
+    </script>
+</th:block>
+</html>

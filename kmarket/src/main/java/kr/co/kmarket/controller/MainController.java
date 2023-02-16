@@ -37,7 +37,7 @@ public class MainController {
         List<ProductVO> bests = service.selectProductBest();
         List<ProductVO> hits = service.selectProductMode("hit");
         List<ProductVO> discounts = service.selectProductMode("discount");
-        List<ProductVO> recommends = service.selectProductMode("review");
+        List<ProductVO> recommends = service.selectProductMode("score");
         List<ProductVO> news = service.selectProductMode("rdate");
 
 

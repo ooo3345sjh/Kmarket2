@@ -9,7 +9,7 @@
                     <h1>로그인</h1>
                     <p>HOME > <span>로그인</span></p>
                 </nav>
-                <form th:action="@{/login}" method="post">
+                <form th:action="@{/user/login}" method="post">
                     <table>
                         <tr>
                             <td>아이디</td>
@@ -30,9 +30,9 @@
                             <input type="checkbox" name="auto">
                             자동 로그인
                         </label>
-                        <a th:href="@{#}">아이디 찾기</a>
-                        <a th:href="@{#}">비밀번호 찾기</a>
-                        <a th:href="@{/join}">회원가입</a>
+                        <a th:href="@{/user/findId}">아이디 찾기</a>
+                        <a th:href="@{/user/findPw}">비밀번호 찾기</a>
+                        <a th:href="@{/user/join}">회원가입</a>
                     </div>
                     <a href="#">
                         <img th:src="@{/images/member_login_banner.jpg}" alt="휴대폰번호로 편리하게 로그인">

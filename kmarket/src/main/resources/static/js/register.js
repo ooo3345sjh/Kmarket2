@@ -86,7 +86,7 @@ window.onload = function() {
 			return;
 		}
 
-        const url = "register/" + uid + "/checkId";
+        const url = "user/register/" + uid + "/checkId";
 
 		// AJAX 전송
 		ajaxAPI(url, null, "get").then((response) => {
@@ -216,7 +216,7 @@ window.onload = function() {
 
         		const jsonData = {"email": email};
 
-        		ajaxAPI("register/sendEmail", jsonData, "POST").then((response) => {
+        		ajaxAPI("user/register/sendEmail", jsonData, "POST").then((response) => {
         			console.log(response);
 
         			if (response == null) {
@@ -320,7 +320,7 @@ window.onload = function() {
 		}
 		
 		// AJAX 전송
-		const url = "register/checkHp/" + type + "?hp=" + hp;
+		const url = "user/register/checkHp/" + type + "?hp=" + hp;
 
 		ajaxAPI(url, null, "get").then((response) => {
 
