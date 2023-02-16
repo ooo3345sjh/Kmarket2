@@ -1,3 +1,32 @@
+// aside 하위항목 숨기기 및 보이기 기능
+$(function() {
+    $(document).on('click', '#gnb > li', function(){
+        $('#gnb > li').not($(this)).children('ol').slideUp(200);
+        let display = $(this).children('ol').css('display');
+        if(display == 'block'){
+            $(this).children('ol').slideUp(200);
+        }else{
+            $(this).children('ol').slideDown(200);
+        }
+    });
+})
+
+    // 검색어 하이라이트 이벤트
+    const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
+    const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
+
+    $(function (){
+        if(searchField.options[searchField.selectedIndex].value === "prodName"){
+            $('.prodName').highlight(searchWord.value);
+        }
+        else if(searchField.options[searchField.selectedIndex].value === "prodNo"){
+            $('.prodNo').highlight(searchWord.value);
+        }
+        else if(searchField.options[searchField.selectedIndex].value === "seller"){
+            $('.seller').highlight(searchWord.value);
+        }
+    })
+
 // 선택삭제 눌려서 삭제 처리
 function checkDelete() {
     let url = '/kmarket/admin/product/deleteSelectedProduct';
@@ -201,7 +230,7 @@ function optionChange(){
 	// 옵션을 추가하기 전에 select box를 비워준다.
 	$('.category2').empty();
 	let option;
-	option = $("<option value='none' disabled selected>2차 분류 선택</option>");
+	option = $("<option value='' disabled selected>2차 분류 선택</option>");
 	$('.category2').append(option);
 
 	for (let i=0; i < change.length; i++){
@@ -216,5 +245,53 @@ function points(){
     let point = Math.floor(val); // 소수점 버리기
     $("#point").val(point);
 }
+
+// 할인율 0~100 사이 값만 등록가능
+$(document).on("keyup", "input[name=discount]", function() {
+    var val= $(this).val();
+
+    if(val < 0 || val > 100) {
+        alert("0~100 범위로 입력해 주십시오.");
+        $(this).val('');
+    }
+});
+
+// 이미지 파일 업로드시 크기, 용량 체크
+    function fileCheck(input)
+    {
+        //console.log("input :", input);
+        let obj = input.value;
+        // 선택파일의 경로를 분리하여 확장자 구하기
+        pathPoint = obj.lastIndexOf('.');
+        filePoint = obj.substring(pathPoint + 1, input.length);
+        fileType = filePoint.toLowerCase();
+
+        // console.log("fileType :", fileType);
+
+        // 확장자가 이미지 파일이면 사이즈를 체크
+        if(fileType=='jpg' || fileType=='gif' || fileType=='png' || fileType=='jpeg' || fileType=='bmp')
+        {
+            //console.log("size : ", input.files[0].size);
+            //console.log("input.files : ", input.files);
+            if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
+                    alert("파일 사이즈가 10mb 를 넘습니다.\n다시 업로드하여 주십시오.");
+                    input.value = "";
+                }
+        }
+        else
+        {
+            // 업로드 파일이 이미지 확장자가 아닐 경우 경고
+            alert('이미지 파일만 업로드 하실수 있습니다.\n다시 업로드하여 주십시오.');
+            input.value = "";
+            return false;
+        }
+
+        // 이미지 확장자이지만 BMP 확장자라면 일단 경고를 준다. (용량이 크기때문)
+        if(fileType=='bmp')
+        {
+            upload = confirm('BMP 파일은 웹상에서 사용하기엔 적절한 이미지 포맷이 아닙니다. \n 그래도 계속 하시겠습니까?');
+            if(!upload) return false;
+        }
+    }
 
 
