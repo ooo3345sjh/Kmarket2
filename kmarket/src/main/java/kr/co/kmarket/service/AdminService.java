@@ -108,8 +108,9 @@ public class AdminService {
 
         MultipartFile[] files = product.getFile();
         List<String> names = new ArrayList<>();
-        // 시스템 경로
-        String path = new File(uploadPath).getAbsolutePath();
+
+        // 파일 저장 경로 설정
+        String path = new File(uploadPath + "/" + product.getCate1() + "/" + product.getCate2()).getAbsolutePath();
 
         for (MultipartFile file : files) {
             // 새 파일명 생성
@@ -117,6 +118,7 @@ public class AdminService {
             String ext = oName.substring(oName.lastIndexOf("."));
             String nName = UUID.randomUUID().toString()+ext;
             names.add(nName);
+
             // 파일 저장
             try {
                 file.transferTo(new File(path, nName));
@@ -131,9 +133,5 @@ public class AdminService {
         product.setThumb2(names.get(1));
         product.setThumb3(names.get(2));
         product.setDetail(names.get(3));
-
-        System.out.println("names = " + names);
-
     }
-
 }

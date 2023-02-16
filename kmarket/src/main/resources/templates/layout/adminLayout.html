@@ -26,42 +26,6 @@
     </div>
 </body>
 <th:block layout:fragment="script">
-    <script>
-////////////////////////////////////////////////////////////////
-    $(document).ready(function(){
-    var gnb = $('#gnb > li > a');
-
-    gnb.click(function(e){
-        e.preventDefault();
-
-        var isOpen = $(this).next().is(':visible');
-
-        if(isOpen){
-            // 현재 서브메뉴를 닫음
-            $(this).next().slideUp(200);
-        }else{
-            // 현재 서브메뉴를 펼침
-            $(this).next().slideDown(200);
-        }
-    });
-});
-////////////////////////////////////////////////////////////////
-    // 검색어 하이라이트 이벤트
-    const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
-    const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
-
-    $(function (){
-        if(searchField.options[searchField.selectedIndex].value === "prodName"){
-            $('.prodName').highlight(searchWord.value);
-        }
-        else if(searchField.options[searchField.selectedIndex].value === "prodNo"){
-            $('.prodNo').highlight(searchWord.value);
-        }
-        else if(searchField.options[searchField.selectedIndex].value === "seller"){
-            $('.seller').highlight(searchWord.value);
-        }
-    })
-    </script>
     <script th:src="@{/js/jquery.highlight-5.js}"></script>
     <script th:src="@{/js/checkbox.js}"></script>
     <script th:src="@{/js/ajaxAPI.js}"></script>
