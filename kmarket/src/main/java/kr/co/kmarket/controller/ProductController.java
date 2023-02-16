@@ -1,8 +1,11 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.ProductService;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
+import kr.co.kmarket.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,8 @@ public class ProductController {
 
     @GetMapping("product/list")
     public String list() {
+
+
         return "product/list";
     }
 
@@ -43,6 +48,7 @@ public class ProductController {
     public String view() {
         return "product/view";
     }
+
 
 
 }
