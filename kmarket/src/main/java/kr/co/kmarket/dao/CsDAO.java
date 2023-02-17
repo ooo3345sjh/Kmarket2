@@ -14,12 +14,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CsDAO {
-//    public void insertCs(CsVO vo);
-//    public int updateCs(CsVO vo);
-//    public int deleteCs(int no);
-//    public List<CsVO> selectCsAll(int start);
       public CsVO selectarticle(Integer no);
       public List<CsVO> select5();
       public List<CsVO> selectarticles(SearchCondition sc);
       public int countAll(SearchCondition sc);
+      public List<CsVO> selectfaqtypes(SearchCondition sc);
 }

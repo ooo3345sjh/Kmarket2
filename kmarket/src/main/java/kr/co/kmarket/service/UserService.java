@@ -84,7 +84,7 @@ public class UserService {
         if(result == 0) emailService.send(map);
     }
 
-    public UserVO findByNameAndEmail(String email, String name){
+    public UserVO findByNameAndEmail(String name, String email){
         return userDAO.findByNameAndEmail(name, email);
     }
 
@@ -178,13 +178,6 @@ public class UserService {
         return userDAO.selectSellerUser(uid);
     };
 
-    private Authentication getAuthentication(){
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
-
-    private WebAuthenticationDetails getWebAuthenticationDetails(){
-        return (WebAuthenticationDetails)getAuthentication().getDetails();
-    }
 
     /**
      * @param type 구매회원 : general / 판매회원 : seller
@@ -197,5 +190,13 @@ public class UserService {
             case "seller": table = "km_member_seller"; break;
         }
         return table;
+    }
+
+    private Authentication getAuthentication(){
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    private WebAuthenticationDetails getWebAuthenticationDetails(){
+        return (WebAuthenticationDetails)getAuthentication().getDetails();
     }
 }

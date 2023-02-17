@@ -102,9 +102,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 //		return new InMemoryUserDetailsManager(user);
 //	}
 
-
-
-	// mac os 파일 경로 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")

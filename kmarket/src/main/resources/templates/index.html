@@ -79,7 +79,7 @@
             <article th:each="product:${hits}">
                 <a th:href="@{/product/view(cate1 = ${product.Cate1}, cate2 = ${product.Cate2}, prodNo = ${product.prodNo})}">
                     <div class="thumb">
-                        <img th:src="@{/file/} + ${product.thumb1}" class="thumb">
+                        <img th:src="@{/file/} + ${product.thumb2}" class="thumb">
                     </div>
                     <h2 th:text="${product.prodName}">상품명</h2>
                     <p th:text="${product.descript}">간단한 상품 설명</p>
@@ -102,7 +102,7 @@
             <article th:each="product:${recommends}">
                 <a th:href="@{/product/view(cate1 = ${product.Cate1}, cate2 = ${product.Cate2}, prodNo = ${product.prodNo})}">
                     <div class="thumb">
-                        <img th:src="@{/file/} + ${product.thumb1}" class="thumb">
+                        <img th:src="@{/file/} + ${product.thumb2}" class="thumb">
                     </div>
                     <h2 th:text="${product.prodName}">상품명</h2>
                     <p th:text="${product.descript}">간단한 상품 설명</p>
@@ -124,7 +124,7 @@
             <article th:each="product:${news}">
                 <a th:href="@{/product/view(cate1 = ${product.Cate1}, cate2 = ${product.Cate2}, prodNo = ${product.prodNo})}">
                     <div class="thumb">
-                        <img th:src="@{https://via.placeholder.com/230x230}" alt="t1">
+                        <img th:src="@{/file/} + ${product.thumb2}" alt="t1">
                     </div>
                     <h2 th:text="${product.prodName}">상품명</h2>
                     <p th:text="${product.descript}">간단한 상품 설명</p>
@@ -147,7 +147,7 @@
             <article th:each="product:${discounts}">
                 <a th:href="@{/product/view(cate1 = ${product.Cate1}, cate2 = ${product.Cate2}, prodNo = ${product.prodNo})}">
                     <div class="thumb">
-                        <img th:src="@{https://via.placeholder.com/230x230}" alt="t1">
+                        <img th:src="@{/file/} + ${product.thumb2}" alt="t1">
                     </div>
                     <h2 th:text="${product.prodName}">상품명</h2>
                     <p th:text="${product.descript}">간단한 상품 설명</p>

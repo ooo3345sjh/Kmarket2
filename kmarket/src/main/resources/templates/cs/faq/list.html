@@ -16,54 +16,24 @@
                     </th:block>
                     <h2>가장 자주 묻는 질문입니다.</h2>
                 </nav>
-
+                <th:block th:each="type:${types}">
                 <div>
-                    <h3>가입</h3>
+                    <h3>[[${type.type}]]</h3>
                     <!-- 게시글이 있는 경우 -->
                         <ul>
-                            <th:block th:each="article,i:${articles}" th:object="${ph}" th:if="${i.index lt 3}">
-                                <li><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
+                            <th:block th:each="article,i:${articles}" >
+                                <li th:if="${#strings.equals(type.type, article.type)}"><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
                                         class="title" th:data-no="${article.csNo}"><span>Q.</span>[[${article.title}]]</a></li>
                             </th:block>
                                 <li class="more"><a href="#">더보기</a> </li>
                         </ul>
                 </div>
-                <div>
-                    <h3>탈퇴</h3>
-                        <ul>
-                            <th:block th:each="article,i:${articles}" th:object="${ph}" th:if="${i.index lt 3}">
-                                <li><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
-                                       class="title" th:data-no="${article.csNo}"><span>Q.</span>[[${article.title}]]</a></li>
-                            </th:block>
-                                <li class="more"><a href="#">더보기</a> </li>
-                        </ul>
-                </div>
-                <div>
-                    <h3>회원정보</h3>
-                        <ul>
-                            <th:block th:each="article,i:${articles}" th:object="${ph}" th:if="${i.index lt 3}">
-                                <li><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
-                                       class="title" th:data-no="${article.csNo}"><span>Q.</span>[[${article.title}]]</a></li>
-                            </th:block>
-                                <li class="more"><a href="#">더보기</a> </li>
-                        </ul>
-                </div>
-                <div>
-                    <h3>로그인</h3>
-                        <ul>
-                            <th:block th:each="article,i:${articles}" th:object="${ph}" th:if="${i.index lt 3}">
-                                <li><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
-                                       class="title" th:data-no="${article.csNo}"><span>Q.</span>[[${article.title}]]</a></li>
-                            </th:block>
-                                <li class="more"><a href="#">더보기</a> </li>
-                        </ul>
-                </div>
+                </th:block>
             </article>
         </section>
     </div>
 </section>
 </th:block>
 <th:block layout:fragment="script">
-    <script th:src="@{/js/postcode.js}"></script>
-    <script th:src="@{/js/register.js}"></script>
+    <script th:src="@{/js/cs.js}"></script>
 </th:block>
