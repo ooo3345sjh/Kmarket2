@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/user_layout">
+<th:block layout:fragment="main">
+    <main id="member">
+        <section class="find findIdResult">
+            <form action="#">
+                <table border="0">
+                    <caption>아이디 찾기 결과</caption>
+                    <tr>
+                        <td>이름</td>
+                        <td th:text="${user.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>아이디</td>
+                        <td th:text="${user.uid}"></td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td th:text="${user.email}"></td>
+                    </tr>
+                    <tr>
+                        <td>가입일</td>
+                        <td th:text="${user.rdate}"></td>
+                    </tr>
+                </table>
+            </form>
+
+            <p>
+                고객님의 정보와 일치하는 아이디 입니다.
+            </p>
+
+            <div>
+                <a href="#" class="btn btnCancel">로그인</a>
+                <a href="#" class="btn btnNext">비밀번호 찾기</a>
+            </div>
+        </section>
+    </main>
+</th:block>
+</html>

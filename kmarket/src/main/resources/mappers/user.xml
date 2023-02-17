@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.UserDAO">
+	<select id="findByNameAndEmail" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * from `km_member_general` where `name`=#{name} AND `email`=#{email};
+	</select>
+
 	<select id="countByUid" parameterType="String" resultType="int">
 		SELECT COUNT(*) from `km_member_uid` where `uid`=#{uid};
 	</select>

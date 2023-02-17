@@ -51,9 +51,9 @@ public class ProductService {
      * @since 2023/02/09
      * @author 라성준
      */
-    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start) {
-        return dao.selectProducts();
-    }
+//    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start) {
+//        return dao.selectProducts();
+//    }
 
 
 

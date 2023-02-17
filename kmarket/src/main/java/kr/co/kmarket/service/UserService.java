@@ -66,11 +66,7 @@ public class UserService {
     public int getDuplicateHpCount(String type, String hp) throws Exception{
         
         // type -> table명으로 변환 작업
-        String table = null;
-        switch (type){
-            case "general": table = "km_member_general"; break;
-            case "seller": table = "km_member_seller"; break;
-        }
+        String table = getTable(type);
 
         // type이 null이면 에러
         if(table == null) throw new Exception("no matching type");
@@ -88,7 +84,24 @@ public class UserService {
         if(result == 0) emailService.send(map);
     }
 
+    public UserVO findByNameAndEmail(String email, String name){
+        return userDAO.findByNameAndEmail(name, email);
+    }
+
+    public void findId_EmailAuth (Map map){
+        String name = (String)map.get("name");
+        String email = (String)map.get("email");
+
+        int result = findByNameAndEmail(name, email) != null? 1:0;
+        map.put("result", result);
+        
+        if(result == 1) emailService.send(map);
+    }
+
+
+
     /**
+     *
      * @param uid 회원 아이디
      * @param type 회원 타입(구매자:1, 판매자:2, 관리자:3)
      * @return 등록된 행 갯수
@@ -171,5 +184,18 @@ public class UserService {
 
     private WebAuthenticationDetails getWebAuthenticationDetails(){
         return (WebAuthenticationDetails)getAuthentication().getDetails();
+    }
+
+    /**
+     * @param type 구매회원 : general / 판매회원 : seller
+     * @return 테이블명 반환
+     */
+    private static String getTable(String type) {
+        String table = null;
+        switch (type){
+            case "general": table = "km_member_general"; break;
+            case "seller": table = "km_member_seller"; break;
+        }
+        return table;
     }
 }

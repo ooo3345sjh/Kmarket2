@@ -35,25 +35,25 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/join", "/signup/*", "/register/**", "/terms", "/logout", "/", "/auth", "/cs/**").permitAll()
+					.mvcMatchers("/user/**", "/", "/auth", "/cs/**").permitAll()
 					.anyRequest().authenticated()
 			)
 
 			// 로그인 설정
 			.formLogin(
 					login->login
-					.loginPage("/login").permitAll()
-					.loginProcessingUrl("/login")
+					.loginPage("/user/login").permitAll()
+					.loginProcessingUrl("/user/login")
 					.defaultSuccessUrl("/")
 			)
 
 			// 로그인 아웃 설정
 			.logout(logout->logout
-					.logoutSuccessUrl("/login")
+					.logoutSuccessUrl("/user/login")
 					.logoutSuccessHandler((req, resp, auth) -> {
 						String url = req.getHeader("Referer");
 						String contextPath = req.getContextPath();
-						resp.sendRedirect(url == null ? contextPath + "/login":url);
+						resp.sendRedirect(url == null ? contextPath + "/user/login":url);
 					})
 			)
 

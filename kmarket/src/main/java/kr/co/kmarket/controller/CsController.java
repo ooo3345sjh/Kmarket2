@@ -52,6 +52,7 @@ public class CsController {
         m.addAttribute("sc",sc);
         return "cs/notice/list";
     }
+
     /*
      이름 : 김동민
      내용 : 고객센터 공지사항 상세

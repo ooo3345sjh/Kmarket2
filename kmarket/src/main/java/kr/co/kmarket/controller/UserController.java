@@ -25,6 +25,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -104,6 +105,31 @@ public class UserController {
     }
 
     @ResponseBody
+    @PostMapping("/findId")
+    public Map findId(@RequestBody Map map){
+        log.info("UserController POST findId...");
+        log.info(map.toString());
+        if(map.get("name") != null){
+            // 메일 전송
+            userService.findId_EmailAuth(map);
+        } else if(map.get("uid") != null){
+
+        }
+
+        return map;
+    }
+
+    @GetMapping("/findId/result")
+    public String findId(Map map, Model m){
+        String name = (String)map.get("name");
+        String email = (String)map.get("email");
+        UserVO user = userService.findByNameAndEmail(email, name);
+        log.info(user.toString());
+        m.addAttribute("user", user);
+        return "user/findIdResult";
+    }
+
+    @ResponseBody
     @GetMapping("/register/checkHp/{type}")
     public Map checkHp(@RequestParam String hp, @PathVariable String type){
         log.info("UserController GET checkHp...");
@@ -123,5 +149,19 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/findId")
+    public String findId(){
+        return "user/findId";
+    }
 
+
+    @GetMapping("/findPw")
+    public String findPw(){
+        return "user/findPw";
+    }
+
+    @GetMapping("/findPw/result")
+    public String findPwResult(){
+        return "user/findPwResult";
+    }
 }
