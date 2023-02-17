@@ -74,8 +74,6 @@ public class UserService {
         return userDAO.countByHp(table, hp);
     }
 
-
-
     /**
      * @param map 클라이언트에 전송할 모델객체
      */
@@ -103,6 +101,7 @@ public class UserService {
 
 
     /**
+     *
      * @param uid 회원 아이디
      * @param type 회원 타입(구매자:1, 판매자:2, 관리자:3)
      * @return 등록된 행 갯수
