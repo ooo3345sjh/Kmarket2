@@ -5,8 +5,7 @@
 <th:block layout:fragment="main">
     <main id="member">
         <section class="find findId">
-            <form name="form" th:action='@{/user/findId/result}' method="post">
-                <input type="hidden" name="findId_Pw" value="true">
+            <form name="form" th:action='@{/user/findId/result}' method="get">
                 <table border="0">
                     <caption>아이디 찾기</caption>
                     <tr>
@@ -41,7 +40,7 @@
 
             <div>
                 <a th:href='@{/user/login}' class="btn btnCancel">취소</a>
-                <a th:href='@{/user/findId/result}' class="btn btnNext">다음</a>
+                <a th:href='@{#}' class="btn btnNext">다음</a>
             </div>
         </section>
     </main>
@@ -49,11 +48,23 @@
 <th:block layout:fragment="script">
     <script th:src="@{/js/emailAuth.js}"></script>
     <script type="text/javascript">
+
+        /* 전역변수 선언 */
+        // Validation Check
+        let nameOk = false;
+        let emailOk = false;
+        let emailAuthOk = false;
+
+        const urlParams = new URL(location.href).searchParams;
+        const error = urlParams.get('error');
+
+        if(error != null) alert("찾으시는 회원 정보가 없습니다.");
+
         window.onload = function(){
             const reName = /^[가-힣]+$/;
             const inputName = document.querySelector('input[name=name]');
             const resultName = document.querySelector('.msgName');
-            let nameOk = false;
+
 
             // 이름 입력
             inputName.addEventListener('focusout', function() {
@@ -77,14 +88,28 @@
             });
 
             let url = "user/findId";
-            let emailAUthOk = emailAuth(url);
+            emailAuth(url);
 
-            const btnNext = document.querySelector('.btnNext');
+            const btnNext = document.querySelector('.btnNext'); // 다음 버튼
 
             btnNext.addEventListener('click', function(e){
-                //e.preventDefault();
+                e.preventDefault();
 
+                let okList = [nameOk, emailOk, emailAuthOk];
 
+                let inputList = document.querySelectorAll('input');
+
+                inputList.forEach((input) => {input.focus();})
+
+                console.log(inputList);
+                for (i=0; i<inputList.length; i++){
+                    if(!okList[i]){
+                        inputList[i].focus();
+                        return;
+                    }
+                }
+
+                form.submit();
             });
 
         }

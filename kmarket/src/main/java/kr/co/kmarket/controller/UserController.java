@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.SessionFlashMapManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +111,7 @@ public class UserController {
     public Map findId(@RequestBody Map map){
         log.info("UserController POST findId...");
         log.info(map.toString());
+
         if(map.get("name") != null){
             // 메일 전송
             userService.findId_EmailAuth(map);
@@ -120,13 +123,19 @@ public class UserController {
     }
 
     @GetMapping("/findId/result")
-    public String findId(Map map, Model m){
+    public String findId(@RequestParam Map map, Model m, RedirectAttributes redirectAttributes){
+        log.info(map.toString());
         String name = (String)map.get("name");
         String email = (String)map.get("email");
-        UserVO user = userService.findByNameAndEmail(email, name);
-        log.info(user.toString());
+        UserVO user = userService.findByNameAndEmail(name, email);
+
+        if(user == null){
+            redirectAttributes.addFlashAttribute("error", "error");
+            return "redirect:/user/findId";
+        }
+
         m.addAttribute("user", user);
-        return "user/findIdResult";
+        return "/user/findIdResult";
     }
 
     @ResponseBody

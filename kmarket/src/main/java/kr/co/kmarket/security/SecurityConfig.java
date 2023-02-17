@@ -2,9 +2,11 @@ package kr.co.kmarket.security;
 
 
 import kr.co.kmarket.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +26,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig implements WebMvcConfigurer {
+
+	@Autowired
+	private ResourceLoader resourceLoader;
+
 
 	UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
 	@Bean
@@ -96,24 +102,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 //		return new InMemoryUserDetailsManager(user);
 //	}
 
-
-	// spring boot에서 외부 경로 매핑하기
-	@Value("${spring.product.img}")
-	String uploadPath;
-
-
-	// windows 파일 경로 설정
-//	@Override
-//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		registry.addResourceHandler("/file/**")
-//				.addResourceLocations("file:///C:/Users/java2/Desktop/workspace/Kmarket2/kmarket/file/");
-//	}
-
-	// mac os 파일 경로 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/file/**")
-				.addResourceLocations(uploadPath);
+				.addResourceLocations(resourceLoader.getResource("file:file/"));
 	}
 
 }
