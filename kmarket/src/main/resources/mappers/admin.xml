@@ -89,6 +89,25 @@
         delete from `km_product` where `prodNo` = #{prodNo};
     </delete>
 
+<!-- ////////////////////////////////////////////////////////////////// -->
+    <!-- Admin Cs -->
+    <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
+        select `csNo`, `uid`, `cate1`, `cate2`, `type`, `title`, `rdate`, `hit`
+        from `km_cs`
+        where `cate1` = #{cate1}
+        <include refid="csCategory2"/>
+        order by `csNo` desc
+        limit #{offset}, 10;
+    </select>
 
+    <sql id="csCategory2">
+        <if test="cate2 != null">
+            and `cate2` = #{cate2}
+        </if>
+    </sql>
+
+    <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `km_cs`
+    </select>
 
 </mapper>

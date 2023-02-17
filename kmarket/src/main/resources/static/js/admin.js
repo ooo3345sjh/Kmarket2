@@ -294,4 +294,12 @@ $(document).on("keyup", "input[name=discount]", function() {
         }
     }
 
+// admin cs
+// 공지사항 유형별로 링크 보내기
+$(function () {
+    $('select[name=cate2]').change(function () {
+        let cate2 = $('select[name=cate2]').val();
+        location.href = '/kmarket/admin/cs/list?cate1=_notice&cate2=' + cate2;
+    })
+});
 

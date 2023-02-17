@@ -1,6 +1,7 @@
 package kr.co.kmarket.dao;
 
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,6 @@ public interface AdminDAO {
     public int countProductAdmin(SearchCondition sc);
     public int deleteProduct(String prodNo);
     public int modifyProduct(ProductVO product);
+    public List<CsVO> selectCsAdmin(SearchCondition sc);
+    public int countCsAdmin(SearchCondition sc);
 }

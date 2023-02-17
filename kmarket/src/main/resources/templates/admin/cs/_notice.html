@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<section id="admin-cs-list">
+    <nav>
+        <h3>공지사항 목록</h3>
+        <p>
+            HOME > 고객센터 > <strong>공지사항</strong>
+        </p>
+    </nav>
+    <!-- 고객센터 컨텐츠 시작 -->
+    <section id="notice">
+        <div>
+            <select name="cate2">
+                <option value="">유형 선택</option>
+                <option value="service">고객서비스</option>
+                <option value="safeDeal">안전거래</option>
+                <option value="xproduct">위해상품</option>
+                <option value="great">이벤트당첨</option>
+            </select>
+        </div>
+        <table>
+            <tr>
+                <th><input type="checkbox" name="all"/></th>
+                <th>번호</th>
+                <th>유형</th>
+                <th>제목</th>
+                <th>조회</th>
+                <th>날짜</th>
+                <th>관리</th>
+            </tr>
+            <th:block th:if="${#lists.size(articles) != 0}">
+                <tr th:each="article, i : ${articles}">
+                    <td><input type="checkbox" name="상품코드"/></td>
+                    <td>[[${article.csNo}]]</td>
+                    <td>[[${article.type}]]</td>
+                    <td>
+                        <a href="#">[[${article.title}]]</a>
+                    </td>
+                    <td>[[${article.hit}]]</td>
+                    <td th:text="${#strings.substring(article.rdate, 2, 10)}"></td>
+                    <td>
+                        <a href="#">[삭제]</a>
+                        <a href="#">[관리]</a>
+                    </td>
+                </tr>
+            </th:block>
+            <!-- 게시글이 없을 경우 -->
+            <th:block th:if="${#lists.size(articles) == 0}">
+                <tr> <td colspan="11" class="noArticles">등록된 게시글이 없습니다.</td> </tr>
+            </th:block>
+        </table>
+
+        <input type="button" value="선택삭제" />
+
+        <!-- 페이징 -->
+        <!-- 게시글이 없을 경우 페이징 숨기기 -->
+        <div class="paging" th:style="${#lists.size(articles) == 0 ? 'visibility : hidden;' : ''}"  th:object="${ph}">
+            <th:block th:if="*{showPrev}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">< 이전</a>
+            </th:block>
+
+            <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
+                    [[${num}]]
+                </a>
+            </th:block>
+
+            <th:block th:if="*{showNext}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음 ></a>
+            </th:block>
+        </div>
+    </section>
+</section>

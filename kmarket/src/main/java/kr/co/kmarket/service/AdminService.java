@@ -3,6 +3,7 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.AdminDAO;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -50,22 +51,17 @@ public class AdminService {
     }
 
     /////////////////////////// 상품 조회 ///////////////////////////
-    public void selectProductAdmin(Model m, SearchCondition sc, @AuthenticationPrincipal UserVO user) {
+    public void selectProductAdmin(Model m, SearchCondition sc, UserVO user) {
 
         int totalCnt = dao.countProductAdmin(sc); // 전체 상품 갯수
 
-        /** 검색 페이지 > 전체 페이수일 경우 실행 **/
         int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지수
-
-        // 전체 페이지수가 현재 페이지수 보다 크면 전체 페이지수로 값 저장
-        if(sc.getPage() > totalPage) sc.setPage(totalPage);
-
+        if(sc.getPage() > totalPage) sc.setPage(totalPage); // 전체 페이지수가 현재 페이지수 보다 크면 전체 페이지수로 값 저장
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
 
         // SearchCondition에 uid, type 담기
         sc.setType(user.getType());
         sc.setUid(user.getUid());
-        System.out.println("type : " + user.getType());
 
         List<ProductVO> list = dao.selectProductAdmin(sc); // 상품 조회
 
@@ -133,5 +129,21 @@ public class AdminService {
         product.setThumb2(names.get(1));
         product.setThumb3(names.get(2));
         product.setDetail(names.get(3));
+    }
+
+    /////////////////////////// 관리자 고객센터 게시판 불러오기 ///////////////////////////
+    public List<CsVO> selectCsAdmin(Model m, SearchCondition sc) {
+
+        int totalCnt = dao.countCsAdmin(sc); // 전체 게시물 갯수
+        int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지 수
+        if(sc.getPage() > totalPage) sc.setPage(totalPage);
+        PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
+
+        List<CsVO> articles = dao.selectCsAdmin(sc);
+
+        m.addAttribute("articles", articles);
+        m.addAttribute("ph", pageHandeler);
+
+        return articles;
     }
 }

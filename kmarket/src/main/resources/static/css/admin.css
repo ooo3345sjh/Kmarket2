@@ -528,14 +528,13 @@ button[type=submit] {
     text-align: center;
     box-sizing: border-box;
 }
-#admin-cs-list > section > table  tr > td:nth-child(1) {width: 20px;}
-#admin-cs-list > section > table  tr > td:nth-child(2) {width: 50px;}
-#admin-cs-list > section > table  tr > td:nth-child(3) {width: 50px;}
-#admin-cs-list > section > table  tr > td:nth-child(4) {width: 50px;}
-#admin-cs-list > section > table  tr > td:nth-child(5) {width: 400px;}
-#admin-cs-list > section > table  tr > td:nth-child(6) {width: 50px;}
-#admin-cs-list > section > table  tr > td:nth-child(7) {width: 50px;}
-#admin-cs-list > section > table  tr > td:nth-child(8) {width: 50px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(1) {width: 20px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(2) {width: 50px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(3) {width: 100px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(4) {width: 400px; text-align: left;}
+#admin-cs-list > #notice > table  tr > td:nth-child(5) {width: 50px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(6) {width: 100px;}
+#admin-cs-list > #notice > table  tr > td:nth-child(7) {width: 70px;}
 
 #admin-cs-list > section > table img.thumb {width: 60px;}
 
@@ -545,24 +544,25 @@ button[type=submit] {
     margin-top: 10px;
 }
 
+/* cs 페이징 처리 */
 #admin-cs-list .paging {
     width: 100%;
     padding: 30px 0;
     text-align: center;
 }
 
-#admin-cs-list .paging > span > a {
+#admin-cs-list .paging > a {
     color: #777;
-    font-family: "Malgun Gothic", Dotum, Tahoma, sans-serif;
+    font-family: "돋움", Dotum, Tahoma, sans-serif;
     font-size: 11px;
     letter-spacing: -1px;
 }
 
-#admin-cs-list .paging > span > a:hover {
+#admin-cs-list .paging > a:hover {
     text-decoration: underline;
 }
 
-#admin-cs-list .paging > .num > a {
+#admin-cs-list .paging > .num {
     display: inline-block;
     min-width: 14px;
     margin: 0 2px;
@@ -575,11 +575,11 @@ button[type=submit] {
     text-align: center;
     text-decoration: none;
 }
-#admin-cs-list .paging > .num > a:hover {
+#admin-cs-list .paging > .num:hover {
     border: 1px solid #454c5f;
     text-decoration: none;
 }
-#admin-cs-list .paging > .num > a.on {
+#admin-cs-list .paging > .current {
     color: #fe434c;
     font-weight: bold;
 }
