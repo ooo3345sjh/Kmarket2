@@ -42,13 +42,13 @@
                         <tr th:each="product,i:${products}">
                             <td><input type="checkbox" name="check" th:value="${product.prodNo}"/></td>
                             <td>
-                                <a th:href="@{/product/list(prodNo=${product.prodNo})}">
+                                <a th:href="@{/product/view(prodNo=${product.prodNo})}">
                                     <img th:src="@{/file/} + ${product.thumb1}" class="thumb">
                                 </a>
                             </td>
                             <td class="prodNo">[[${product.prodNo}]]</td>
                             <td class="prodName">
-                                <a th:href="@{/product/list(prodNo=${product.prodNo})}" th:text="|${product.prodName}|"></a>
+                                <a th:href="@{/product/view(prodNo=${product.prodNo})}" th:text="|${product.prodName}|"></a>
                             </td>
                             <td>[[${product.price}]]</td> <!-- 세자리 수 콤마 [[${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}]] -->
                             <td>[[${product.discount}]]</td>

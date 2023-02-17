@@ -2,21 +2,17 @@ package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.AdminService;
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
 * 날짜 : 2023/02/09
@@ -118,7 +114,11 @@ public class AdminController {
 
     // 관리자 고객센터
     @GetMapping("/cs/list")
-    public String csList() {
+    public String csList(Model m, SearchCondition sc) {
+
+        service.selectCsAdmin(m, sc);
+
+        m.addAttribute("cate1", sc.getCate1());
         return "admin/cs/list";
     }
 
