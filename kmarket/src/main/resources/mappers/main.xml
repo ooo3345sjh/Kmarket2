@@ -15,7 +15,7 @@
 
     <!-- 베스트 상품 5개 출력 -->
     <select id="selectProductBest" resultType="kr.co.kmarket.vo.ProductVO">
-        SELECT prodNo, Cate1, Cate2, prodName, price, discount, thumb1 FROM km_product ORDER BY sold DESC LIMIT 5;
+        SELECT prodNo, cate1, cate2, prodName, price, discount, thumb1 FROM km_product ORDER BY sold DESC LIMIT 5;
     </select>
 
     <!-- 카테고리 1 ,2 값 불러오기 -->
@@ -27,8 +27,8 @@
     <select id="selectProductMode" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT
                 prodNo,
-                Cate1,
-                Cate2,
+                cate1,
+                cate2,
                 prodName,
                 descript,
                 price,
