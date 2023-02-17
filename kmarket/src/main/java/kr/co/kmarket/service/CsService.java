@@ -5,6 +5,7 @@ import kr.co.kmarket.repository.CsRepo;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.List;
  * 내용 : cs controller
  * */
 @Service
+@Slf4j
 public class CsService {
 
       @Autowired
@@ -27,15 +29,15 @@ public class CsService {
       public List<CsVO> select5(){
             return dao.select5();
       }
-//    public void insertCs(CsVO vo){ dao.insertCs(vo); }
-//
+
       public CsVO selectarticle (Integer no) {
             return dao.selectarticle(no);
       }
-//
-//    public List<CsVO> selectCsAll(int start) {
-//        return dao.selectCsall(start);
-//    }
+
+      public List<CsVO> selectfaqtypes(SearchCondition sc){
+            return dao.selectfaqtypes(sc);
+      }
+
       public void selectarticles(Model m, SearchCondition sc){
             int totalCnt = dao.countAll(sc);
             // 전체 페이지수
@@ -47,5 +49,4 @@ public class CsService {
             m.addAttribute("ph", pageHandler);
             m.addAttribute("articles", articles);
       }
-
 }

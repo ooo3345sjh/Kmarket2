@@ -1,9 +1,12 @@
 package kr.co.kmarket.utils;
 
+import kr.co.kmarket.vo.CsVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
