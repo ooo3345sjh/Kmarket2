@@ -67,7 +67,9 @@ public class CsController {
     }
     @GetMapping("cs/faq/list")
     public String faq_list(Model m,SearchCondition sc){
-        service.selectarticles(m,sc);
+        List<CsVO> types = service.selectfaqtypes(sc);
+        service.selectarticles(m, sc);
+        m.addAttribute("types",types);
         m.addAttribute("sc",sc);
         return "cs/faq/list";
     }
