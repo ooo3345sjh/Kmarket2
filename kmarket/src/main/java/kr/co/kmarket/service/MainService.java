@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 메인 서비스
  * @since 2023/02/13
@@ -33,9 +35,21 @@ public class MainService {
      */
     public List<ProductVO> selectProductBest() {
         List<ProductVO> bests = dao.selectProductBest();
+
         for (ProductVO best : bests) {
             best.setDisPrice((int) (best.getPrice() * (1 - (best.getDiscount() / 100.0))));
         }
+
+        // 이미지 파일 경로 설정
+        bests = bests.stream().map(p -> {
+            int cate1 = p.getCate1();
+            int cate2 = p.getCate2();
+            String thumb1 = cate1 + "/" + cate2 + "/" + p.getThumb1(); // /cate1/cate2/thumb1
+            p.setThumb1(thumb1);
+            return p;
+
+        }).collect(Collectors.toList());
+
         return bests;
     }
 
@@ -57,9 +71,22 @@ public class MainService {
      */
     public List<ProductVO> selectProductMode(String mode) {
         List<ProductVO> products = dao.selectProductMode(mode);
+
         for(ProductVO product : products) {
             product.setDisPrice((int) (product.getPrice() * (1 - ( product.getDiscount() / 100.0 ))));
         }
+
+        // 이미지 파일 경로 설정
+        products = products.stream().map(p -> {
+            int cate1 = p.getCate1();
+            int cate2 = p.getCate2();
+
+            String thumb2 = cate1 + "/" + cate2 + "/" + p.getThumb2(); // /cate1/cate2/thumb1
+            p.setThumb2(thumb2);
+
+            return p;
+        }).collect(Collectors.toList());
+         //System.out.println("list : " + products);
         return products;
     }
 
