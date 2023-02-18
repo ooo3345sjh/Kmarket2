@@ -19,8 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.io.IOException;
 
 
 @EnableWebSecurity(debug = true)
@@ -74,7 +77,11 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-       return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+       return (web) -> {
+			   web.ignoring()
+					   .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+					   .mvcMatchers("/file/**");
+	   };
 	}
 
 //	@Bean
