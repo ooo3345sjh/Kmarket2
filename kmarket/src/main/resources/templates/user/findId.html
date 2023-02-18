@@ -5,7 +5,7 @@
 <th:block layout:fragment="main">
     <main id="member">
         <section class="find findId">
-            <form name="form" th:action='@{/user/findId/result}' method="get">
+            <form name="form" th:action='@{/user/findId/result}' method="post">
                 <table border="0">
                     <caption>아이디 찾기</caption>
                     <tr>
@@ -56,9 +56,11 @@
         let emailAuthOk = false;
 
         const urlParams = new URL(location.href).searchParams;
-        const error = urlParams.get('error');
+        const error = "[[${error}]]";
+        const error1 = "[[${param.error}]]";
 
-        if(error != null) alert("찾으시는 회원 정보가 없습니다.");
+        if(error == "error") alert("찾으시는 회원 정보가 없습니다.");
+        if(error1 == "error") alert("찾으시는 회원 정보가 없습니다.");
 
         window.onload = function(){
             const reName = /^[가-힣]+$/;
@@ -87,7 +89,7 @@
 
             });
 
-            let url = "user/findId";
+            let url = "user/findId/emailAuth";
             emailAuth(url);
 
             const btnNext = document.querySelector('.btnNext'); // 다음 버튼

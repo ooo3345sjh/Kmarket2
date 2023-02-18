@@ -10,6 +10,8 @@ import kr.co.kmarket.service.UserService;
 import kr.co.kmarket.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +37,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() throws IOException {
         return "user/login";
     }
 
@@ -107,9 +111,9 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/findId")
-    public Map findId(@RequestBody Map map){
-        log.info("UserController POST findId...");
+    @PostMapping("/findId/emailAuth")
+    public Map findId_emailAuth(@RequestBody Map map){
+        log.info("UserController POST findId_emailAuth...");
         log.info(map.toString());
 
         if(map.get("name") != null){
@@ -122,20 +126,20 @@ public class UserController {
         return map;
     }
 
-    @GetMapping("/findId/result")
-    public String findId(@RequestParam Map map, Model m, RedirectAttributes redirectAttributes){
-        log.info(map.toString());
+    @PostMapping("/findId/result")
+    public String findIdResult(@RequestParam Map map, RedirectAttributes rttr, Model m){
+        log.info("UserController POST findId...");
         String name = (String)map.get("name");
         String email = (String)map.get("email");
-        UserVO user = userService.findByNameAndEmail(name, email);
 
+        UserVO user = userService.findByNameAndEmail(name, email);
         if(user == null){
-            redirectAttributes.addFlashAttribute("error", "error");
+            rttr.addFlashAttribute("error", "error");
             return "redirect:/user/findId";
         }
 
         m.addAttribute("user", user);
-        return "/user/findIdResult";
+        return "user/findIdResult";
     }
 
     @ResponseBody

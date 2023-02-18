@@ -24,16 +24,6 @@ public class SearchCondition {
     private int type; // 상품 조회를 위한 사용자 타입, 아이디
     private String uid;
 
-
-    public String getCate1() {
-
-        if (this.cate1.startsWith("_")) {
-            return cate1.substring(1);
-        }else{
-            return cate1;
-        }
-    }
-
     public String getQueryString(Integer page){
         // ?page=1&pageSize=10&option="T"&keyword="title"
         return getQueryString(page, no);
