@@ -21,8 +21,8 @@
                     <h3>[[${type.type}]]</h3>
                     <!-- 게시글이 있는 경우 -->
                         <ul>
-                            <th:block th:each="article,i:${articles}" >
-                                <li th:if="${#strings.equals(type.type, article.type)}"><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
+                            <th:block th:each="article,i:${articles}"  th:if="${#strings.equals(type.type, article.type)}">
+                                <li><a th:href="@{/cs/faq/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
                                         class="title" th:data-no="${article.csNo}"><span>Q.</span>[[${article.title}]]</a></li>
                             </th:block>
                                 <li class="more"><a href="#">더보기</a> </li>

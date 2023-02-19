@@ -30,15 +30,15 @@
         <include refid="cate2"/>
         <include refid="type"/>
         ORDER BY `csNo` DESC
-        <include refid="notice"/>;
+        <include refid="notfaq"/>;
     </select>
     <sql id="type">
         <if test="cate1.equals('faq')">
             AND `type` = #{type}
         </if>
     </sql>
-    <sql id="notice">
-        <if test="cate1.equals('notice')">
+    <sql id="notfaq">
+        <if test="!cate1.equals('faq')">
             LIMIT #{offset}, 10
         </if>
     </sql>

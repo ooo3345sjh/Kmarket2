@@ -3,32 +3,38 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/cs_layout">
 <th:block layout:fragment="main">
-        <section id="cs">
-            <div class="qna">
-                <nav>
-                    <div>
-                      <p>홈<span>></span>문의하기</p>
-                    </div>
-                </nav>
-                <section class="write">
-                    <aside>
-                        <h2>문의하기</h2>
-                        <ul>
-                            <li class="on"><a href="#">회원</a></li>
-                            <li><a href="#">쿠폰/이벤트</a></li>
-                            <li><a href="#">주문/결제</a></li>
-                            <li><a href="#">배송</a></li>
-                            <li><a href="#">취소/반품/교환</a></li>
-                            <li><a href="#">여행/숙박/항공</a></li>
-                            <li><a href="#">안전거래</a></li>
-                        </ul>
-                    </aside>
                     <article>
-                        <nav>
-                    		<h1>회원</h1>
-                    		<span>회원 관련 문의내용 입니다.</span>
-                    	</nav>
-                        <form action="#">
+                        <th:block th:switch="${sc.cate2}">
+                            <nav th:case="user">
+                                <h1>회원</h1>
+                                <h2>회원 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="coupon">
+                                <h1>쿠폰/이벤트</h1>
+                                <h2>쿠폰/이벤트 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="order">
+                                <h1>주문/결제</h1>
+                                <h2>주문/결제 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="delivery">
+                                <h1>배송</h1>
+                                <h2>배송 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="cancel">
+                                <h1>취소/반품/교환</h1>
+                                <h2>취소/반품/교환 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="travel">
+                                <h1>여행/숙박/항공</h1>
+                                <h2>여행/숙박/항공 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="safeDeal">
+                                <h1>안전거래</h1>
+                                <h2>안전거래 관련 문의 내용입니다.</h2>
+                            </nav>
+                        </th:block>
+                        <form th:action="">
                             <table>
                                 <tr>
                                     <td>문의유형</td>
@@ -59,7 +65,7 @@
                                 </tr>
                             </table>
                         </form>
-                        <a href="#" class="btnList">취소하기</a>
+                        <a th:href="@{/cs/qna/list(cate1=${sc.cate1},cate2=${sc.cate2})}" class="btnList">취소하기</a>
                         <a href="#" class="btnSubmit">등록하기</a>
                     </article>
                 </section>

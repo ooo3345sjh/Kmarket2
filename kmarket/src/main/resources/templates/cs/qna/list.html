@@ -5,60 +5,72 @@
 <th:block layout:fragment="main">
 
                     <article>
-                        <nav>
-                            <h1>회원</h1>
-                            <h2>회원관련 문의 내용입니다.</h2>
-                        </nav>
+                        <th:block th:switch="${sc.cate2}">
+                            <nav th:case="user">
+                                <h1>회원</h1>
+                                <h2>회원 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="coupon">
+                                <h1>쿠폰/이벤트</h1>
+                                <h2>쿠폰/이벤트 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="order">
+                                <h1>주문/결제</h1>
+                                <h2>주문/결제 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="delivery">
+                                <h1>배송</h1>
+                                <h2>배송 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="cancel">
+                                <h1>취소/반품/교환</h1>
+                                <h2>취소/반품/교환 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="travel">
+                                <h1>여행/숙박/항공</h1>
+                                <h2>여행/숙박/항공 관련 문의 내용입니다.</h2>
+                            </nav>
+                            <nav th:case="safeDeal">
+                                <h1>안전거래</h1>
+                                <h2>안전거래 관련 문의 내용입니다.</h2>
+                            </nav>
+                        </th:block>
                         <table>
-                            <tr>
-                                <td><a href="#">[가입] 가입 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[탈퇴] 탈퇴 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[회원정보] 회원정보 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[탈퇴] 탈퇴 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[탈퇴] 탈퇴 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[가입] 가입 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">[탈퇴] 탈퇴 문의내용</a></td>
-                                <td>leta**</td>
-                            </tr>
+                            <th:block th:if="${#lists.size(articles) != 0}">
+                                <tr th:each="article,i:${articles}" th:object="${ph}">
+                                    <td>
+                                        <a th:href="@{/cs/qna/view} + ${ph.sc.getQueryString(ph.sc.page, article.csNo)}"
+                                           th:text="|[${article.type}] ${#strings.length(article.title) > 30 ? #strings.substring(article.title, 0, 20) + '...' : article.title}|" class="title" th:data-no="${article.csNo}"></a>
+                                    </td>
+                                    <td>
+                                        <span th:text="${article.comment == null ? '검토중' : '답변완료'}" th:class="${article.comment == null ? 'pending' : 'complete'}"></span>
+                                    </td>
+                                    <td>[[|${#strings.substring(article.uid,0,3)}**|]]</td>
+                                    <td>[[${#strings.substring(article.rdate,2,10)}]]</td>
+                                </tr>
+                            </th:block>
+                            <!-- 게시글이 없는 경우 -->
+                            <th:block th:if="${#lists.size(articles) == 0}">
+                                <tr> <td colspan="5">등록된 게시글이 없습니다.</td> </tr>
+                            </th:block>
                         </table>
-                        <div class="page">
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">다음</a>
+                        <div class="page" th:style="${#lists.size(articles) == 0 ? 'visibility:hidden;':''}" th:object="${ph}">
+
+                            <th:block th:if="*{showPrev}">
+                                <a th:href="@{/cs/qna/list} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">이전</a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
+                                <a  th:href="@{/cs/qna/list} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
+                                    [[${num}]]
+                                </a>
+                            </th:block>
+
+                            <th:block th:if="*{showNext}">
+                                <a th:href="@{/cs/qna/list} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음</a>
+                            </th:block>
                         </div>
-                        <a href="#">문의하기</a>
+                        <a th:href="@{/cs/qna/write(cate1='qna',cate2=${sc.cate2})}">문의하기</a>
                     </article>
                 </section>
             </div>
