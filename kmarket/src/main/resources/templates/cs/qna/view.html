@@ -5,13 +5,21 @@
 <th:block layout:fragment="main">
                     <article>
                         <nav>
-                            <h2 class="title">[[${article.type}]] [[${article.title}]]</h2>
+                            <h2 class="title">[[|[${article.type}]|]] [[${article.title}]]</h2>
                                 <span>[[|${#strings.substring(article.uid,0,3)}**|]]</span>
                                 <span class="date">[[${#strings.substring(article.rdate,2,10)}]]</span>
                         </nav>
                         <div class="content" style="white-space: pre-line;">
                             <p>
                                 [[${article.content}]]
+                            </p>
+                        </div>
+                        <nav>
+                            <h2 class="title">[[|[답변] ${article.title}|]]</h2>
+                        </nav>
+                        <div class="comment">
+                            <p>
+                                [[${article.comment}]]
                             </p>
                         </div>
                         <a th:href="@{/cs/qna/list(cate1=${article.cate1},cate2=${article.cate2})}" class="btnList">목록보기</a>

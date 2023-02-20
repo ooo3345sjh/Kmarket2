@@ -41,8 +41,7 @@ public class CsController {
         m.addAttribute("cate5", cate5);
         return "cs/cs_index";
     }
-    /*
-     이름 : 김동민
+    /**
      내용 : 고객센터 공지사항 목록
      */
     @GetMapping("cs/notice/list")
@@ -97,7 +96,8 @@ public class CsController {
         return "cs/qna/view";
     }
     @GetMapping("cs/qna/write")
-    public String qna_write(){
+    public String qna_write(Model m,SearchCondition sc){
+        m.addAttribute("sc",sc);
         return "cs/qna/write";
     }
 }
