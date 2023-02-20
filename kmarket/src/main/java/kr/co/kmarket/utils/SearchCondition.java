@@ -14,8 +14,8 @@ import java.util.List;
 public class SearchCondition {
     private Integer page = 1;
     private Integer pageSize = 10;
-    private String cate1 = null;
-    private String cate2 = null;
+    private String cate1;
+    private String cate2;
     private Integer no = 0;
     private String searchField;
     private String searchWord;
@@ -23,6 +23,7 @@ public class SearchCondition {
     // 추가 필드
     private int type; // 상품 조회를 위한 사용자 타입, 아이디
     private String uid;
+    private String csType;
 
     public String getQueryString(Integer page){
         // ?page=1&pageSize=10&option="T"&keyword="title"
@@ -31,16 +32,23 @@ public class SearchCondition {
 
     public String getQueryString(Integer page, Integer no){
         // ?page=1&pageSize=10&option="T"&keyword="title"
-        UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
-                .queryParam("cate1", cate1==null ? "null" : cate1)
-                .queryParam("cate2", cate2==null ? "null" : cate2)
-                .queryParam("page", page);
+        UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
 
+        if (page != null && page != 0)
+            builder.queryParam("page", page);
+
+        if (cate1 != null)
+            builder.queryParam("cate1", cate1);
+
+        if (cate2 != null)
+            builder.queryParam("cate2", cate2); // 이렇게 하면 cate1과 cate2가 없을 시 수행하지 않음 (김진우 수정)
 
         if (no != null && no != 0)
             builder.queryParam("no", no);
 
-        if (cate2 != null)
+        if (csType != null)
+            builder.queryParam("csType", csType);
+
 
         // 검색 기능
         if(searchField != null && !searchWord.isBlank()){

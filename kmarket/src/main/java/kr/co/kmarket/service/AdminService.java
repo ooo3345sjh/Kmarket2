@@ -135,6 +135,7 @@ public class AdminService {
     public List<CsVO> selectCsAdmin(Model m, SearchCondition sc) {
 
         int totalCnt = dao.countCsAdmin(sc); // 전체 게시물 갯수
+
         int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지 수
         if(sc.getPage() > totalPage) sc.setPage(totalPage);
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
@@ -146,4 +147,9 @@ public class AdminService {
 
         return articles;
     }
+
+    public int deleteCs(String csNo) {
+        return dao.deleteCs(csNo);
+    }
+
 }

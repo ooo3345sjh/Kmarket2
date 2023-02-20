@@ -7,66 +7,71 @@
         </p>
     </nav>
     <!-- 고객센터 컨텐츠 시작 -->
-    <section>
+    <section id="faqQna">
         <div>
-            <select name="search1">
-                <option value="search1">1차 선택</option>
-                <option value="search1">회원</option>
-                <option value="search1">쿠폰/혜택/이벤트</option>
-                <option value="search1">주문/결제</option>
-                <option value="search1">배송</option>
-                <option value="search1">취소/반품/교환</option>
-                <option value="search1">여행/숙박/항공</option>
-                <option value="search1">안전거래</option>
+            <select name="cate2" class="category2" onchange="optionChangeCs();">
+                <option value="">1차 선택</option>
+                <option value="user">회원</option>
+                <option value="coupon">쿠폰/혜택/이벤트</option>
+                <option value="order">주문/결제</option>
+                <option value="delivery">배송</option>
+                <option value="cancel">취소/반품/교환</option>
+                <option value="travel">여행/숙박/항공</option>
+                <option value="safeDeal">안전거래</option>
             </select>
-            <select name="search2">
-                <option value="search1">2차 선택</option>
+            <select name="type" class="type">
+                <option value="">2차 선택</option>
             </select>
+            <a th:href="@{/admin/cs/list(cate1=${cate1})}">&nbsp 전체 보기</a>
         </div>
         <table>
             <tr>
-                <th><input type="checkbox" name="all"/></th>
+                <th><input type="checkbox" name="allCheck" onclick="selectAll(this)"/></th>
                 <th>번호</th>
                 <th>1차유형</th>
                 <th>2차유형</th>
                 <th>제목</th>
                 <th>작성자</th>
-                <th>날짜</th>
+                <th>작성일</th>
                 <th>상태</th>
             </tr>
 
-            <tr>
-                <td><input type="checkbox" name="상품코드"/></td>
-                <td>123</td>
-                <td>주문/결제</td>
-                <td>상품</td>
-                <td>[청소년 위해상품/이미지] 청소년이 구매할 수 없는 상품은 무엇인가요.</td>
-                <td>kim**</td>
-                <td>22-12-30</td>
-                <td>검토중</td>
-            </tr>
+            <th:block th:if="${#lists.size(articles) != 0}">
+                <tr th:each="article, i : ${articles}">
+                    <td><input type="checkbox" name="check" th:value="${article.csNo}"/></td>
+                    <td>[[${article.csNo}]]</td>
+                    <td>[[${article.cate2}]]</td>
+                    <td>[[${article.type}]]</td>
+                    <td th:text="|[${article.type} ${article.title}]|"></td>
+                    <td>[[${article.uid}]]</td>
+                    <td th:text="|${#strings.substring(article.rdate, 2, 10)}|"></td>
+                    <td>검토중</td>
+                </tr>
+            </th:block>
+            <th:block th:if="${#lists.size(articles) == 0}">
+                <tr> <td colspan="11" class="noArticles">등록된 질문이 없습니다.</td> </tr>
+            </th:block>
         </table>
 
+        <input type="button" value="선택삭제" id="deleteButton" onclick="deleteCheckedCs()"/>
+        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/register(cate1=${cate1})}'|"/>
 
-        <input type="button" value="선택삭제" />
+        <!-- 페이징 -->
+        <!-- 게시글이 없을 경우 페이징 숨기기 -->
+        <div class="paging" th:style="${#lists.size(articles) == 0 ? 'visibility : hidden;' : ''}"  th:object="${ph}">
+            <th:block th:if="*{showPrev}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">< 이전</a>
+            </th:block>
 
+            <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num current':'num'}">
+                    [[${num}]]
+                </a>
+            </th:block>
 
-        <div class="paging">
-                        <span class="prev">
-                            <a href="#"><&nbsp;이전</a>
-                        </span>
-            <span class="num">
-                            <a href="#" class="on">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">6</a>
-                            <a href="#">7</a>
-                        </span>
-            <span class="next">
-                            <a href="#">다음&nbsp;></a>
-                        </span>
+            <th:block th:if="*{showNext}">
+                <a th:href="@{/admin/cs/list} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음 ></a>
+            </th:block>
         </div>
 
     </section>

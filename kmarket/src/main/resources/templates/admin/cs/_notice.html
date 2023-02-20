@@ -9,17 +9,17 @@
     <!-- 고객센터 컨텐츠 시작 -->
     <section id="notice">
         <div>
-            <select name="cate2">
-                <option value="">유형 선택</option>
-                <option value="service">고객서비스</option>
-                <option value="safeDeal">안전거래</option>
-                <option value="xproduct">위해상품</option>
-                <option value="great">이벤트당첨</option>
+            <select name="cate2" class="noticeCate">
+                <option value="none">전체 보기</option>
+                <option value="service" th:selected="${ph.sc.cate2 == 'service'}">고객서비스</option>
+                <option value="safeDeal" th:selected="${ph.sc.cate2 == 'safeDeal'}">안전거래</option>
+                <option value="xproduct" th:selected="${ph.sc.cate2 == 'xproduct'}">위해상품</option>
+                <option value="great" th:selected="${ph.sc.cate2 == 'great'}">이벤트당첨</option>
             </select>
         </div>
         <table>
             <tr>
-                <th><input type="checkbox" name="all"/></th>
+                <th><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"/></th>
                 <th>번호</th>
                 <th>유형</th>
                 <th>제목</th>
@@ -29,7 +29,7 @@
             </tr>
             <th:block th:if="${#lists.size(articles) != 0}">
                 <tr th:each="article, i : ${articles}">
-                    <td><input type="checkbox" name="상품코드"/></td>
+                    <td><input type="checkbox" name="check" th:value="${article.csNo}"/></td>
                     <td>[[${article.csNo}]]</td>
                     <td>[[${article.type}]]</td>
                     <td>
@@ -38,8 +38,8 @@
                     <td>[[${article.hit}]]</td>
                     <td th:text="${#strings.substring(article.rdate, 2, 10)}"></td>
                     <td>
-                        <a href="#">[삭제]</a>
-                        <a href="#">[관리]</a>
+                        <a href="#" class="deleteCs" th:data-no="${article.csNo}">[삭제]</a>
+                        <a th:href="@{/admin/cs/modify(csNo=${article.csNo})}">[수정]</a>
                     </td>
                 </tr>
             </th:block>
@@ -49,7 +49,8 @@
             </th:block>
         </table>
 
-        <input type="button" value="선택삭제" />
+        <input type="button" value="선택삭제" id="deleteButton" onclick="deleteCheckedCs()"/>
+        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/register}'|"/>
 
         <!-- 페이징 -->
         <!-- 게시글이 없을 경우 페이징 숨기기 -->

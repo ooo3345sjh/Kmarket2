@@ -583,3 +583,38 @@ button[type=submit] {
     color: #fe434c;
     font-weight: bold;
 }
+
+/* cs 선택삭제 */
+#admin-cs-list > section #deleteButton {
+    float: left;
+    background: #fff;
+    height:auto;
+    cursor:pointer;
+    text-indent: 0;
+    padding: 10px 15px;
+    border : 1px solid #d6d6d6;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+/* cs 등록하기 */
+#admin-cs-list > section #registerButton {
+    float: right;
+    background: #fff;
+    height:auto;
+    cursor:pointer;
+    text-indent: 0;
+    padding: 10px 15px;
+    border : 1px solid #d6d6d6;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+#admin-cs-list > #faqQna > table  tr > td:nth-child(1) {width: 20px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(2) {width: 50px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(3) {width: 80px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(4) {width: 80px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(5) {width: 400px; text-align: left;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(6) {width: 70px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(7) {width: 70px;}
+#admin-cs-list > #faqQna > table  tr > td:nth-child(8) {width: 70px;}
