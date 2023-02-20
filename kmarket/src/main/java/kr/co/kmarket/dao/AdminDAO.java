@@ -25,4 +25,5 @@ public interface AdminDAO {
     public int modifyProduct(ProductVO product);
     public List<CsVO> selectCsAdmin(SearchCondition sc);
     public int countCsAdmin(SearchCondition sc);
+    public int deleteCs(String csNo);
 }

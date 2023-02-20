@@ -49,9 +49,8 @@ public class AdminController {
     @GetMapping("/product/deleteProduct")
     public Map deleteProduct(@RequestParam String prodNo) {
         log.info("deleteProduct...");
-        // System.out.println("prodNo = " + prodNo);
+
         int result = service.deleteProduct(prodNo);
-        System.out.println("result = " + result);
 
         Map map = new HashMap();
         map.put("result", result);
@@ -64,7 +63,6 @@ public class AdminController {
     @PostMapping("/product/deleteSelectedProduct")
     public Map deleteSelectedProduct(@RequestParam("valueArr") String[] ajaxMsg) {
         log.info("deleteSelectedProduct...");
-
         int size = ajaxMsg.length;
         int result = 0;
         // System.out.println("ajaxMsg: " + ajaxMsg);
@@ -116,12 +114,44 @@ public class AdminController {
     @GetMapping("/cs/list")
     public String csList(Model m, SearchCondition sc) {
 
+        System.out.println("sc = " + sc);
         service.selectCsAdmin(m, sc);
 
         m.addAttribute("cate1", sc.getCate1());
         return "admin/cs/list";
     }
 
+    @ResponseBody
+    @GetMapping("/cs/delete")
+    public Map deleteCs(@RequestParam  String csNo) {
+        log.info("deleteCs...");
+        int result = service.deleteCs(csNo);
+
+        Map map = new HashMap();
+        map.put("result", result);
+
+        return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/cs/deleteChecked")
+    public Map deleteCheckedCs(@RequestParam("valueArr") String[] checkedCs) {
+
+        log.info("deleteCheckedCs...");
+        System.out.println("checkedCs[1] = " + checkedCs[1]);
+
+        int size = checkedCs.length;
+        int result = 0;
+        System.out.println("size = " + size);
+        for (int i=0; i<size; i++) {
+            result = service.deleteCs(checkedCs[i]);
+        }
+
+        Map map = new HashMap();
+        map.put("result", result);
+
+        return map;
+    }
 
 
 }

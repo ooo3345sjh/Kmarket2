@@ -96,18 +96,34 @@
         from `km_cs`
         where `cate1` = #{cate1}
         <include refid="csCategory2"/>
+        <include refid="csType"/>
         order by `csNo` desc
         limit #{offset}, 10;
     </select>
 
+    <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `km_cs`
+        where `cate1` = #{cate1}
+        <include refid="csCategory2"/>
+        <include refid="csType"/>
+    </select>
+
     <sql id="csCategory2">
-        <if test="cate2 != null">
+        <if test='cate2 != null'> <!-- cate2를 안 받아올 때 실행하지 않는 if문 찾기 -->
             and `cate2` = #{cate2}
         </if>
     </sql>
 
-    <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM `km_cs`
-    </select>
+    <!-- cs type 유형별 리스트 출력 -->
+    <sql id="csType">
+        <if test="csType != null">
+            and `type` = #{csType}
+        </if>
+    </sql>
+
+    <delete id="deleteCs">
+        delete from `km_cs` where `csNo` = #{csNo};
+    </delete>
+
 
 </mapper>

@@ -11,21 +11,21 @@ $(function() {
     });
 })
 
-    // 검색어 하이라이트 이벤트
-    const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
-    const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
+// 검색어 하이라이트 이벤트
+const searchField = document.querySelector('select[name=searchField]'); // 검색 필드
+const searchWord = document.querySelector('input[name=searchWord]');   // 검색 단어
 
-    $(function (){
-        if(searchField.options[searchField.selectedIndex].value === "prodName"){
-            $('.prodName').highlight(searchWord.value);
-        }
-        else if(searchField.options[searchField.selectedIndex].value === "prodNo"){
-            $('.prodNo').highlight(searchWord.value);
-        }
-        else if(searchField.options[searchField.selectedIndex].value === "seller"){
-            $('.seller').highlight(searchWord.value);
-        }
-    })
+$(function (){
+    if(searchField.options[searchField.selectedIndex].value === "prodName"){
+        $('.prodName').highlight(searchWord.value);
+    }
+    else if(searchField.options[searchField.selectedIndex].value === "prodNo"){
+        $('.prodNo').highlight(searchWord.value);
+    }
+    else if(searchField.options[searchField.selectedIndex].value === "seller"){
+        $('.seller').highlight(searchWord.value);
+    }
+})
 
 // 선택삭제 눌려서 삭제 처리
 function checkDelete() {
@@ -41,23 +41,25 @@ function checkDelete() {
     if (valueArr.length == 0) {
         alert('선택된 상품이 없습니다.');
     } else {
-        let chk = confirm('정말 삭제하시겠습니까?');
+        let isDeleteOK = confirm('정말 삭제하시겠습니까?');
         console.log(valueArr);
+        if(isDeleteOK) {
         $.ajax({
-            url: url,
-            type: 'POST',
-            traditional: true,
-            data: {valueArr: valueArr},
-            dataType: 'json',
-            success: function(data) {
-                if (data.result = 1) {
-                    alert('삭제되었습니다.');
-                    location.replace("/kmarket/admin/product/list");
-                } else {
-                    alert('삭제에 실패했습니다.');
+                url: url,
+                type: 'POST',
+                traditional: true,
+                data: {valueArr: valueArr},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.result = 1) {
+                        alert('삭제되었습니다.');
+                        location.replace("/kmarket/admin/product/list");
+                    } else {
+                        alert('삭제에 실패했습니다.');
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
 ////////////////////////////////////////////////////////////////
@@ -69,7 +71,6 @@ $(function() {
         let isDeleteOK = confirm('정말 삭제하시겠습니까?');
 
         if(isDeleteOK) {
-            let prod = $(this).closest('tr');
             let prodNo = $(this).attr('data-no');
             console.log(prodNo);
 
@@ -82,7 +83,7 @@ $(function() {
                     console.log(data);
                     if(data.result > 0) {
                         alert('상품이 삭제되었습니다.');
-                        prod.hide();
+                        location.reload();
                     }
                 }
             });
@@ -257,49 +258,178 @@ $(document).on("keyup", "input[name=discount]", function() {
 });
 
 // 이미지 파일 업로드시 크기, 용량 체크
-    function fileCheck(input)
+function fileCheck(input)
+{
+    //console.log("input :", input);
+    let obj = input.value;
+    // 선택파일의 경로를 분리하여 확장자 구하기
+    pathPoint = obj.lastIndexOf('.');
+    filePoint = obj.substring(pathPoint + 1, input.length);
+    fileType = filePoint.toLowerCase();
+
+    // console.log("fileType :", fileType);
+
+    // 확장자가 이미지 파일이면 사이즈를 체크
+    if(fileType=='jpg' || fileType=='gif' || fileType=='png' || fileType=='jpeg' || fileType=='bmp')
     {
-        //console.log("input :", input);
-        let obj = input.value;
-        // 선택파일의 경로를 분리하여 확장자 구하기
-        pathPoint = obj.lastIndexOf('.');
-        filePoint = obj.substring(pathPoint + 1, input.length);
-        fileType = filePoint.toLowerCase();
-
-        // console.log("fileType :", fileType);
-
-        // 확장자가 이미지 파일이면 사이즈를 체크
-        if(fileType=='jpg' || fileType=='gif' || fileType=='png' || fileType=='jpeg' || fileType=='bmp')
-        {
-            //console.log("size : ", input.files[0].size);
-            //console.log("input.files : ", input.files);
-            if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
-                    alert("파일 사이즈가 10mb 를 넘습니다.\n다시 업로드하여 주십시오.");
-                    input.value = "";
-                }
-        }
-        else
-        {
-            // 업로드 파일이 이미지 확장자가 아닐 경우 경고
-            alert('이미지 파일만 업로드 하실수 있습니다.\n다시 업로드하여 주십시오.');
-            input.value = "";
-            return false;
-        }
-
-        // 이미지 확장자이지만 BMP 확장자라면 일단 경고를 준다. (용량이 크기때문)
-        if(fileType=='bmp')
-        {
-            upload = confirm('BMP 파일은 웹상에서 사용하기엔 적절한 이미지 포맷이 아닙니다. \n 그래도 계속 하시겠습니까?');
-            if(!upload) return false;
-        }
+        //console.log("size : ", input.files[0].size);
+        //console.log("input.files : ", input.files);
+        if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
+                alert("파일 사이즈가 10mb 를 넘습니다.\n다시 업로드하여 주십시오.");
+                input.value = "";
+            }
     }
+    else
+    {
+        // 업로드 파일이 이미지 확장자가 아닐 경우 경고
+        alert('이미지 파일만 업로드 하실수 있습니다.\n다시 업로드하여 주십시오.');
+        input.value = "";
+        return false;
+    }
+
+    // 이미지 확장자이지만 BMP 확장자라면 일단 경고를 준다. (용량이 크기때문)
+    if(fileType=='bmp')
+    {
+        upload = confirm('BMP 파일은 웹상에서 사용하기엔 적절한 이미지 포맷이 아닙니다. \n 그래도 계속 하시겠습니까?');
+        if(!upload) return false;
+    }
+}
 
 // admin cs
 // 공지사항 유형별로 링크 보내기
 $(function () {
-    $('select[name=cate2]').change(function () {
+    $('.noticeCate').change(function () {
         let cate2 = $('select[name=cate2]').val();
-        location.href = '/kmarket/admin/cs/list?cate1=_notice&cate2=' + cate2;
+        if(cate2 == "none") {
+            location.href = '/kmarket/admin/cs/list?cate1=notice';
+        }else {
+            location.href = '/kmarket/admin/cs/list?cate1=notice&cate2=' + cate2;
+        }
+    })
+});
+
+// cs 게시글 삭제
+$(document).on('click', '.deleteCs', function(e) {
+    e.preventDefault();
+    console.log('deleteCs');
+    let isDeleteOK = confirm('정말 삭제하시겠습니까?');
+
+    if(isDeleteOK) {
+        let csNo = $(this).attr('data-no');
+        console.log(csNo);
+
+        $.ajax({
+            url: '/kmarket/admin/cs/delete',
+            type: 'get',
+            data: {'csNo': csNo},
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                if(data.result > 0) {
+                    alert('게시글이 삭제되었습니다.');
+                    location.reload();
+                }
+            }
+        });
+    }
+});
+
+// cs 체크된 항목들 삭제
+function deleteCheckedCs() {
+    let url = '/kmarket/admin/cs/deleteChecked';
+    let valueArr = new Array();
+    let list = $("input[name='check']");
+
+    for (let i=0; i<list.length; i++) {
+        if (list[i].checked){ // 선택되어 있으면 배열에 값을 저장
+            valueArr.push(list[i].value);
+        }
+    }
+    if (valueArr.length == 0) {
+        alert('선택된 게시글이 없습니다.');
+    } else {
+        let isDeleteOK = confirm('정말 삭제하시겠습니까?');
+        console.log(valueArr);
+        if(isDeleteOK) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                traditional: true,
+                data: {valueArr: valueArr},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.result = 1) {
+                        alert('삭제되었습니다.');
+                        location.reload();
+                    } else {
+                        alert('삭제에 실패했습니다.');
+                    }
+                }
+            });
+        }
+
+    }
+}
+
+// cs 1차선택 후 2차선택 보이기
+function optionChangeCs(){
+
+	// category2에 속하는 것들 배열로 추가
+	let user = ['가입', '탈퇴', '회원정보', '로그인'];
+	let coupon = ['쿠폰/할인/혜택', '포인트', '제휴', '이벤트'];
+	let order = ['상품', '결제', '구매내역', '영수증/증빙'];
+	let delivery = ['배송상태/기간', '배송정보확인/변경', '해외배송', '당일배송', '해외직구'];
+	let cancel = ['반품신청/철회', '반품정보확인/변경', '교환AS신청/철회', '교환정보확인/변경', '취소신청/철회', '취소확인/환불정보'];
+	let travel = ['여행/숙박', '항공'];
+	let safeDeal = ['서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래/외부거래유도', '표시광고', '청소년 위해상품/이미지'];
+
+	// category1의 select option에서 value값 받아오기
+	// 여기서 value값 = DB에 들어갈 cate1의 고유번호
+	let cate2 = $('.category2').val();
+
+	let change;
+
+	switch (cate2) {
+		case 'user':
+			change = user;
+			break;
+		case 'coupon':
+			change = coupon;
+			break;
+		case 'order':
+			change = order;
+			break;
+		case 'delivery':
+			change = delivery;
+			break;
+		case 'cancel':
+			change = cancel;
+			break;
+		case 'travel':
+			change = travel;
+			break;
+		case 'safeDeal':
+			change = safeDeal;
+			break;
+	}
+
+	// 옵션을 추가하기 전에 select box를 비워준다.
+	$('.type').empty();
+	let option;
+	option = $("<option value='' disabled selected>2차 선택</option>");
+	$('.type').append(option);
+
+	for (let i=0; i < change.length; i++){
+		option = $("<option value="+change[i]+">"+change[i]+"</option>");
+		$('.type').append(option);
+	}
+}
+// faq, pna 공통 유형별 리스트 출력하기
+$(function () {
+    $('.type').change(function () {
+        let cate2 = $('select[name=cate2]').val();
+        let type = $('select[name=type]').val();
+        location.href = '/kmarket/admin/cs/list?cate1=faq&cate2=' + cate2 + '&csType=' + type;
     })
 });
 
