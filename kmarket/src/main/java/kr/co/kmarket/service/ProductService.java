@@ -6,6 +6,7 @@ import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate1VO;
+import kr.co.kmarket.vo.Product_cate2VO;
 import kr.co.kmarket.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,11 +52,9 @@ public class ProductService {
      * @since 2023/02/09
      * @author 라성준
      */
-//    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start) {
-//        return dao.selectProducts();
-//    }
-
-
+    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start, String search){
+        return dao.selectProducts(cate1, cate2, sort, start, search);
+    }
 
     /**
      * product update service
@@ -91,6 +90,102 @@ public class ProductService {
 
     }
 
+    /**
+     * product catename 가져오기
+     * 2023/02/21 /라성준
+     * @param cate1
+     * @param cate2
+     * @return
+     */
+    public Product_cate2VO getCateName(int cate1, int cate2){
+        return dao.getCateName(cate1, cate2);
+    }
+
+    /**
+     * product 상품 갯수
+     * 2023/02/21 /라성준
+     * @param cate1
+     * @param cate2
+     * @return
+     */
+    public int getCountTotal(int cate1, int cate2, String search) {
+        return dao.getCountTotal(cate1, cate2, search);
+    }
+
+    /**
+     * page start
+     * 2023/02/21 /라성준
+     * @param currentPage
+     * @param count
+     * @return
+     */
+    public int getLimitStart(int currentPage, int count) {
+        return (currentPage - 1) * count ;
+    }
+
+    /**
+     * page group
+     * 2023/02/21 /라성준
+     * @param currentPage
+     * @param lastPage
+     * @return
+     */
+    public int[] getPageGroupNum(int currentPage, int lastPage) {
+
+        int groupCurrent = (int) Math.ceil(currentPage / 10.0);
+        int groupStart = (groupCurrent - 1) * 10 + 1;
+        int groupEnd = groupCurrent * 10;
+
+        if(groupEnd > lastPage) {
+            groupEnd = lastPage;
+        }
+
+        int[] group = {groupStart, groupEnd};
+
+        return group;
+    }
+
+    /**
+     * current page
+     * 2023/02/21 /라성준
+     * @param pg
+     * @return
+     */
+    public int getCurrentPage(String pg) {
+        int currentPage = 1;
+
+        if(pg != null) {
+            currentPage = Integer.parseInt(pg);
+        }
+        return currentPage;
+    }
+
+    /**
+     * last page
+     * 2023/02/21 /라성준
+     * @param total
+     * @param count
+     * @return
+     */
+    public int getLastPageNum(int total, int count) {
+
+        int lastPage = 0;
+
+        if(total % count == 0) {
+            lastPage = (total / count);
+        }else {
+            lastPage = (total / count) + 1;
+        }
+
+        if(lastPage == 0){
+            lastPage = 1;
+        }
+
+        return lastPage;
+    }
 
 
 }
+
+
+
