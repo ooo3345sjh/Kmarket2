@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>케이마켓:: 대한민국 1등 온라인 쇼핑몰</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/ajaxAPI.js}"></script>
+    <script>
+        const contextPath = "[[@{/}]]"
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <th:block th:replace="fragments/_header::my_header"></th:block>
+    <div id="my">
+        <nav>
+            <div>
+                <a href="#">
+                    <img th:src="@{/images/my_logo.jpg}" alt="나의쇼핑정보">
+                </a>
+                <ol>
+                    <li>
+                        <a href="#">
+                            주문·배송
+                            <span class="delivery">1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            할인쿠폰
+                            <span class="coupon">1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            포인트
+                            <span class="point">1,000</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            문의내역
+                            <span class="qna">1</span>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </nav>
+        <div th:class="${type}">
+            <ul>
+                <span class="menu_else"></span>
+                <li><a href="#">전체주문내역</a></li>
+                <li><a href="#">포인트내역</a></li>
+                <li><a href="#">쿠폰</a></li>
+                <li><a href="#">나의리뷰</a></li>
+                <li><a href="#">문의하기</a></li>
+                <li><a href="#">나의설정</a></li>
+            </ul>
+            <th:block layout:fragment="section"></th:block>
+        </div>
+    </div>
+</div>
+</body>
+<th:block th:replace="fragments/_footer::user_footer"></th:block>
+<th:block layout:fragment="script"></th:block>
+</html>

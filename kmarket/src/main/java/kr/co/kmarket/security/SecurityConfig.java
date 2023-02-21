@@ -26,12 +26,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.io.IOException;
 
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
+	@Autowired
+	private SecurityUserService service;
 
 
 	UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
@@ -44,16 +46,22 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/user/**", "/", "/auth", "/cs/**").permitAll()
+					.mvcMatchers("/user/**", "/", "/auth", "/cs/**", "/admin/**", "/file/**").permitAll()
 					.anyRequest().authenticated()
 			)
 
 			// 로그인 설정
 			.formLogin(
-					login->login
+				login->login
 					.loginPage("/user/login").permitAll()
 					.loginProcessingUrl("/user/login")
 					.defaultSuccessUrl("/")
+			)
+
+			// 자동 로그인 설정
+			.rememberMe( reme -> reme
+					.userDetailsService(service)
+					.tokenValiditySeconds(600)
 			)
 
 			// 로그인 아웃 설정
@@ -79,8 +87,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     public WebSecurityCustomizer webSecurityCustomizer() {
        return (web) -> {
 			   web.ignoring()
-					   .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-					   .mvcMatchers("/file/**");
+					   .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	   };
 	}
 

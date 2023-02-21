@@ -18,6 +18,8 @@ public interface UserDAO {
 
 
     public UserVO findByNameAndEmail(@Param(value = "name") String name, @Param(value = "email") String email);
+    public UserVO findByUidAndEmail(@Param(value = "uid") String uid, @Param(value = "email") String email);
+    public int updatePw(@Param(value = "uid") String uid, @Param(value = "pass") String pass);
     public int countByUid(@Param(value = "uid") String uid);
     public int countByEmail(@Param(value = "email") String email);
     public int countByHp(@Param(value = "table") String table, @Param(value = "hp") String hp);

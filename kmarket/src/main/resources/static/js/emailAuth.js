@@ -130,6 +130,12 @@ function emailAuth(url){
 
         if(emailCode == ""){
             resultEmailCode.innerText = "필수 항목입니다.";
+            return;
+        }
+
+        if(emailAuthOk == false){
+            resultEmailCode.innerText = "이메일 인증이 되지 않았습니다.";
+            return;
         }
 
     });

@@ -6,7 +6,12 @@
 	<select id="findByNameAndEmail" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
 		SELECT * from `km_member_general` where `name`=#{name} AND `email`=#{email};
 	</select>
-
+	<select id="findByUidAndEmail" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * from `km_member_general` where `uid`=#{uid} AND `email`=#{email};
+	</select>
+	<update id="updatePw" parameterType="String">
+		UPDATE `km_member_general` SET `pass`=#{pass} WHERE `uid`=#{uid};
+	</update>
 	<select id="countByUid" parameterType="String" resultType="int">
 		SELECT COUNT(*) from `km_member_uid` where `uid`=#{uid};
 	</select>

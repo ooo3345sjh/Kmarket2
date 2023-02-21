@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/findId/emailAuth")
+    @PostMapping("/find/emailAuth")
     public Map findId_emailAuth(@RequestBody Map map){
         log.info("UserController POST findId_emailAuth...");
         log.info(map.toString());
@@ -120,7 +120,8 @@ public class UserController {
             // 메일 전송
             userService.findId_EmailAuth(map);
         } else if(map.get("uid") != null){
-
+            // 메일 전송
+            userService.findPw_EmailAuth(map);
         }
 
         return map;
@@ -128,7 +129,7 @@ public class UserController {
 
     @PostMapping("/findId/result")
     public String findIdResult(@RequestParam Map map, RedirectAttributes rttr, Model m){
-        log.info("UserController POST findId...");
+        log.info("UserController POST findIdResult...");
         String name = (String)map.get("name");
         String email = (String)map.get("email");
 
@@ -173,8 +174,46 @@ public class UserController {
         return "user/findPw";
     }
 
-    @GetMapping("/findPw/result")
+    @GetMapping("/findPw/reulst")
     public String findPwResult(){
         return "user/findPwResult";
+    }
+
+    @PostMapping("/findPw/result")
+    public String findPwResult(@RequestParam Map map, RedirectAttributes rttr, Model m){
+        log.info("UserController POST findPwResult...");
+        String uid = (String)map.get("uid");
+        String email = (String)map.get("email");
+
+        UserVO user = userService.findByUidAndEmail(uid, email);
+        if(user == null){
+            rttr.addFlashAttribute("error", "error");
+            return "redirect:/user/findPw";
+        }
+
+        m.addAttribute("user", user);
+        return "user/findPwResult";
+    }
+
+    @PostMapping("/findPw/reset")
+    public String resetPw(
+            @RequestParam(value = "pass1") String pass,
+            @RequestParam(value = "uid") String uid,
+            RedirectAttributes rttr
+    )
+    {
+        log.info("UserController POST resetPw...");
+        log.info(pass);
+        log.info(uid);
+
+        int result = userService.resetPw(uid, pass);
+
+        if(result != 1){
+            rttr.addFlashAttribute("error", "error");
+            return "redirect:/user/findPw/result";
+        }
+
+        rttr.addFlashAttribute("success", "successPw");
+        return "redirect:/user/login";
     }
 }
