@@ -2,26 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:fragment="main_header">
-        <header>
-            <div class="top">
-                <div>
-                    <a th:href='@{/admin}'>관리자</a>
-                    <a href='#'>로그아웃</a>
-                    <a href="#">마이페이지</a>
+    <header th:fragment="mainHeader">
+        <div class="top">
+            <div>
+                <th:block sec:authorize="isAnonymous()">
                     <a th:href="@{/login}">로그인</a>
                     <a th:href="@{/join}">회원가입</a>
-                    <a href="#">
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a sec:authorize="hasAnyRole('ROLE_5','ROLE_2')" th:href="@{/admin/}">관리자</a>
+                    <a th:href="@{/my/home}">마이페이지</a>
+                    <a th:href="@{/logout}">로그아웃</a>
+                    <a th:href="@{/product/cart}">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        장바구니
+                        &nbsp;장바구니
                     </a>
-                </div>
+                </th:block>
             </div>
+        </div>
             <div class="logo">
                 <div>
                     <a th:href="@{/}">
                         <img th:src='@{/images/header_logo.png}' alt="로고">
                     </a>
-                    <form action="#">
+                    <form th:action="@{/product/list}">
                         <input type="text" name="search">
                         <button>
                             <i class="fa fa-search" aria-hidden="true"></i>
