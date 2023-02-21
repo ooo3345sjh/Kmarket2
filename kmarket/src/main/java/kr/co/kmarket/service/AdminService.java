@@ -132,7 +132,7 @@ public class AdminService {
     }
 
     /////////////////////////// 관리자 고객센터 게시판 불러오기 ///////////////////////////
-    public List<CsVO> selectCsAdmin(Model m, SearchCondition sc) {
+    public List<CsVO> selectCsAdmins(Model m, SearchCondition sc) {
 
         int totalCnt = dao.countCsAdmin(sc); // 전체 게시물 갯수
 
@@ -140,7 +140,7 @@ public class AdminService {
         if(sc.getPage() > totalPage) sc.setPage(totalPage);
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
 
-        List<CsVO> articles = dao.selectCsAdmin(sc);
+        List<CsVO> articles = dao.selectCsAdmins(sc);
 
         m.addAttribute("articles", articles);
         m.addAttribute("ph", pageHandeler);
@@ -152,4 +152,7 @@ public class AdminService {
         return dao.deleteCs(csNo);
     }
 
+    public CsVO selectCsAdmin(int csNo) {
+        return dao.selectCsAdmin(csNo);
+    }
 }

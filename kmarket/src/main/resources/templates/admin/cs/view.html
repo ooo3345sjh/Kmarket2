@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="layout/adminLayout">
+<th:block layout:fragment="main">
+    <section id="cs-view" class="admin">
+        <nav>
+            <th:block th:if="${cate1} == notice">
+                <h3>공지사항 보기</h3>
+                <p>HOME > 고객센터 > <strong>공지사항</strong></p>
+            </th:block>
+            <th:block th:if="${cate1} == faq">
+                <h3>자주묻는질문 보기</h3>
+                <p>HOME > 고객센터 > <strong>자주묻는 질문</strong></p>
+            </th:block>
+            <th:block th:if="${cate1} == qna">
+                <h3>문의사항 답변</h3>
+                <p>HOME > 고객센터 > <strong>문의하기</strong></p>
+            </th:block>
+        </nav>
+    <th:block th:if="${cate1} == notice">
+        <table>
+            <tr>
+                <td>유형</td>
+                <td class="type">[[${article.type}]]</td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td class="title">[[${article.title}]]</td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td class="content">
+                    <p>
+                        [[${article.content}]]
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
+            <a href="#" class="btnModify">수정</a>
+            <a href="#" class="btnList">목록</a>
+        </div>
+    </th:block>
+    <th:block th:if="${cate1} == faq">
+        <table>
+            <tr>
+                <td>유형</td>
+                <td class="type">
+                    [[${article.type}]]
+                </td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td class="title">[[${article.title}]]</td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td class="content">
+                    <p>
+                        [[${article.content}]]
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
+            <a href="#" class="btnModify">수정</a>
+            <a href="#" class="btnList">목록</a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${cate1} == qna">
+        <form action="#" id='qnaForm' method="get">
+            <input type="hidden" name="no" value=""/>
+            <input type="hidden" name="cate1" value=""/>
+
+            <table class="qna">
+                <tr>
+                    <td>유형</td>
+                    <td class="type">[[${article.type}]]</td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td class="title">[[${article.title}]]</td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td>
+                        <p style="font-size: 15px">
+                            [[${article.content}]]
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- 답변 -->
+                <tr>
+                    <td>답변</td>
+                    <td id='commentTextarea'>
+                                <p style="font-size: 15px;">comment</p>
+                                <textarea name="comment" class="comment"></textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <a href="#" class="remove" id='qnaRemove' data-no="${cvo.csNo}">삭제</a>
+
+                    <input  type="submit" id="reply" class="btnWrite" value="답변수정">
+
+                    <input  type="submit" id="reply1" class="btnWrite" value="답변등록">
+
+            <a href="#" id='qnaList' class="btnList">목록</a>
+        </form>
+    </th:block>
+</th:block>

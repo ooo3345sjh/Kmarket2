@@ -91,7 +91,7 @@
 
 <!-- ////////////////////////////////////////////////////////////////// -->
     <!-- Admin Cs -->
-    <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectCsAdmins" resultType="kr.co.kmarket.vo.CsVO">
         select `csNo`, `uid`, `cate1`, `cate2`, `type`, `title`, `rdate`, `hit`
         from `km_cs`
         where `cate1` = #{cate1}
@@ -99,6 +99,10 @@
         <include refid="csType"/>
         order by `csNo` desc
         limit #{offset}, 10;
+    </select>
+
+    <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
+        select `csNo`, `type`, `title`, `content` from `km_cs` where csNo = #{csNo};
     </select>
 
     <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">

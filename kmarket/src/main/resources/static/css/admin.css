@@ -618,3 +618,147 @@ button[type=submit] {
 #admin-cs-list > #faqQna > table  tr > td:nth-child(6) {width: 70px;}
 #admin-cs-list > #faqQna > table  tr > td:nth-child(7) {width: 70px;}
 #admin-cs-list > #faqQna > table  tr > td:nth-child(8) {width: 70px;}
+
+/* 공지사항 보기 */
+#cs-view > table {
+    margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 2px solid #111;
+}
+
+#cs-view > table tr {
+    width: 100%;
+    height: 60px;
+}
+#cs-view > table tr > td:nth-child(1) {
+	width: 132px;
+    font-size: 17px;
+    font-weight: bold;
+    padding-right: 0px;
+    text-align: center;
+}
+#cs-view > table tr > td:nth-child(2) {
+    padding-left: 47px;
+    font-size: 15px;
+}
+
+#cs-view > table td {
+    border-bottom: 1px solid #ccc;
+}
+#cs-view > table tr > .content {
+    height: 300px;
+}
+#cs-view > table tr > .content > p {
+    font-size: 16px;
+    line-height: 30px;
+}
+#cs-view > div {
+	float: right;
+    margin-top: 35px;
+}
+#cs-view > div > .deleteCs {
+	background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+
+#cs-view > div > .btnModify {
+	background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+
+#cs-view > div > .btnList {
+	background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+
+#cs-view > table tr > td > .reply {
+	width: 510px;
+    height: 130px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 16px;
+    text-indent: 5px;
+}
+
+/****** QNA 전용*********/
+#cs-view > form > table {
+    margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 2px solid #111;
+}
+
+#cs-view > form > table tr {
+    width: 100%;
+    height: 60px;
+}
+#cs-view > form > table tr > td:nth-child(1) {
+	width: 132px;
+    font-size: 17px;
+    font-weight: bold;
+    padding-right: 0px;
+    text-align: center;
+}
+#cs-view > form > table tr > td:nth-child(2) {
+    padding-left: 47px;
+    font-size: 15px;
+}
+
+#cs-view > form > table td {
+    border-bottom: 1px solid #ccc;
+}
+#cs-view > form > table tr > .content {
+    height: 300px;
+}
+#cs-view > form > table tr > .content > p {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+#cs-view > form > table tr > td > textarea {
+	width: 510px;
+    height: 130px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 16px;
+    text-indent: 5px;
+}
+#cs-view > form > a {
+	display: inline-block;
+    margin-top: 5px;
+    float: right;
+    margin: 2px;
+}
+
+#cs-view > form > .remove {
+	background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+#cs-view > form > .btnWrite {
+	    margin-top: 2px;
+}

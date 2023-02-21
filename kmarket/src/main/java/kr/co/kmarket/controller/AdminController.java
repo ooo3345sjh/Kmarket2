@@ -115,7 +115,7 @@ public class AdminController {
     public String csList(Model m, SearchCondition sc) {
 
         System.out.println("sc = " + sc);
-        service.selectCsAdmin(m, sc);
+        service.selectCsAdmins(m, sc);
 
         m.addAttribute("cate1", sc.getCate1());
         return "admin/cs/list";
@@ -123,7 +123,7 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("/cs/delete")
-    public Map deleteCs(@RequestParam  String csNo) {
+    public Map deleteCs(@RequestParam String csNo) {
         log.info("deleteCs...");
         int result = service.deleteCs(csNo);
 
@@ -153,5 +153,19 @@ public class AdminController {
         return map;
     }
 
+    // 고객센터 공지사항 뷰
+    @GetMapping("/cs/view")
+    public String view(Model m, int csNo, String cate1) {
+        log.info("viewController...");
+        System.out.println("csNo = " + csNo);
+
+        CsVO article = service.selectCsAdmin(csNo);
+        System.out.println("article = " + article);
+
+        m.addAttribute("article", article);
+        m.addAttribute("cate1", cate1);
+
+        return "/admin/cs/view";
+    }
 
 }
