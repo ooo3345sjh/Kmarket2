@@ -33,7 +33,7 @@
                     <td>[[${article.csNo}]]</td>
                     <td>[[${article.type}]]</td>
                     <td>
-                        <a href="#">[[${article.title}]]</a>
+                        <a th:href="@{/admin/cs/view(cate1=${cate1},csNo=${article.csNo})}">[[${article.title}]]</a>
                     </td>
                     <td>[[${article.hit}]]</td>
                     <td th:text="${#strings.substring(article.rdate, 2, 10)}"></td>
