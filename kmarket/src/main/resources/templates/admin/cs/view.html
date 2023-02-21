@@ -39,8 +39,8 @@
         </table>
         <div>
             <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
-            <a href="#" class="btnModify">수정</a>
-            <a href="#" class="btnList">목록</a>
+            <a th:href="@{/admin/cs/write(cate1=${cate1})}" class="btnModify">수정</a>
+            <a th:href="@{/admin/cs/list(cate1=${cate1})}" class="btnList">목록</a>
         </div>
     </th:block>
     <th:block th:if="${cate1} == faq">
@@ -66,15 +66,15 @@
         </table>
         <div>
             <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
-            <a href="#" class="btnModify">수정</a>
-            <a href="#" class="btnList">목록</a>
+            <a th:href="@{/admin/cs/write(cate1=${cate1})}" class="btnModify">수정</a>
+            <a th:href="@{/admin/cs/list(cate1=${cate1})}" class="btnList">목록</a>
         </div>
     </th:block>
 
     <th:block th:if="${cate1} == qna">
-        <form action="#" id='qnaForm' method="get">
-            <input type="hidden" name="no" value=""/>
-            <input type="hidden" name="cate1" value=""/>
+        <form th:action="@{/admin/cs/reply}" id='qnaForm' method="get">
+            <input type="hidden" name="csNo" th:value="${article.csNo}"/>
+            <input type="hidden" name="cate1" th:value="${cate1}"/>
 
             <table class="qna">
                 <tr>
@@ -98,19 +98,24 @@
                 <tr>
                     <td>답변</td>
                     <td id='commentTextarea'>
-                                <p style="font-size: 15px;">comment</p>
-                                <textarea name="comment" class="comment"></textarea>
+                        <th:block th:if="${article.comment} != null">
+                            <p style="font-size: 15px;">[[${article.comment}]]</p>
+                        </th:block>
+                        <th:block th:if="${article.comment} == null">
+                            <textarea name="comment" class="comment" required></textarea>
+                        </th:block>
                     </td>
                 </tr>
             </table>
 
-            <a href="#" class="remove" id='qnaRemove' data-no="${cvo.csNo}">삭제</a>
-
-                    <input  type="submit" id="reply" class="btnWrite" value="답변수정">
-
-                    <input  type="submit" id="reply1" class="btnWrite" value="답변등록">
-
-            <a href="#" id='qnaList' class="btnList">목록</a>
+            <a href="#" class="deleteCs" id='qnaRemove' th:data-no="${article.csNo}">삭제</a>
+                <th:block th:if="${article.comment} != null">
+                    <input  type="submit" id="reply1" class="btnWrite" value="답변수정">
+                </th:block>
+                <th:block th:if="${article.comment} == null">
+                    <input  type="submit" id="reply2" class="btnWrite" value="답변등록">
+                </th:block>
+            <a th:href="@{/admin/cs/list(cate1=${cate1})}" id='qnaList' class="btnList">목록</a>
         </form>
     </th:block>
 </th:block>

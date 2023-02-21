@@ -99,8 +99,6 @@ main > aside {
     text-indent: 52px;
 }
 
-
-
 main > section {
     float: right;
     width: 1130px;
@@ -287,6 +285,15 @@ button[type=submit] {
 
 /* admin-index */
 #admin-index {}
+
+.admin {
+    float: left;
+    width: 1130px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    position: relative;
+}
 
 #admin-index > article {
     width: 100%;
@@ -668,26 +675,6 @@ button[type=submit] {
     color: #fff;
 }
 
-#cs-view > div > .btnModify {
-	background-color: #c0c0c0;
-    border: 1px solid #c0c0c0;
-    border-radius: 2px;
-    padding: 5px 20px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #fff;
-}
-
-#cs-view > div > .btnList {
-	background-color: #c0c0c0;
-    border: 1px solid #c0c0c0;
-    border-radius: 2px;
-    padding: 5px 20px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #fff;
-}
-
 #cs-view > table tr > td > .reply {
 	width: 510px;
     height: 130px;
@@ -750,7 +737,7 @@ button[type=submit] {
     margin: 2px;
 }
 
-#cs-view > form > .remove {
+#cs-view > form > .deleteCs {
 	background-color: #c0c0c0;
     border: 1px solid #c0c0c0;
     border-radius: 2px;
@@ -760,5 +747,211 @@ button[type=submit] {
     color: #fff;
 }
 #cs-view > form > .btnWrite {
-	    margin-top: 2px;
+    margin-top: 2px;
+}
+
+/* 공지사항 글 쓰기 */
+#cs-write > form > table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid #111;
+}
+#cs-write > form > table tr{
+    width: 100%;
+    height: 26px;
+}
+#cs-write > form > table td{
+    font-size: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+}
+#cs-write > form > table td:first-child{
+    width: 100px;
+}
+#cs-write > form > table input {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    text-indent: 10px;
+    box-sizing: border-box;
+}
+#cs-write > form > table select {
+    width: 150px;
+    height: 40px;
+    text-indent: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+#cs-write > form > table select * {
+    font-size: 16px;
+}
+#cs-write > form > table textarea {
+    width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+#cs-write > input:nth-of-type(1) {
+    margin-top: 50px;
+    float: right;
+}
+#cs-write > input:nth-of-type(2) {
+    display: block;
+    margin-top: 50px;
+    float: right;
+}
+
+/* 공지사항 수정 */
+#cs-modify > form > table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid #111;
+}
+#cs-modify > form > table tr{
+    width: 100%;
+    height: 26px;
+}
+#cs-modify > form > table td{
+    font-size: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+}
+#cs-modify > form > table td:first-child{
+    width: 100px;
+}
+#cs-modify > form > table input {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    text-indent: 10px;
+    box-sizing: border-box;
+}
+#cs-modify > form > table select {
+    width: 216px;
+    height: 40px;
+    text-indent: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+#cs-modify > form > table select * {
+    font-size: 16px;
+}
+#cs-modify > form > table textarea {
+    width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+#cs-modify > form > .btnList {
+	margin-left: 899px;
+    display: inline-block;
+    margin-top: 5px;
+}
+#cs-modify > form > .btnWrite {
+    display: block;
+    margin-top: 70.5px;
+    margin-right: 5px;
+    height: 36px;
+    font-size: 18px;
+    float: right;
+    box-sizing: border-box;
+}
+
+#cs-write .btnList{
+	position: relative;
+    top: 10px;
+    left: 470px;
+}
+#cs-write .btnWrite{
+	top: 609px;
+    right: 384px;
+    font-size: 18px;
+    width: 114px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.btnList{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+}
+.btnDelete{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+}
+.btnModify{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btnWrite{
+	position: absolute;
+    bottom: 20px;
+    right: 28px;
+    border-radius: 2px;
+    /* padding: 5px 20px; */
+    line-height: 38px;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #fff;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    height: 38px;
+    width: 81px;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+#qnaRemove{
+    position: relative;
+    right: 201px;
+    top: 5px;
+}
+#reply1{
+	position: relative;
+    top: 5px;
+    height: 36px;
+    left: 896px;
+    font-size: 18px;
+    width: 90px;
+}
+#reply2{
+	position: relative;
+    top: 5px;
+    height: 36px;
+    left: 896px;
+    font-size: 18px;
+    width: 90px;
+}
+#qnaList{
+	position: relative;
+    top: 5px;
+    right: -66px;
 }

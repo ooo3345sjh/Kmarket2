@@ -19,7 +19,7 @@
                 <option value="travel">여행/숙박/항공</option>
                 <option value="safeDeal">안전거래</option>
             </select>
-            <select name="type" class="type">
+            <select name="type" class="type" id="type">
                 <option value="">2차 선택</option>
             </select>
             <a th:href="@{/admin/cs/list(cate1=${cate1})}">&nbsp 전체 보기</a>
@@ -49,7 +49,7 @@
                 <td th:text="${#strings.substring(article.rdate, 2, 10)}"></td>
                 <td>
                     <a href="#" class="deleteCs" th:data-no="${article.csNo}">[삭제]</a>
-                    <a th:href="@{/admin/cs/modify(csNo=${article.csNo})}">[수정]</a>
+                    <a th:href="@{/admin/cs/modify(cate1=faq, csNo=${article.csNo})}">[수정]</a>
                 </td>
             </tr>
             </th:block>
@@ -60,7 +60,7 @@
         </table>
 
         <input type="button" value="선택삭제" id="deleteButton" onclick="deleteCheckedCs()"/>
-        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/register(cate1=${cate1})}'|"/>
+        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/write(cate1=${cate1})}'|"/>
 
         <!-- 페이징 -->
         <!-- 게시글이 없을 경우 페이징 숨기기 -->

@@ -141,6 +141,7 @@ public class AdminService {
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
 
         List<CsVO> articles = dao.selectCsAdmins(sc);
+//        System.out.println(" = " + );
 
         m.addAttribute("articles", articles);
         m.addAttribute("ph", pageHandeler);
@@ -154,5 +155,31 @@ public class AdminService {
 
     public CsVO selectCsAdmin(int csNo) {
         return dao.selectCsAdmin(csNo);
+    }
+
+    public int updateComment(CsVO vo) {
+        return dao.updateComment(vo);
+    }
+
+    public int updateCs(CsVO vo) {
+        return dao.updateCs(vo);
+    }
+
+    public int insertCs(CsVO vo, @AuthenticationPrincipal UserVO user) {
+        vo.setUid(user.getUid());
+        vo.setRegip(user.getRegip());
+
+        if(vo.getType() == null) {
+            if (vo.getCate2().equals("service")) {
+                vo.setType("고객서비스");
+            } else if (vo.getCate2().equals("safeDeal")) {
+                vo.setType("안전거래");
+            } else if (vo.getCate2().equals("xproduct")) {
+                vo.setType("위해상품");
+            } else {
+                vo.setType("이벤트당첨");
+            }
+        }
+        return dao.insertCs(vo);
     }
 }

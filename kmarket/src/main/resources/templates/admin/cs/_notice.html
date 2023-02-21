@@ -39,7 +39,7 @@
                     <td th:text="${#strings.substring(article.rdate, 2, 10)}"></td>
                     <td>
                         <a href="#" class="deleteCs" th:data-no="${article.csNo}">[삭제]</a>
-                        <a th:href="@{/admin/cs/modify(csNo=${article.csNo})}">[수정]</a>
+                        <a th:href="@{/admin/cs/modify(cate1=notice, csNo=${article.csNo})}">[수정]</a>
                     </td>
                 </tr>
             </th:block>
@@ -50,7 +50,7 @@
         </table>
 
         <input type="button" value="선택삭제" id="deleteButton" onclick="deleteCheckedCs()"/>
-        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/register}'|"/>
+        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/write(cate1=${cate1})}'|"/>
 
         <!-- 페이징 -->
         <!-- 게시글이 없을 경우 페이징 숨기기 -->

@@ -91,8 +91,21 @@
 
 <!-- ////////////////////////////////////////////////////////////////// -->
     <!-- Admin Cs -->
+
+    <insert id="insertCs" keyProperty="csNo">
+        insert into `km_cs` set
+                `uid` = #{uid},
+                `cate1` = #{cate1},
+                `cate2` = #{cate2},
+                `type` = #{type},
+                `title` = #{title},
+                `content` = #{content},
+                `regip` = #{regip},
+                `rdate` = NOW();
+    </insert>
+
     <select id="selectCsAdmins" resultType="kr.co.kmarket.vo.CsVO">
-        select `csNo`, `uid`, `cate1`, `cate2`, `type`, `title`, `rdate`, `hit`
+        select *
         from `km_cs`
         where `cate1` = #{cate1}
         <include refid="csCategory2"/>
@@ -102,8 +115,20 @@
     </select>
 
     <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
-        select `csNo`, `type`, `title`, `content` from `km_cs` where csNo = #{csNo};
+        select * from `km_cs` where csNo = #{csNo};
     </select>
+
+    <update id="updateCs">
+        update `km_cs` set
+                cate2 = #{cate2},
+                title = #{title},
+                content = #{content}
+        where csNo = #{csNo};
+    </update>
+
+    <update id="updateComment">
+        update `km_cs` set `comment` = #{comment} where csNo = #{csNo};
+    </update>
 
     <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
         SELECT COUNT(*) FROM `km_cs`

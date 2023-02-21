@@ -23,8 +23,12 @@ public interface AdminDAO {
     public int countProductAdmin(SearchCondition sc);
     public int deleteProduct(String prodNo);
     public int modifyProduct(ProductVO product);
+
+    public int insertCs(CsVO vo);
     public List<CsVO> selectCsAdmins(SearchCondition sc);
     public CsVO selectCsAdmin(int csNo);
+    public int updateComment(CsVO vo);
+    public int updateCs(CsVO vo);
     public int countCsAdmin(SearchCondition sc);
     public int deleteCs(String csNo);
 }

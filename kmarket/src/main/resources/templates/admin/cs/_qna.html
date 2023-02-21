@@ -47,7 +47,12 @@
                     </td>
                     <td>[[${article.uid}]]</td>
                     <td th:text="|${#strings.substring(article.rdate, 2, 10)}|"></td>
-                    <td>검토중</td>
+                    <th:block th:if="${article.comment} == null">
+                        <td>검토중</td>
+                    </th:block>
+                    <th:block th:if="${article.comment} != null">
+                        <td>답변완료</td>
+                    </th:block>
                 </tr>
             </th:block>
             <th:block th:if="${#lists.size(articles) == 0}">
@@ -56,7 +61,6 @@
         </table>
 
         <input type="button" value="선택삭제" id="deleteButton" onclick="deleteCheckedCs()"/>
-        <input type="button" value="등록하기" id="registerButton" th:onclick="|location.href='@{/admin/cs/register(cate1=${cate1})}'|"/>
 
         <!-- 페이징 -->
         <!-- 게시글이 없을 경우 페이징 숨기기 -->

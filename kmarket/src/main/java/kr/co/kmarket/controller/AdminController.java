@@ -157,15 +157,55 @@ public class AdminController {
     @GetMapping("/cs/view")
     public String view(Model m, int csNo, String cate1) {
         log.info("viewController...");
-        System.out.println("csNo = " + csNo);
 
         CsVO article = service.selectCsAdmin(csNo);
-        System.out.println("article = " + article);
 
         m.addAttribute("article", article);
         m.addAttribute("cate1", cate1);
 
         return "/admin/cs/view";
     }
+
+    // qna 답변달기
+    @GetMapping("cs/reply")
+    public String reply(CsVO vo) {
+        log.info("reqlyController...");
+        service.updateComment(vo);
+        return "redirect:/admin/cs/view?cate1="+ vo.getCate1() + "&csNo=" + vo.getCsNo();
+    }
+
+    @GetMapping("cs/write")
+    public String write(Model m, CsVO vo) {
+        log.info("writeController...");
+        m.addAttribute("cate1", vo.getCate1());
+        return "/admin/cs/write";
+    }
+
+    @PostMapping("cs/write")
+    public String write(CsVO vo, @AuthenticationPrincipal UserVO user) {
+        log.info("writeController...");
+        service.insertCs(vo, user);
+
+        return "redirect:/admin/cs/list?cate1=" + vo.getCate1();
+    }
+
+    @GetMapping("cs/modify")
+    public String modify(Model m, String cate1, int csNo) {
+        log.info("modifyGetController...");
+
+        CsVO article = service.selectCsAdmin(csNo);
+
+        m.addAttribute("article", article);
+        m.addAttribute("cate1", cate1);
+        return "/admin/cs/modify";
+    }
+
+    @PostMapping("cs/modify")
+    public String modify(CsVO vo) {
+        log.info("modifyPostController...");
+        service.updateCs(vo);
+        return "redirect:/admin/cs/view?csNo=" + vo.getCsNo() + "&cate1=" + vo.getCate1();
+    }
+
 
 }

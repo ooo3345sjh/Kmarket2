@@ -3,5 +3,91 @@
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="layout/adminLayout">
 <th:block layout:fragment="main">
+    <section id="cs-modify" class="admin">
+        <nav>
+            <th:block th:if="${cate1} == notice">
+                <h3>공지사항 작성</h3>
+                <p>HOME > 고객센터 > <Strong>공지사항</Strong></p>
+            </th:block>
+            <th:block th:if="${cate1} == faq">
+                <h3>자주묻는질문 보기</h3>
+                <p>HOME > 고객센터 > <strong>자주묻는 질문</strong></p>
+            </th:block>
+            <th:block th:if="${cate1} == qna">
+                <h3>문의사항 답변</h3>
+                <p>HOME > 고객센터 > <strong>문의하기</strong></p>
+            </th:block>
+        </nav>
 
+        <!-- 공지사항 글쓰기 -->
+        <th:block th:if="${cate1} == notice">
+            <form th:action="@{/admin/cs/modify}" method="post">
+                <input type="hidden" name="cate1" th:value="${cate1}"/>
+                <input type="hidden" name="csNo" th:value="${article.csNo}"/>
+                <table>
+                    <tr>
+                        <td>유형</td>
+                        <td>
+                            <select name="cate2" required>
+                                <option value="none" disabled selected>유형선택</option>
+                                <option th:value="service" th:selected="${article.cate2 == 'service'}">고객서비스</option>
+                                <option th:value="safeDeal" th:selected="${article.cate2 == 'safeDeal'}">안전거래</option>
+                                <option th:value="xproduct" th:selected="${article.cate2 == 'xproduct'}">위해상품</option>
+                                <option th:value="great" th:selected="${article.cate2 == 'great'}">이벤트당첨</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>제목</td>
+                        <td>
+                            <input type="text" name="title" placeholder="제목을 입력합니다." th:value="${article.title}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>내용</td>
+                        <td>
+                            <textarea name="content" placeholder="내용을 입력하세요." required>[[${article.content}]]</textarea>
+                        </td>
+                    </tr>
+                </table>
+                <input type="button"  name='cancel' class="btnList" value="취소하기">
+                <input type="submit" class="btnList" value="등록하기">
+            </form>
+        </th:block>
+
+        <!-- 자주묻는 질문 글쓰기 -->
+        <th:block th:if="${cate1} == faq">
+            <form th:action="@{/admin/cs/modify}" method="post">
+                <input type="hidden" name="cate1" th:value="${cate1}"/>
+                <input type="hidden" name="csNo" th:value="${article.csNo}"/>
+                <table>
+                    <tr>
+                        <td>유형</td>
+                        <td>
+                            <select name="cate2">
+                                <option selected>[[${article.cate2}]]</option>
+                            </select>
+                            <select name="type" class="type">
+                                <option value="" disabled selected>2차 선택</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>제목</td>
+                        <td>
+                            <input type="text" name="title" placeholder="제목을 입력합니다." required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>내용</td>
+                        <td>
+                            <textarea name="content" placeholder="내용을 입력하세요." required></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <input type="button" name='cancel' class="btnList" value="취소하기">
+                <input type="submit" class="btnList" value="등록하기">
+            </form>
+        </th:block>
+    </section>
 </th:block>
