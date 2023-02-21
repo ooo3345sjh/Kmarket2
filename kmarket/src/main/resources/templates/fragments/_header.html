@@ -104,4 +104,34 @@
             </div>
         </header>
 </th:block>
+<th:block th:fragment="my_header">
+    <header>
+        <div class="top">
+            <div>
+                <a th:href='@{/admin}'>관리자</a>
+                <a href='#'>로그아웃</a>
+                <a href="#">마이페이지</a>
+                <a th:href="@{/login}">로그인</a>
+                <a th:href="@{/join}">회원가입</a>
+                <a href="#">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    장바구니
+                </a>
+            </div>
+        </div>
+        <div class="logo">
+            <div>
+                <a th:href="@{/}">
+                    <img th:src='@{/images/header_logo.png}' alt="로고">
+                </a>
+                <form action="#">
+                    <input type="text" name="search">
+                    <button>
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+</th:block>
 </html>
