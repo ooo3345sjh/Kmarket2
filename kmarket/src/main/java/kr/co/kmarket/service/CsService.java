@@ -38,6 +38,9 @@ public class CsService {
             return dao.selectfaqtypes(sc);
       }
 
+      public void insertqna(CsVO qna){
+            dao.insertqna(qna);
+      }
       public void selectarticles(Model m, SearchCondition sc){
             int totalCnt = dao.countAll(sc);
             // 전체 페이지수

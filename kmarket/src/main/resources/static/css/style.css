@@ -1997,7 +1997,7 @@ footer > div > div > p > span {
 #cs > .qna > .list > article > table td:nth-child(n+2) {
     text-align: center;
 }
-.complete {
+.reqcomplete {
   color: blue;
   font-size: 15px;
   text-align: center;

@@ -14,6 +14,7 @@
                                 [[${article.content}]]
                             </p>
                         </div>
+                        <th:block th:if="${not #strings.isEmpty(article.comment)}">
                         <nav>
                             <h2 class="title">[[|[답변] ${article.title}|]]</h2>
                         </nav>
@@ -22,6 +23,7 @@
                                 [[${article.comment}]]
                             </p>
                         </div>
+                        </th:block>
                         <a th:href="@{/cs/qna/list(cate1=${article.cate1},cate2=${article.cate2})}" class="btnList">목록보기</a>
                     </article>
                 </section>

@@ -43,7 +43,7 @@
                                            th:text="|[${article.type}] ${#strings.length(article.title) > 30 ? #strings.substring(article.title, 0, 20) + '...' : article.title}|" class="title" th:data-no="${article.csNo}"></a>
                                     </td>
                                     <td>
-                                        <span th:text="${article.comment == null ? '검토중' : '답변완료'}" th:class="${article.comment == null ? 'pending' : 'complete'}"></span>
+                                        <span th:text="${article.comment == null ? '검토중' : '답변완료'}" th:class="${article.comment == null ? 'pending' : 'reqcomplete'}"></span>
                                     </td>
                                     <td>[[|${#strings.substring(article.uid,0,3)}**|]]</td>
                                     <td>[[${#strings.substring(article.rdate,2,10)}]]</td>
