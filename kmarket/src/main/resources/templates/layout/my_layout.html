@@ -26,30 +26,30 @@
     <div id="my">
         <nav>
             <div>
-                <a href="#">
+                <a th:href="@{/my/home}">
                     <img th:src="@{/images/my_logo.jpg}" alt="나의쇼핑정보">
                 </a>
                 <ol>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/my/ordered}">
                             주문·배송
                             <span class="delivery" th:text="${user.orderCnt}">1</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/my/coupon}">
                             할인쿠폰
                             <span class="coupon" th:text="${user.couponCnt}">1</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/my/point}">
                             포인트
                             <span class="point" th:text="${#numbers.formatInteger(user.point, 1, 'COMMA')}">1,000</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/my/qna}">
                             문의내역
                             <span class="qna" th:text="${user.csCnt}">1</span>
                         </a>
@@ -60,12 +60,12 @@
         <div th:class="${type}">
             <ul>
                 <span class="menu_else"></span>
-                <li><a href="#">전체주문내역</a></li>
-                <li><a href="#">포인트내역</a></li>
-                <li><a href="#">쿠폰</a></li>
-                <li><a href="#">나의리뷰</a></li>
-                <li><a href="#">문의하기</a></li>
-                <li><a href="#">나의설정</a></li>
+                <li><a th:href="@{/my/ordered}">전체주문내역</a></li>
+                <li><a th:href="@{/my/point}">포인트내역</a></li>
+                <li><a th:href="@{/my/coupon}">쿠폰</a></li>
+                <li><a th:href="@{/my/review}">나의리뷰</a></li>
+                <li><a th:href="@{/my/qna}">문의하기</a></li>
+                <li><a th:href="@{/my/info}">나의설정</a></li>
             </ul>
             <th:block layout:fragment="section"></th:block>
         </div>

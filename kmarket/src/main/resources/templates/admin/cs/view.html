@@ -39,7 +39,7 @@
         </table>
         <div>
             <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
-            <a th:href="@{/admin/cs/write(cate1=${cate1})}" class="btnModify">수정</a>
+            <a th:href="@{/admin/cs/modify(cate1=${cate1}, csNo=${article.csNo})}" class="btnModify">수정</a>
             <a th:href="@{/admin/cs/list(cate1=${cate1})}" class="btnList">목록</a>
         </div>
     </th:block>
@@ -66,7 +66,7 @@
         </table>
         <div>
             <a href="#" class="deleteCs" th:data-no="${article.csNo}">삭제</a>
-            <a th:href="@{/admin/cs/write(cate1=${cate1})}" class="btnModify">수정</a>
+            <a th:href="@{/admin/cs/modify(cate1=${cate1}, csNo=${article.csNo})}" class="btnModify">수정</a>
             <a th:href="@{/admin/cs/list(cate1=${cate1})}" class="btnList">목록</a>
         </div>
     </th:block>

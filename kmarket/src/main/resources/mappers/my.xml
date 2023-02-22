@@ -31,7 +31,7 @@
 	 	용도 : 마이페이지 홈 최근주문내역 조회
 	 -->
 	<select id="selectOrderLog" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
-		SELECT o.*, s.company as company, p.prodName, p.thumb1, p.cate1, p.cate2
+		SELECT o.*, s.company as company, p.prodName, p.thumb1, p.cate1, p.cate2, s.uid as 'sellerUid'
 		FROM `km_product_order` as o
 		JOIN `km_product_order_item` as oi
 		ON o.`ordNo` = oi.`ordNo`
