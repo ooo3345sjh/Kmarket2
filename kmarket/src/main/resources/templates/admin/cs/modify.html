@@ -28,12 +28,12 @@
                     <tr>
                         <td>유형</td>
                         <td>
-                            <select name="cate2" required>
+                            <select name="type" required>
                                 <option value="none" disabled selected>유형선택</option>
-                                <option th:value="service" th:selected="${article.cate2 == 'service'}">고객서비스</option>
-                                <option th:value="safeDeal" th:selected="${article.cate2 == 'safeDeal'}">안전거래</option>
-                                <option th:value="xproduct" th:selected="${article.cate2 == 'xproduct'}">위해상품</option>
-                                <option th:value="great" th:selected="${article.cate2 == 'great'}">이벤트당첨</option>
+                                <option th:value="고객서비스" th:selected="${article.type == '고객서비스'}">고객서비스</option>
+                                <option th:value="안전거래" th:selected="${article.type == '안전거래'}">안전거래</option>
+                                <option th:value="위해상품" th:selected="${article.type == '위해상품'}">위해상품</option>
+                                <option th:value="이벤트당첨" th:selected="${article.type == '이벤트당첨'}">이벤트당첨</option>
                             </select>
                         </td>
                     </tr>
@@ -50,8 +50,8 @@
                         </td>
                     </tr>
                 </table>
-                <input type="button"  name='cancel' class="btnList" value="취소하기">
                 <input type="submit" class="btnList" value="등록하기">
+                <input type="button"  name='cancel' class="btnList" value="취소하기">
             </form>
         </th:block>
 
@@ -67,26 +67,84 @@
                             <select name="cate2">
                                 <option selected>[[${article.cate2}]]</option>
                             </select>
-                            <select name="type" class="type">
-                                <option value="" disabled selected>2차 선택</option>
-                            </select>
+                            <th:block th:if="${article.cate2 == 'user'}">
+                                <select name="type" class="type">
+                                    <option value="가입" th:selected="${article.type == '가입'}">가입</option>
+                                    <option value="탈퇴" th:selected="${article.type == '탈퇴'}">탈퇴</option>
+                                    <option value="회원정보" th:selected="${article.type == '회원정보'}">회원정보</option>
+                                    <option value="로그인" th:selected="${article.type == '로그인'}">로그인</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'coupon'}">
+                                <select name="type" class="type">
+                                    <option value="쿠폰/할인/혜택" th:selected="${article.type == '쿠폰/할인/혜택'}">쿠폰/할인/혜택</option>
+                                    <option value="포인트" th:selected="${article.type == '포인트'}">포인트</option>
+                                    <option value="제휴" th:selected="${article.type == '제휴'}">제휴</option>
+                                    <option value="이벤트" th:selected="${article.type == '이벤트'}">이벤트</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'order'}">
+                                <select name="type" class="type">
+                                    <option value="상품" th:selected="${article.type == '상품'}">상품</option>
+                                    <option value="결제" th:selected="${article.type == '결제'}">결제</option>
+                                    <option value="구매내역" th:selected="${article.type == '구매내역'}">구매내역</option>
+                                    <option value="영수증/증빙" th:selected="${article.type == '영수증/증빙'}">영수증/증빙</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'delivery'}">
+                                <select name="type" class="type">
+                                    <option value="배송상태/기간" th:selected="${article.type == '배송상태/기간'}">배송상태/기간</option>
+                                    <option value="배송정보확인/변경" th:selected="${article.type == '배송정보확인/변경'}">배송정보확인/변경</option>
+                                    <option value="해외배송" th:selected="${article.type == '해외배송'}">해외배송</option>
+                                    <option value="당일배송" th:selected="${article.type == '당일배송'}">당일배송</option>
+                                    <option value="해외직구" th:selected="${article.type == '해외직구'}">해외직구</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'cancel'}">
+                                <select name="type" class="type">
+                                    <option value="반품신청/철회" th:selected="${article.type == '반품신청/철회'}">반품신청/철회</option>
+                                    <option value="배송정보확인/변경" th:selected="${article.type == '배송정보확인/변경'}">배송정보확인/변경</option>
+                                    <option value="반품정보확인/변경" th:selected="${article.type == '반품정보확인/변경'}">반품정보확인/변경</option>
+                                    <option value="교환AS신청/철회" th:selected="${article.type == '교환AS신청/철회'}">교환AS신청/철회</option>
+                                    <option value="교환정보확인/변경" th:selected="${article.type == '교환정보확인/변경'}">교환정보확인/변경</option>
+                                    <option value="취소신청/철회" th:selected="${article.type == '취소신청/철회'}">취소신청/철회</option>
+                                    <option value="취소확인/환불정보" th:selected="${article.type == '취소확인/환불정보'}">취소확인/환불정보</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'travel'}">
+                                <select name="type" class="type">
+                                    <option value="여행/숙박" th:selected="${article.type == '여행/숙박'}">여행/숙박</option>
+                                    <option value="항공" th:selected="${article.type == '항공'}">항공</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${article.cate2 == 'safeDeal'}">
+                                <select name="type" class="type">
+                                    <option value="서비스 이용규칙 위반" th:selected="${article.type == '여행/숙박'}">여행/숙박</option>
+                                    <option value="지식재산권침해" th:selected="${article.type == '지식재산권침해'}">지식재산권침해</option>
+                                    <option value="법령 및 정책위반 상품" th:selected="${article.type == '법령 및 정책위반 상품'}">법령 및 정책위반 상품</option>
+                                    <option value="게시물 정책위반" th:selected="${article.type == '게시물 정책위반'}">게시물 정책위반</option>
+                                    <option value="직거래/외부거래유도" th:selected="${article.type == '직거래/외부거래유도'}">직거래/외부거래유도</option>
+                                    <option value="표시광고" th:selected="${article.type == '표시광고'}">표시광고</option>
+                                    <option value="청소년 위해상품/이미지" th:selected="${article.type == '청소년 위해상품/이미지'}">청소년 위해상품/이미지</option>
+                                </select>
+                            </th:block>
                         </td>
                     </tr>
                     <tr>
                         <td>제목</td>
                         <td>
-                            <input type="text" name="title" placeholder="제목을 입력합니다." required>
+                            <input type="text" name="title" placeholder="제목을 입력합니다." th:value="${article.title}" required>
                         </td>
                     </tr>
                     <tr>
                         <td>내용</td>
                         <td>
-                            <textarea name="content" placeholder="내용을 입력하세요." required></textarea>
+                            <textarea name="content" placeholder="내용을 입력하세요." required>[[${article.content}]]</textarea>
                         </td>
                     </tr>
                 </table>
-                <input type="button" name='cancel' class="btnList" value="취소하기">
                 <input type="submit" class="btnList" value="등록하기">
+                <input type="button" name='cancel' class="btnList" value="취소하기">
             </form>
         </th:block>
     </section>

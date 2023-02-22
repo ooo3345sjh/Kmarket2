@@ -4,6 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.AdminDAO">
 
+    <select id="selectLatest" resultType="kr.co.kmarket.vo.CsVO">
+        select * from `km_cs`
+            where `cate1` = #{cate1}
+            order by `csNo` desc limit 5;
+    </select>
+
     <!-- 상품 등록 -->
     <insert id="insertProductAdmin">
         insert into `km_product` set
@@ -31,7 +37,7 @@
             `rdate` = NOW();
     </insert>
 
-    <!-- admin 상품 조회 -->
+    <!-- 상품 조회 -->
     <select id="selectProductAdmin" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.ProductVO">
         select a.*, b.uid from `km_product` as a
         join `km_member_seller` as b
@@ -48,7 +54,82 @@
         SELECT COUNT(*) FROM `km_product`
         where 1=1
         <include refid="searchCondition"/>
+        <include refid="sellerType2"/>
     </select>
+
+    <!-- 상품 정보 수정 -->
+    <update id="modifyProduct" parameterType="kr.co.kmarket.vo.ProductVO">
+        update `km_product` set `prodName` = #{prodName},
+                                `price` = #{price},
+                                `discount` = #{discount},
+                                `point` = #{point},
+                                `stock` = #{stock}
+                                where `prodNo` = #{prodNo};
+    </update>
+
+    <!-- 상품 삭제 -->
+    <delete id="deleteProduct">
+        delete from `km_product` where `prodNo` = #{prodNo};
+    </delete>
+
+<!-- ///////////////////////////////// Admin Cs///////////////////////////////// -->
+
+    <!-- 고객센터 글 등록 -->
+    <insert id="insertCs" keyProperty="csNo">
+        insert into `km_cs` set
+                `uid` = #{uid},
+                `cate1` = #{cate1},
+                `cate2` = #{cate2},
+                `type` = #{type},
+                `title` = #{title},
+                `content` = #{content},
+                `regip` = #{regip},
+                `rdate` = NOW();
+    </insert>
+
+    <!-- 고객센터 게시글 리스트 -->
+    <select id="selectCsAdmins" resultType="kr.co.kmarket.vo.CsVO">
+        select *
+        from `km_cs`
+        where `cate1` = #{cate1}
+        <include refid="csCategory2"/>
+        <include refid="csType"/>
+        order by `csNo` desc
+        limit #{offset}, 10;
+    </select>
+
+    <!-- 고객센터 글 보기 -->
+    <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
+        select * from `km_cs` where csNo = #{csNo};
+    </select>
+
+    <!-- 고객센터 글 수정 -->
+    <update id="updateCs">
+        update `km_cs` set
+                type = #{type},
+                title = #{title},
+                content = #{content}
+        where csNo = #{csNo};
+    </update>
+
+    <!-- 고객센터 답변 수정 -->
+    <update id="updateComment">
+        update `km_cs` set `comment` = #{comment} where csNo = #{csNo};
+    </update>
+
+    <!-- 고객센터 게시글 수 -->
+    <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `km_cs`
+        where `cate1` = #{cate1}
+        <include refid="csCategory2"/>
+        <include refid="csType"/>
+    </select>
+
+    <delete id="deleteCs">
+        delete from `km_cs` where `csNo` = #{csNo};
+    </delete>
+
+    <!-- ///////////////////////////////// include ///////////////////////////////// -->
 
     <!-- 검색 조건 -->
     <sql id="searchCondition">
@@ -67,78 +148,16 @@
         </if>
     </sql>
 
-    <!-- 일반적인 판매자일 경우 판매자가 등록한 상품만 조회 -->
+    <!-- type이 2라면 해당 판매자가 등록한 상품만 조회 -->
     <sql id="sellerType2">
         <if test="type == 2">
-            AND `uid` = #{uid}
+            AND `seller` = #{uid}
         </if>
     </sql>
 
-    <!-- 상품 정보 수정 -->
-    <update id="modifyProduct" parameterType="kr.co.kmarket.vo.ProductVO">
-        update `km_product` set `prodName` = #{prodName},
-                                `price` = #{price},
-                                `discount` = #{discount},
-                                `point` = #{point},
-                                `stock` = #{stock}
-                                where `prodNo` = #{prodNo};
-    </update>
-
-    <!-- 상품 삭제 -->
-    <delete id="deleteProduct">
-        delete from `km_product` where `prodNo` = #{prodNo};
-    </delete>
-
-<!-- ////////////////////////////////////////////////////////////////// -->
-    <!-- Admin Cs -->
-
-    <insert id="insertCs" keyProperty="csNo">
-        insert into `km_cs` set
-                `uid` = #{uid},
-                `cate1` = #{cate1},
-                `cate2` = #{cate2},
-                `type` = #{type},
-                `title` = #{title},
-                `content` = #{content},
-                `regip` = #{regip},
-                `rdate` = NOW();
-    </insert>
-
-    <select id="selectCsAdmins" resultType="kr.co.kmarket.vo.CsVO">
-        select *
-        from `km_cs`
-        where `cate1` = #{cate1}
-        <include refid="csCategory2"/>
-        <include refid="csType"/>
-        order by `csNo` desc
-        limit #{offset}, 10;
-    </select>
-
-    <select id="selectCsAdmin" resultType="kr.co.kmarket.vo.CsVO">
-        select * from `km_cs` where csNo = #{csNo};
-    </select>
-
-    <update id="updateCs">
-        update `km_cs` set
-                cate2 = #{cate2},
-                title = #{title},
-                content = #{content}
-        where csNo = #{csNo};
-    </update>
-
-    <update id="updateComment">
-        update `km_cs` set `comment` = #{comment} where csNo = #{csNo};
-    </update>
-
-    <select id="countCsAdmin" parameterType="kr.co.kmarket.utils.SearchCondition"  resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM `km_cs`
-        where `cate1` = #{cate1}
-        <include refid="csCategory2"/>
-        <include refid="csType"/>
-    </select>
-
+    <!-- cate2 유형별 리스트 출력 -->
     <sql id="csCategory2">
-        <if test='cate2 != null'> <!-- cate2를 안 받아올 때 실행하지 않는 if문 찾기 -->
+        <if test='cate2 != null'>
             and `cate2` = #{cate2}
         </if>
     </sql>
@@ -149,10 +168,4 @@
             and `type` = #{csType}
         </if>
     </sql>
-
-    <delete id="deleteCs">
-        delete from `km_cs` where `csNo` = #{csNo};
-    </delete>
-
-
 </mapper>

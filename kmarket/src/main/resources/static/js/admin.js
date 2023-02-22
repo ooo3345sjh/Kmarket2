@@ -433,9 +433,13 @@ function optionChangeCs(){
 // faq, pna 공통 유형별 리스트 출력하기
 $(function () {
     $('#type').change(function () {
+        const url = new URL(window.location.href); // URL 객체 생성
+        const urlParams = url.searchParams; // URLSearchParams 객체
+        cate1 = urlParams.get('cate1') // type value 값을 가져온다.
+
         let cate2 = $('select[name=cate2]').val();
         let type = $('select[name=type]').val();
-        location.href = '/kmarket/admin/cs/list?cate1=faq&cate2=' + cate2 + '&csType=' + type;
+        location.href = '/kmarket/admin/cs/list?cate1=' + cate1 + '&cate2=' + cate2 + '&csType=' + type;
     })
 });
 
