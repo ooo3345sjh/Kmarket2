@@ -17,14 +17,12 @@
     <select id="getCountTotal" resultType="int">
         SELECT COUNT(`prodNo`) FROM `km_product` WHERE <if test="cate1 != 0">`cate1`=#{cate1}</if>
         <if test="cate2 != 0"> AND `cate2`=#{cate2}</if>
-        <if test="search != null">`prodName` LIKE '%${search}%'</if>
     </select>
 
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT * FROM `km_product` WHERE<if test="cate1 != 0">`Cate1`=#{cate1}</if>
 
         <if test="cate2 != 0">AND `cate2`=#{cate2}</if>
-        <if test="search != null">`prodName` LIKE '%${search}%'</if>
         <if test="sort == 'sold'">ORDER BY `sold` DESC LIMIT #{start}, 10;</if>
         <if test="sort == 'lowprice'">ORDER BY `price` ASC LIMIT #{start}, 10;</if>
         <if test="sort == 'highprice'">ORDER BY `price` DESC LIMIT #{start}, 10;</if>
