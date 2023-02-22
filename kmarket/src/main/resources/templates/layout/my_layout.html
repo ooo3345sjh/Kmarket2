@@ -13,7 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/jquery.star-rating-svg.min.js}"></script>
     <script th:src="@{/js/ajaxAPI.js}"></script>
+    <script th:src="@{/js/popup.js}"></script>
     <script>
         const contextPath = "[[@{/}]]"
     </script>
@@ -31,25 +33,25 @@
                     <li>
                         <a href="#">
                             주문·배송
-                            <span class="delivery">1</span>
+                            <span class="delivery" th:text="${user.orderCnt}">1</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             할인쿠폰
-                            <span class="coupon">1</span>
+                            <span class="coupon" th:text="${user.couponCnt}">1</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             포인트
-                            <span class="point">1,000</span>
+                            <span class="point" th:text="${#numbers.formatInteger(user.point, 1, 'COMMA')}">1,000</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             문의내역
-                            <span class="qna">1</span>
+                            <span class="qna" th:text="${user.csCnt}">1</span>
                         </a>
                     </li>
                 </ol>
@@ -71,5 +73,7 @@
 </div>
 </body>
 <th:block th:replace="fragments/_footer::user_footer"></th:block>
+<th:block th:replace="fragments/popup::popup"></th:block>
 <th:block layout:fragment="script"></th:block>
+
 </html>

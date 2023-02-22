@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.MyDAO">
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 마이페이지 요약정보 안내 데이터 조회
+	 -->
+	<select id="selectNavInfo" parameterType="String" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT *,
+			(
+			SELECT COUNT(*) FROM `km_member_coupon`
+			WHERE `uid`=#{uid}
+			) 'couponCnt',
+			(
+			SELECT COUNT(*) FROM `km_product_order`
+			WHERE `uid`=#{uid} AND `ordState` != '구매확정'
+			) 'orderCnt',
+			(
+			SELECT COUNT(*) FROM	`km_cs`
+			WHERE `uid`=#{uid} AND `comment` IS null
+			) 'csCnt'
+		FROM `km_member_general`
+		WHERE `uid`=#{uid} ;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 마이페이지 홈 최근주문내역 조회
+	 -->
+	<select id="selectOrderLog" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
+		SELECT o.*, s.company as company, p.prodName, p.thumb1, p.cate1, p.cate2
+		FROM `km_product_order` as o
+		JOIN `km_product_order_item` as oi
+		ON o.`ordNo` = oi.`ordNo`
+
+		JOIN `km_product` as p
+		ON oi.`prodNo` = p.`prodNo`
+
+		JOIN `km_member_seller` as s
+		ON p.`seller` = s.`uid`
+
+		WHERE o.`uid`=#{uid}
+		ORDER BY o.`ordDate` DESC
+		LIMIT 5
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 마이페이지 홈 포인트적립내역 조회
+	 -->
+	<select id="selectPointLog" parameterType="String" resultType="kr.co.kmarket.vo.PointVO">
+		SELECT *
+		FROM `km_member_point`
+		WHERE `uid`=#{uid}
+		ORDER BY `pointDate` DESC
+		LIMIT 5
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 마이페이지 홈 상품평 조회
+	 -->
+	<select id="selectReviewLog" parameterType="String" resultType="kr.co.kmarket.vo.ReviewVO">
+		SELECT r.*, p.prodName
+		FROM `km_product_review` r
+		JOIN `km_product` p
+		ON r.`prodNO` = p.`prodNo`
+		WHERE `uid`=#{uid}
+		ORDER BY `rdate` DESC
+		LIMIT 5
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 마이페이지 홈 문의내역 조회
+	 -->
+	<select id="selectCsLog" parameterType="String" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT *
+		FROM `km_cs`
+		WHERE `uid`=#{uid} AND `cate1`='qna'
+		ORDER BY `rdate` DESC
+		LIMIT 5
+	</select>
+</mapper>

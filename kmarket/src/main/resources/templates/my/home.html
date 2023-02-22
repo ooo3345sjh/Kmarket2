@@ -17,27 +17,29 @@
                     <th>상태</th>
                     <th>확인/신청</th>
                 </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
+                <tr th:each="orderLog:${map.orderLog}">
+                    <td class="date">
+                        [[${#strings.substring(orderLog.ordDate, 0, 10)}]]
+                    </td>
                     <td>
                         <a href="#" class="thumb">
-                            <img src="https://via.placeholder.com/80x80" alt="">
+                            <img th:src="@{/file/} + ${orderLog.thumb1}" alt="">
                         </a>
                         <ul>
-                            <li class="company">상호명</li>
+                            <li class="company">상호명 [[${orderLog.company}]]</li>
                             <li class="prodName">
-                                <a href="#">상품명</a>
+                                <a href="#">[[${orderLog.prodName}]]</a>
                             </li>
                             <li>
                                 수량:
-                                <span class="prodCount">1</span>
+                                <span class="prodCount">[[${orderLog.ordCount}]]</span>
                                 개 / 주문번호 :
-                                <span class="ordNo">1012211341</span>
+                                <span class="ordNo">[[${orderLog.ordNo}]]</span>
                             </li>
-                            <li class="prodPrice">34,000</li>
+                            <li class="prodPrice">[[${#numbers.formatInteger(orderLog.ordPrice, 1, 'COMMA')}]]</li>
                         </ul>
                     </td>
-                    <td class="status">배송완료</td>
+                    <td class="status">[[${orderLog.ordState}]]</td>
                     <td class="confirm">
                         <a href="#" class="receive">수취확인</a>
                         <a href="#" class="review">상품평</a>
@@ -60,13 +62,23 @@
                         <th>비고</th>
                         <th>유효기간</th>
                     </tr>
-                    <tr>
-                        <td>2022-12-10</td>
-                        <td>적립</td>
-                        <td>2022121001</td>
-                        <td>340</td>
-                        <td>상품 구매확정</td>
-                        <td>2024-12-10</td>
+                    <tr th:each="pointLog:${map.pointLog}">
+                        <td>[[${#strings.substring(pointLog.pointDate, 0, 10)}]]</td>
+                        <th:block th:if="${pointLog.point gt 0}">
+                            <td>적립</td>
+                        </th:block>
+                        <th:block th:unless="${pointLog.point gt 0}">
+                            <td>사용</td>
+                        </th:block>
+                        <td>[[${pointLog.ordNo}]]</td>
+                        <td>[[${pointLog.point}]]</td>
+                        <th:block th:if="${pointLog.point gt 0}">
+                            <td>상품 구매</td>
+                        </th:block>
+                        <th:block th:unless="${pointLog.point gt 0}">
+                            <td>-</td>
+                        </th:block>
+                        <td>-</td>
                     </tr>
                 </table>
             </table>
@@ -82,40 +94,16 @@
                     <th>평점</th>
                     <th>작성일</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star1">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star2">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star3">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star4">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star5">상품평</span></td>
-                    <td>2022-12-10</td>
+                <tr th:each="reviewLog, i:${map.reviewLog}">
+                    <td style="width: 40px;">[[${i.count}]]</td>
+                    <td style="width: 10px;">
+                        <span class="prodName">
+                        [[${reviewLog.prodName}]]
+                        </span>
+                    </td>
+                    <td>[[${reviewLog.content}]]</td>
+                    <td style="width: 50px;"><span th:class="|rating star${reviewLog.rating}|">상품평</span></td>
+                    <td style="width: 100px;">[[${#strings.substring(reviewLog.rdate, 0, 10)}]]</td>
                 </tr>
             </table>
         </article>
@@ -131,29 +119,18 @@
                     <th>작성일</th>
                     <th>상태</th>
                 </tr>
-                <tr>
-                    <td>5</td>
+                <tr th:each="csLog, i:${map.csLog}">
+                    <td>[[${i.count}]]</td>
                     <td>고객센터</td>
-                    <td>주문/결제</td>
-                    <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
+                    <td>[[${csLog.type}]]</td>
+                    <td>[[${csLog.content}]]</td>
                     <td>2024-12-12</td>
-                    <td><span class="notAnswerYet">검토중</span></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>고객센터</td>
-                    <td>주문/결제</td>
-                    <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                    <td>2024-12-12</td>
-                    <td><span class="answered">답변완료</span></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>판매자게시판</td>
-                    <td>배송</td>
-                    <td>배송기간이 보통 얼마나 걸리나요?</td>
-                    <td>2024-12-12</td>
-                    <td><span class="answered">답변완료</span></td>
+                    <td>
+                        <span th:class="${#strings.isEmpty(csLog.comment)? 'notAnswerYet':'answered'}"
+                              th:text="${#strings.isEmpty(csLog.comment)? '검토중':'답변완료'}">
+                            검토중
+                        </span>
+                    </td>
                 </tr>
             </table>
         </article>
