@@ -3,6 +3,7 @@ package kr.co.kmarket.dao;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate2VO;
+import kr.co.kmarket.vo.ReviewVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -56,4 +57,16 @@ public interface ProductDAO {
     public int getCountTotal(@Param("cate1") int cate1,
                              @Param("cate2") int cate2,
                              @Param("search") String search);
+
+    /**
+     * product review 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @param start
+     * @return
+     */
+    public List<ReviewVO> selectReviews(@Param("prodNo") int prodNo,
+                                        @Param("start") int start);
+
+
 }

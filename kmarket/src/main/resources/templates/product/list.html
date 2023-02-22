@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link rel="stylesheet" href="../css/style.css"/>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
     <div id="wrapper">
         <header>
             <div class="top">
                 <div>
+
                     <th:block sec:authorize="isAnonymous()">
                         <a th:href="@{/login}">로그인</a>
                         <a th:href="@{/join}">회원가입</a>
@@ -30,6 +30,7 @@
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             &nbsp;장바구니
                     </a>
+                    </th:block>
                 </div>
             </div>
             <div class="logo">
@@ -195,19 +196,19 @@
                         <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=sold,search=${search})}" th:class="${sort eq 'sold'?'on':'off'}" class="on">판매많은순</a>
                     </li>
                     <li>
-                        <a href="#">낮은가격순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=lowprice,search=${search})}" th:class="${sort eq 'lowprice'?'on':'off'}">낮은가격순</a>
                     </li>
                     <li>
-                        <a href="#">높은가격순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=highprice,search=${search})}" th:class="${sort eq 'highprice'?'on':'off'}">높은가격순</a>
                     </li>
                     <li>
-                        <a href="#">평점높은순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=score,search=${search})}" th:class="${sort eq 'score'?'on':'off'}">평점높은순</a>
                     </li>
                     <li>
-                        <a href="#">후기많은순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=review,search=${search})}" th:class="${sort eq 'review'?'on':'off'}">후기많은순</a>
                     </li>
                     <li>
-                        <a href="#">최근등록순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=rdate,search=${search})}" th:class="${sort eq 'rdate'?'on':'off'}">최근등록순</a>
                     </li>
                 </ul>
                 <!-- 상품 목록 -->
@@ -231,42 +232,50 @@
                                         <del class="org-price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
                                         <span class="discount">[[${product.discount}]]%</span>
                                     </li>
-                                    <li>
-                                        <span class="free-delivery">무료배송</span>
                                     </li>
+                                    <th:block th:if="${product.delivery eq 0}">
+                                        <li><span class="free-delivery">무료배송</span></li>
+                                    </th:block>
+                                    <th:block th:if="${product.delivery > 0}">
+                                        <li><span>배송비 </span>[[${#numbers.formatInteger(product.delivery, 1, 'COMMA')+'원'}]]</li>
+                                    </th:block>
                                 </ul>
                             </td>
                             <td>
                                 <h4 class="seller">
                                     <i class="fas fa-home" aria-hidden="true"></i>
-                                    [[${product.seller}]]
+                                    [[${product.company}]]
                                 </h4>
                                 <h5 class="badge power">판매자등급</h5>
                                 <h6 th:class="'rating star'+${product.score}">상품평</h6>
                             </td>
                         </tr>
+                    </tbody>
                 </table>
                 <!-- 상품목록 페이지번호 -->
                 <div class="paging">
-                    <span class="prev">
-                        <a href="#"><&nbsp;이전</a>
-                    </span>
+                    <th:block th:if="${pageGroup[0]>1}">
+                        <span class="prev">
+                            <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${pageGroup[0]-1},search=${search})}"><&nbsp;이전</a>
+                        </span>
+                    </th:block>
                     <span class="num">
-                        <a href="#" class="on">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">7</a>
+                        <th:block th:each="num:${#numbers.sequence(pageGroup[0], pageGroup[1])}">
+                            <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${num},search=${search})}"
+                               th:class="${num == currentPage ? 'on':'off'}">[[${num}]]</a>
+                        </th:block>
                     </span>
-                    <span class="next">
-                        <a href="#">다음&nbsp;></a>
-                    </span>
+                    <th:block th:if="${pageGroup[1]<lastPageNum}">
+                        <span class="next">
+                            <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${pageGroup[1]+1},search=${search})}">다음&nbsp;></a>
+                        </span>
+                    </th:block>
                 </div>
             </section>
         </main>
+
         <footer>
+            <div>
             <ul>
                 <li>
                     <a href="#">회사소개</a>
@@ -307,6 +316,7 @@
                     <br/>
                     Fax : 051-123-4567 | Mail : kmarket@kamrket.co.kr
                 </p>
+            </div>
             </div>
         </footer>
         <button type="button" id="top">상단이동</button>

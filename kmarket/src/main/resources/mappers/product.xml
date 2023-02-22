@@ -17,6 +17,7 @@
     <select id="getCountTotal" resultType="int">
         SELECT COUNT(`prodNo`) FROM `km_product` WHERE <if test="cate1 != 0">`cate1`=#{cate1}</if>
         <if test="cate2 != 0"> AND `cate2`=#{cate2}</if>
+
     </select>
 
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
