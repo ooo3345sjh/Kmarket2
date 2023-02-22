@@ -2,7 +2,9 @@ package kr.co.kmarket.service;
 
 
 import kr.co.kmarket.dao.MyDAO;
+import kr.co.kmarket.dao.UserDAO;
 import kr.co.kmarket.vo.UserVO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,9 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class MyService {
 
-    @Autowired
     private MyDAO myDAO;
 
     /**
@@ -44,5 +46,8 @@ public class MyService {
 
         return map;
     }
+
+
+
 
 }

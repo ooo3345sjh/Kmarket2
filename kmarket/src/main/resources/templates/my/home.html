@@ -21,12 +21,14 @@
                     <td class="date">
                         [[${#strings.substring(orderLog.ordDate, 0, 10)}]]
                     </td>
-                    <td>
+                    <td class="info">
                         <a href="#" class="thumb">
                             <img th:src="@{/file/} + ${orderLog.thumb1}" alt="">
                         </a>
                         <ul>
-                            <li class="company">상호명 [[${orderLog.company}]]</li>
+                            <li class="company">
+                                <a href="#" th:data-sellerUid="${orderLog.sellerUid}">[[${orderLog.company}]]</a>
+                            </li>
                             <li class="prodName">
                                 <a href="#">[[${orderLog.prodName}]]</a>
                             </li>
@@ -36,7 +38,7 @@
                                 개 / 주문번호 :
                                 <span class="ordNo">[[${orderLog.ordNo}]]</span>
                             </li>
-                            <li class="prodPrice">[[${#numbers.formatInteger(orderLog.ordPrice, 1, 'COMMA')}]]</li>
+                            <li class="prodPrice">[[${#numbers.formatInteger(orderLog.ordPrice, 1, 'COMMA')}]]원</li>
                         </ul>
                     </td>
                     <td class="status">[[${orderLog.ordState}]]</td>
@@ -71,7 +73,7 @@
                             <td>사용</td>
                         </th:block>
                         <td>[[${pointLog.ordNo}]]</td>
-                        <td>[[${pointLog.point}]]</td>
+                        <td>[[${#numbers.formatInteger(pointLog.point, 1, 'COMMA')}]]</td>
                         <th:block th:if="${pointLog.point gt 0}">
                             <td>상품 구매</td>
                         </th:block>
@@ -165,23 +167,9 @@
 </th:block>
 <th:block layout:fragment="script">
     <script>
-        $(function () {
+        $(function(){
 
-            $('.receive').click(function (e) {
-                e.preventDefault();
 
-                let jsonData = {"uid":"1234sad", "pass":"123123"}
-
-               $.ajax({
-                    url: contextPath + 'my/home',
-                    method:'post',
-                    data: jsonData,
-                    dataType:'json',
-                    success: function (data) {
-                        console.log(data);
-                    }
-               });
-		    })
 
 
         })

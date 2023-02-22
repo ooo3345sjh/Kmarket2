@@ -40,4 +40,5 @@ out/
 ### 추가 ###
 file/
 log/
+src/main/resources/application.properties
 

@@ -59,6 +59,7 @@ public class UserVO implements UserDetails {
     private int orderCnt;  // 주문 수
     private int couponCnt; // 쿠폰 수
     private int csCnt;     // 문의 수
+    private String addr;   // 주소(zip + addr1 + addr2)
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
