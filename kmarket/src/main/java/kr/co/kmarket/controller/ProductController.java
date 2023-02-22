@@ -4,6 +4,7 @@ import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate2VO;
+import kr.co.kmarket.vo.ReviewVO;
 import kr.co.kmarket.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,24 +37,18 @@ public class ProductController {
                                required = false) String search,
                                String sort, String pg)
     {
-
-        Product_cate2VO cateName = null;
+                        Product_cate2VO cateName = null;
 
         // 게시글 출력 갯수
         int count = 10;
-
         // 현재 페이지 번호
         int currentPage = service.getCurrentPage(pg);
-
         // 페이지 시작값
         int start = service.getLimitStart(currentPage, count);
-
         // 전체 게시물 갯수
         int total = service.getCountTotal(cate1, cate2, search);
-
         // 페이지 마지막 번호
         int lastPageNum = service.getLastPageNum(total, count);
-
         // 페이지 그룹 start, end 번호
         int[] pageGroup = service.getPageGroupNum(currentPage, lastPageNum);
 
@@ -69,7 +64,6 @@ public class ProductController {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("lastPageNum", lastPageNum);
         model.addAttribute("pageGroup", pageGroup);
-
 
         return "product/list";
     }
@@ -90,10 +84,16 @@ public class ProductController {
     }
 
     @GetMapping("product/view")
-    public String view() {
+    public String view(int cate1, int cate2, int prodNo,  Model model, String pg) {
+        Product_cate2VO cateName = service.getCateName(cate1, cate2);
+        //ProductVO product = service.selectProduct(prodNo);
+        //List<ReviewVO> reviews = service.selectReviews(prodNo);
+
+        model.addAttribute("cate1", cate1);
+        model.addAttribute("cate2", cate2);
+        model.addAttribute("cateName", cateName);
+
         return "product/view";
     }
-
-
 
 }

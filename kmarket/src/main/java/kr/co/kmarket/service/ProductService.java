@@ -4,10 +4,7 @@ import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.repository.ProductRepo;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
-import kr.co.kmarket.vo.ProductVO;
-import kr.co.kmarket.vo.Product_cate1VO;
-import kr.co.kmarket.vo.Product_cate2VO;
-import kr.co.kmarket.vo.UserVO;
+import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -182,6 +179,17 @@ public class ProductService {
         }
 
         return lastPage;
+    }
+
+    /**
+     * product review 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @param start
+     * @return
+     */
+    public List<ReviewVO> selectReviews(int prodNo, int start) {
+        return dao.selectReviews(prodNo, start);
     }
 
 
