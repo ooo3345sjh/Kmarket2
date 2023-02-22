@@ -19,4 +19,5 @@ public interface CsDAO {
       public List<CsVO> selectarticles(SearchCondition sc);
       public int countAll(SearchCondition sc);
       public List<CsVO> selectfaqtypes(SearchCondition sc);
+      public void insertqna(CsVO qna);
 }

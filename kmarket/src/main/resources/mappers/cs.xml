@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.CsDAO">
-    <insert id="insertCs" parameterType="kr.co.kmarket.vo.CsVO" useGeneratedKeys="true" keyProperty="csNo">
+    <insert id="insertqna" parameterType="kr.co.kmarket.vo.CsVO" useGeneratedKeys="true" keyProperty="csNo">
         insert into `km_cs` set
         `uid`= #{uid},
         `cate1`= #{cate1},
@@ -12,9 +12,8 @@
         `title`= #{title},
         `content`= #{content},
         `regip`= #{regip},
-        `rdate`= NOW(),
-        `hit`= #{hit},
-        `comment`= #{comment};
+        `rdate`= NOW();
+
     </insert>
     <!-- cs main 게시글 5개 출력-->
     <select id="select5" resultType="kr.co.kmarket.vo.CsVO">
