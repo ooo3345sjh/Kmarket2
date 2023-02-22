@@ -88,6 +88,10 @@ public class UserService {
         return userDAO.findByNameAndEmail(name, email);
     }
 
+    public UserVO findByUidAndEmail(String uid, String email){
+        return userDAO.findByUidAndEmail(uid, email);
+    }
+
     public void findId_EmailAuth (Map map){
         String name = (String)map.get("name");
         String email = (String)map.get("email");
@@ -98,7 +102,20 @@ public class UserService {
         if(result == 1) emailService.send(map);
     }
 
+    public void findPw_EmailAuth (Map map){
+        String uid = (String)map.get("uid");
+        String email = (String)map.get("email");
 
+        int result = findByUidAndEmail(uid, email) != null? 1:0;
+        map.put("result", result);
+
+        if(result == 1) emailService.send(map);
+    }
+
+    public int resetPw(String uid, String pass){
+
+        return userDAO.updatePw(uid, encoder.encode(pass));
+    }
 
     /**
      *

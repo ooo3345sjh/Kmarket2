@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>
@@ -10,27 +10,32 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body>
     <div id="wrapper">
         <header>
             <div class="top">
                 <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                    <a href="#">마이페이지</a>
-                    <a href="#">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        장바구니
+                    <th:block sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}">로그인</a>
+                        <a th:href="@{/join}">회원가입</a>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a sec:authorize="hasAnyRole('ROLE_5','ROLE_2')" th:href="@{/admin/}">관리자</a>
+                        <a th:href="@{/my/home}">마이페이지</a>
+                        <a th:href="@{/logout}">로그아웃</a>
+                        <a th:href="@{/product/cart}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            &nbsp;장바구니
                     </a>
                 </div>
             </div>
             <div class="logo">
                 <div>
-                    <a href="#">
-                        <img src="../img/header_logo.png" alt="로고">
+                    <a th:href="@{/}">
+                        <img th:src="@{/images/header_logo.png}" alt="로고">
                     </a>
                     <form action="#">
                         <input type="text" name="keyword">
@@ -63,60 +68,112 @@
             <aside>
                 <!-- 카테고리 -->
                 <ul class="category">
+                    <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
                     <li>
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                        카테고리
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-tshirt" aria-hidden="true"></i>
-                            패션·의류·뷰티
-                            <i class="fas fa-angle-right" aria-hidden="true"></i>
-                        </a>
+                        <a th:href="@{/product/list(cate1=10,sort=sold)}"><i class="fas fa-shopping-bag"></i>브랜드 패션<i class="fas fa-angle-right"></i></a>
                         <ol>
-                            <li><a href="#">남성의류</a></li>
-                            <li><a href="#">여성의류</a></li>
-                            <li><a href="#">잡화</a></li>
-                            <li><a href="#">뷰티</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=10,sort=sold)}">브랜드 여성의류</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=11,sort=sold)}">브랜드 남성의류</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=12,sort=sold)}">브랜드 진/캐쥬얼</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=13,sort=sold)}">브랜드 신발/가방</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=14,sort=sold)}">브랜드 쥬얼리/시계</a></li>
+                            <li><a th:href="@{/product/list(cate1=10,cate2=15,sort=sold)}">브랜드 아웃도어</a></li>
                         </ol>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="fas fa-laptop" aria-hidden="true"></i>
-                            가전·디지털
-                            <i class="fas fa-angle-right" aria-hidden="true"></i>
-                        </a>
+                        <a th:href="@{/product/list(cate1=11,sort=sold)}"><i class="fas fa-tshirt"></i>패션의류·잡화·뷰티<i class="fas fa-angle-right"></i></a>
                         <ol>
-                            <li><a href="#">노트북/PC</a></li>
-                            <li><a href="#">가전</a></li>
-                            <li><a href="#">휴대폰</a></li>
-                            <li><a href="#">기타</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=10,sort=sold)}">여성의류</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=11,sort=sold)}">남성의류</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=12,sort=sold)}">언더웨어</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=13,sort=sold)}">신발</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=14,sort=sold)}">가방/잡화</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=15,sort=sold)}">쥬얼리/시계</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=16,sort=sold)}">화장품/향수</a></li>
+                            <li><a th:href="@{/product/list(cate1=11,cate2=17,sort=sold)}">바디/헤어</a></li>
                         </ol>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="fas fa-utensils" aria-hidden="true"></i>
-                            식품·생필품
-                            <i class="fas fa-angle-right" aria-hidden="true"></i>
-                        </a>
+                        <a th:href="@{/product/list(cate1=12,sort=sold)}"><i class="fas fa-baby-carriage" aria-hidden="true"></i>유아동<i class="fas fa-angle-right"></i></a>
                         <ol>
-                            <li><a href="#">신선식품</a></li>
-                            <li><a href="#">가공식품</a></li>
-                            <li><a href="#">건강식품</a></li>
-                            <li><a href="#">생필품</a></li>
+                            <li><a th:href="@{/product/list(cate1=12,cate2=10,sort=sold)}">출산/육아</a></li>
+                            <li><a th:href="@{/product/list(cate1=12,cate2=11,sort=sold)}">장난감/완구</a></li>
+                            <li><a th:href="@{/product/list(cate1=12,cate2=12,sort=sold)}">유아동 의류</a></li>
+                            <li><a th:href="@{/product/list(cate1=12,cate2=13,sort=sold)}">유아동 신발/잡화</a></li>
                         </ol>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="fas fa-home" aria-hidden="true"></i>
-                            홈·문구·취미
-                            <i class="fas fa-angle-right" aria-hidden="true"></i>
-                        </a>
+                        <a th:href="@{/product/list(cate1=13,sort=sold)}"><i class="fas fa-utensils"></i>식품·생필품<i class="fas fa-angle-right" ></i></a>
                         <ol>
-                            <li><a href="#">가구/DIY</a></li>
-                            <li><a href="#">침구·커튼</a></li>
-                            <li><a href="#">생활용품</a></li>
-                            <li><a href="#">사무용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=10,sort=sold)}">신선식품</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=11,sort=sold)}">가공식품</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=12,sort=sold)}">건강식품</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=13,sort=sold)}">커피/음료</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=14,sort=sold)}">생필품</a></li>
+                            <li><a th:href="@{/product/list(cate1=13,cate2=15,sort=sold)}">바디/헤어</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list(cate1=14,sort=sold)}"><i class="fas fa-home"></i>홈데코·문구·취미·반려<i class="fas fa-angle-right"></i></a>
+                        <ol>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=10,sort=sold)}">가구/DIY</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=11,sort=sold)}">침구/커튼</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=12,sort=sold)}">조명/인테리어</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=13,sort=sold)}">생활용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=14,sort=sold)}">주방용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=15,sort=sold)}">문구/사무용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=16,sort=sold)}">사무기기</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=17,sort=sold)}">악기/취미</a></li>
+                            <li><a th:href="@{/product/list(cate1=14,cate2=18,sort=sold)}">반려동물용품</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list(cate1=15,sort=sold)}"><i class="fas fa-tv"></i>컴퓨터·디지털·가전<i class="fas fa-angle-right"></i></a>
+                        <ol>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=10,sort=sold)}">노트북/PC</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=11,sort=sold)}">모니터/프린터</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=12,sort=sold)}">PC주변기기</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=13,sort=sold)}">모바일/태블릿</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=14,sort=sold)}">카메라</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=15,sort=sold)}">게임</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=16,sort=sold)}">영상가전</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=17,sort=sold)}">주방가전</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=18,sort=sold)}">계절가전</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=19,sort=sold)}">생활/미용가전</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=20,sort=sold)}">음향가전</a></li>
+                            <li><a th:href="@{/product/list(cate1=15,cate2=21,sort=sold)}">건강가전</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list(cate1=16,sort=sold)}"><i class="fas fa-running"></i>스포츠·건강·렌탈<i class="fas fa-angle-right"></i></a>
+                        <ol>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=10,sort=sold)}">스포츠의류/운동화</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=11,sort=sold)}">휘트니스/수영</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=12,sort=sold)}">구기/라켓</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=13,sort=sold)}">골프</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=14,sort=sold)}">자전거/보드/기타레저</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=15,sort=sold)}">캠핑/낚시</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=16,sort=sold)}">등산/아웃도어</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=17,sort=sold)}">건강/의료용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=18,sort=sold)}">건강식품</a></li>
+                            <li><a th:href="@{/product/list(cate1=16,cate2=19,sort=sold)}">렌탈서비스</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list(cate1=17,sort=sold)}"><i class="fas fa-car"></i>자동차·공구<i class="fas fa-angle-right"></i></a>
+                        <ol>
+                            <li><a th:href="@{/product/list(cate1=17,cate2=10,sort=sold)}">자동차용품</a></li>
+                            <li><a th:href="@{/product/list(cate1=17,cate2=11,sort=sold)}">공구/안전/산업용품</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list(cate1=18,sort=sold)}"><i class="fas fa-book"></i>여행·도서·티켓·e쿠폰<i class="fas fa-angle-right"></i></a>
+                        <ol>
+                            <li><a th:href="@{/product/list(cate1=18,cate2=10,sort=sold)}">여행/항공권</a></li>
+                            <li><a th:href="@{/product/list(cate1=18,cate2=11,sort=sold)}">도서/음반/e교육</a></li>
+                            <li><a th:href="@{/product/list(cate1=18,cate2=12,sort=sold)}">공연티켓</a></li>
+                            <li><a th:href="@{/product/list(cate1=18,cate2=13,sort=sold)}">e쿠폰</a></li>
+                            <li><a th:href="@{/product/list(cate1=18,cate2=14,sort=sold)}">상품권</a></li>
                         </ol>
                     </li>
                 </ul>
@@ -135,7 +192,7 @@
                 <!-- 정렬 메뉴 -->
                 <ul class="sort">
                     <li>
-                        <a href="#" class="on">판매많은순</a>
+                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=sold,search=${search})}" th:class="${sort eq 'sold'?'on':'off'}" class="on">판매많은순</a>
                     </li>
                     <li>
                         <a href="#">낮은가격순</a>
@@ -156,24 +213,23 @@
                 <!-- 상품 목록 -->
                 <table border="0">
                     <tbody>
-                        <tr>
-                            <td>
-                                <a href="#" class="thumb">
-                                    <img src="https://via.placeholder.com/120x120" alt="상품이미지">
+                        <tr th:each="product, i:${products}">
+                            <td><a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo})}" class="thumb">
+                                    <img th:src="@{/file/} + ${product.thumb1}" alt="상품이미지">
                                 </a>
                             </td>
                             <td>
-                                <h3 class="name">상품명</h3>
-                                <a href="#" class="desc">상품설명</a>
+                                <h3 class="name">[[${product.prodName}]]</h3>
+                                <a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo})}" class="desc">[[${product.descript}]]</a>
                             </td>
                             <td>
                                 <ul>
                                     <li>
-                                        <ins class="dis-price">27,000</ins>
+                                        <ins class="dis-price">[[${#numbers.formatInteger((product.price * (1 - product.discount / 100.0)), 3, 'COMMA')}]]</ins>
                                     </li>
                                     <li>
-                                        <del class="org-price">30,000</del>
-                                        <span class="discount">10%</span>
+                                        <del class="org-price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+                                        <span class="discount">[[${product.discount}]]%</span>
                                     </li>
                                     <li>
                                         <span class="free-delivery">무료배송</span>
@@ -183,145 +239,12 @@
                             <td>
                                 <h4 class="seller">
                                     <i class="fas fa-home" aria-hidden="true"></i>
-                                    판매자
+                                    [[${product.seller}]]
                                 </h4>
                                 <h5 class="badge power">판매자등급</h5>
-                                <h6 class="rating star1">상품평</h6>
+                                <h6 th:class="'rating star'+${product.score}">상품평</h6>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="thumb">
-                                    <img src="https://via.placeholder.com/120x120" alt="상품이미지">
-                                </a>
-                            </td>
-                            <td>
-                                <h3 class="name">상품명</h3>
-                                <a href="#" class="desc">상품설명</a>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>
-                                        <ins class="dis-price">27,000</ins>
-                                    </li>
-                                    <li>
-                                        <del class="org-price">30,000</del>
-                                        <span class="discount">10%</span>
-                                    </li>
-                                    <li>
-                                        <span class="free-delivery">무료배송</span>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <h4 class="seller">
-                                    <i class="fas fa-home" aria-hidden="true"></i>
-                                    판매자
-                                </h4>
-                                <h5 class="badge power">판매자등급</h5>
-                                <h6 class="rating star2">상품평</h6>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="thumb">
-                                    <img src="https://via.placeholder.com/120x120" alt="상품이미지">
-                                </a>
-                            </td>
-                            <td>
-                                <h3 class="name">상품명</h3>
-                                <a href="#" class="desc">상품설명</a>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>
-                                        <ins class="dis-price">27,000</ins>
-                                    </li>
-                                    <li>
-                                        <del class="org-price">30,000</del>
-                                        <span class="discount">10%</span>
-                                    </li>
-                                    <li>
-                                        <span class="free-delivery">무료배송</span>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <h4 class="seller">
-                                    <i class="fas fa-home" aria-hidden="true"></i>
-                                    판매자
-                                </h4>
-                                <h5 class="badge power">판매자등급</h5>
-                                <h6 class="rating star3">상품평</h6>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="thumb">
-                                    <img src="https://via.placeholder.com/120x120" alt="상품이미지">
-                                </a>
-                            </td>
-                            <td>
-                                <h3 class="name">상품명</h3>
-                                <a href="#" class="desc">상품설명</a>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>
-                                        <ins class="dis-price">27,000</ins>
-                                    </li>
-                                    <li>
-                                        <del class="org-price">30,000</del>
-                                        <span class="discount">10%</span>
-                                    </li>
-                                    <li>
-                                        <span class="free-delivery">무료배송</span>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <h4 class="seller">
-                                    <i class="fas fa-home" aria-hidden="true"></i>
-                                    판매자
-                                </h4>
-                                <h5 class="badge power">판매자등급</h5>
-                                <h6 class="rating star4">상품평</h6>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#" class="thumb">
-                                    <img src="https://via.placeholder.com/120x120" alt="상품이미지">
-                                </a>
-                            </td>
-                            <td>
-                                <h3 class="name">상품명</h3>
-                                <a href="#" class="desc">상품설명</a>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>
-                                        <ins class="dis-price">27,000</ins>
-                                    </li>
-                                    <li>
-                                        <del class="org-price">30,000</del>
-                                        <span class="discount">10%</span>
-                                    </li>
-                                    <li>
-                                        <span>배송비 2500</span>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <h4 class="seller">
-                                    <i class="fas fa-home" aria-hidden="true"></i>
-                                    판매자
-                                </h4>
-                                <h5 class="badge power">판매자등급</h5>
-                                <h6 class="rating star5">상품평</h6>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
                 <!-- 상품목록 페이지번호 -->
                 <div class="paging">
@@ -360,7 +283,7 @@
             </ul>
             <div>
                 <p>
-                    <img src="../img/footer_logo.png" alt="로고">
+                    <img th:src="@{/images/footer_logo.png}" alt="로고">
                 </p>
                 <p>
                     <strong>(주)KMARKET</strong>

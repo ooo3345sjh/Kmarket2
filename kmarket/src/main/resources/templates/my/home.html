@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/my_layout">
+<th:block layout:fragment="section">
+    <section>
+        <a href="#">
+            <img th:src="@{/images/my_banner1.jpg}" alt="banner">
+        </a>
+        <article class="latest">
+            <h3>최근주문내역</h3>
+            <a href="#" class="more">더보기</a>
+            <table border="0">
+                <tr>
+                    <th>날짜</th>
+                    <th>상품정보</th>
+                    <th>상태</th>
+                    <th>확인/신청</th>
+                </tr>
+                <tr th:each="orderLog:${map.orderLog}">
+                    <td class="date">
+                        [[${#strings.substring(orderLog.ordDate, 0, 10)}]]
+                    </td>
+                    <td class="info">
+                        <a href="#" class="thumb">
+                            <img th:src="@{/file/} + ${orderLog.thumb1}" alt="">
+                        </a>
+                        <ul>
+                            <li class="company">
+                                <a href="#" th:data-sellerUid="${orderLog.sellerUid}">[[${orderLog.company}]]</a>
+                            </li>
+                            <li class="prodName">
+                                <a href="#">[[${orderLog.prodName}]]</a>
+                            </li>
+                            <li>
+                                수량:
+                                <span class="prodCount">[[${orderLog.ordCount}]]</span>
+                                개 / 주문번호 :
+                                <span class="ordNo">[[${orderLog.ordNo}]]</span>
+                            </li>
+                            <li class="prodPrice">[[${#numbers.formatInteger(orderLog.ordPrice, 1, 'COMMA')}]]원</li>
+                        </ul>
+                    </td>
+                    <td class="status">[[${orderLog.ordState}]]</td>
+                    <td class="confirm">
+                        <a href="#" class="receive">수취확인</a>
+                        <a href="#" class="review">상품평</a>
+                        <a href="#" class="refund">반품신청</a>
+                        <a href="#" class="exchange">교환신청</a>
+                    </td>
+                </tr>
+            </table>
+        </article>
+        <article class="point">
+            <h3>포인트적립내역</h3>
+            <a href="#" class="more">더보기</a>
+            <table border="0">
+                <table border="0">
+                    <tr>
+                        <th>날짜</th>
+                        <th>구분</th>
+                        <th>주문번호</th>
+                        <th>적립금액</th>
+                        <th>비고</th>
+                        <th>유효기간</th>
+                    </tr>
+                    <tr th:each="pointLog:${map.pointLog}">
+                        <td>[[${#strings.substring(pointLog.pointDate, 0, 10)}]]</td>
+                        <th:block th:if="${pointLog.point gt 0}">
+                            <td>적립</td>
+                        </th:block>
+                        <th:block th:unless="${pointLog.point gt 0}">
+                            <td>사용</td>
+                        </th:block>
+                        <td>[[${pointLog.ordNo}]]</td>
+                        <td>[[${#numbers.formatInteger(pointLog.point, 1, 'COMMA')}]]</td>
+                        <th:block th:if="${pointLog.point gt 0}">
+                            <td>상품 구매</td>
+                        </th:block>
+                        <th:block th:unless="${pointLog.point gt 0}">
+                            <td>-</td>
+                        </th:block>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </table>
+        </article>
+        <article class="review">
+            <h3>상품평</h3>
+            <a href="#" class="more">더보기</a>
+            <table border="0">
+                <tr>
+                    <th>번호</th>
+                    <th>상품명</th>
+                    <th>내용</th>
+                    <th>평점</th>
+                    <th>작성일</th>
+                </tr>
+                <tr th:each="reviewLog, i:${map.reviewLog}">
+                    <td style="width: 40px;">[[${i.count}]]</td>
+                    <td style="width: 10px;">
+                        <span class="prodName">
+                        [[${reviewLog.prodName}]]
+                        </span>
+                    </td>
+                    <td>[[${reviewLog.content}]]</td>
+                    <td style="width: 50px;"><span th:class="|rating star${reviewLog.rating}|">상품평</span></td>
+                    <td style="width: 100px;">[[${#strings.substring(reviewLog.rdate, 0, 10)}]]</td>
+                </tr>
+            </table>
+        </article>
+        <article class="qna">
+            <h3>문의내역</h3>
+            <a href="#" class="more">더보기</a>
+            <table border="0">
+                <tr>
+                    <th>번호</th>
+                    <th>문의채널</th>
+                    <th>문의유형</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>상태</th>
+                </tr>
+                <tr th:each="csLog, i:${map.csLog}">
+                    <td>[[${i.count}]]</td>
+                    <td>고객센터</td>
+                    <td>[[${csLog.type}]]</td>
+                    <td>[[${csLog.content}]]</td>
+                    <td>2024-12-12</td>
+                    <td>
+                        <span th:class="${#strings.isEmpty(csLog.comment)? 'notAnswerYet':'answered'}"
+                              th:text="${#strings.isEmpty(csLog.comment)? '검토중':'답변완료'}">
+                            검토중
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </article>
+        <article class="myinfo">
+            <h3>확인해주세요!</h3>
+
+            <div>
+                <div class="address">
+                    <span>기본 배송지설정</span>
+                    <a href="#" class="setting">변경</a>
+                </div>
+                <div class="email">
+                    <span>email 설정</span>
+                    <a href="#" class="setting">변경</a>
+                    <p>
+                        <span>abc123@gmail.com</span><br/>
+                        (최종수정일 <span>2021-12-10</span>)
+                    </p>
+                </div>
+                <div class="hp">
+                    <span>휴대폰 설정</span>
+                    <a href="#" class="setting">변경</a>
+                    <p>
+                        <span>abc123@gmail.com</span><br/>
+                        (최종수정일 <span>2021-12-10</span>)
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </section>
+</th:block>
+<th:block layout:fragment="script">
+    <script>
+        $(function(){
+
+
+
+
+        })
+    </script>
+</th:block>
+</html>
