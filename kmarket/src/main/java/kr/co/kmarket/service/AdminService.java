@@ -38,30 +38,54 @@ public class AdminService {
     @Autowired
     private AdminDAO dao;
 
-    /////////////////////////// 상품 등록 ///////////////////////////
+    /**
+     * 관리자 메인페이지 공지사항, 문의하기 출력
+     * @param m
+     * @return 공지사항, 문의하기 글 반환
+     */
     @Transactional
-    public int insertProductAdmin(ProductVO product) {
-
-        // 파일 업로드
-        fileupload(product);
-        // 상품 등록
-        int result = dao.insertProductAdmin(product);
-
-        return result;
+    public void selectLatest(Model m){
+        String notice = "notice";
+        String qna = "qna";
+        List<CsVO> latest1 = dao.selectLatest(notice);
+        List<CsVO> latest2 = dao.selectLatest(qna);
+        m.addAttribute("latest1", latest1);
+        m.addAttribute("latest2", latest2);
     }
 
-    /////////////////////////// 상품 조회 ///////////////////////////
+    /**
+     * 상품 등록
+     * @param product
+     * @param user
+     * 파일업로드 상품등록 트렌젝션 처리
+     */
+    @Transactional
+    public void insertProductAdmin(ProductVO product, @AuthenticationPrincipal UserVO user) {
+        product.setSeller(user.getUid()); // 로그인 된 판매자의 uid 추가
+        product.setIp(user.getRegip()); // regip 추가
+
+        fileupload(product); // 파일 업로드
+        dao.insertProductAdmin(product); // 상품 등록
+    }
+
+    /**
+     * 상품 조회
+     * @param m
+     * @param sc
+     * @param user
+     * @return 상품 리스트, 페이지 헨들러
+     */
     public void selectProductAdmin(Model m, SearchCondition sc, UserVO user) {
+
+        // SearchCondition에 uid, type 담기
+        sc.setType(user.getType());
+        sc.setUid(user.getUid());
 
         int totalCnt = dao.countProductAdmin(sc); // 전체 상품 갯수
 
         int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지수
         if(sc.getPage() > totalPage) sc.setPage(totalPage); // 전체 페이지수가 현재 페이지수 보다 크면 전체 페이지수로 값 저장
         PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
-
-        // SearchCondition에 uid, type 담기
-        sc.setType(user.getType());
-        sc.setUid(user.getUid());
 
         List<ProductVO> list = dao.selectProductAdmin(sc); // 상품 조회
 
@@ -77,23 +101,111 @@ public class AdminService {
            p.setThumb3(thumb3);
            return p;
         }).collect(Collectors.toList());
-        // System.out.println("list : " + list);
 
         m.addAttribute("ph", pageHandeler);
         m.addAttribute("products", list);
     }
 
-    /////////////////////////// 상품 정보 수정 ///////////////////////////
+    /**
+     * 상품 수정
+     * @param product
+     * @return result = 1를 반환하여 알람처리
+     */
     public int modifyProduct(ProductVO product) {
         log.info("modifyService...");
         return dao.modifyProduct(product);
     }
 
-
-    /////////////////////////// 상품 삭제 ///////////////////////////
+    /**
+     * 상품 삭제
+     * @param prodNo
+     * @return result = 1을 반환하여 알람처리
+     */
     public int deleteProduct(String prodNo) {
         return dao.deleteProduct(prodNo);
     }
+
+    /////////////////////////// 관리자 고객센터 ///////////////////////////
+
+    /**
+     * 고객센터 게시판 불러오기
+     * @param m
+     * @param sc
+     * @return 고객센터 게시글, 페이지 헨들러
+     */
+    public List<CsVO> selectCsAdmins(Model m, SearchCondition sc) {
+
+        int totalCnt = dao.countCsAdmin(sc); // 전체 게시물 갯수
+
+        int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지 수
+        if(sc.getPage() > totalPage) sc.setPage(totalPage);
+        PageHandler pageHandler = new PageHandler(totalCnt, sc); // 페이징 처리
+
+        List<CsVO> articles = dao.selectCsAdmins(sc); // 게시글 출력
+
+        m.addAttribute("articles", articles);
+        m.addAttribute("ph", pageHandler);
+
+        return articles;
+    }
+
+    /**
+     * 고객센터 글 보기
+     * @param csNo
+     * @return 해당 csNo의 게시글 반환 (cate2, type, title, content)
+     */
+    public CsVO selectCsAdmin(int csNo) {
+        return dao.selectCsAdmin(csNo);
+    }
+
+    /**
+     * 고객센터 글 쓰기
+     * @param vo
+     * @param user
+     */
+    public int insertCs(CsVO vo, @AuthenticationPrincipal UserVO user) {
+        vo.setUid(user.getUid());
+        vo.setRegip(user.getRegip());
+
+        if(vo.getType() == null) {
+            if (vo.getCate2().equals("service")) {
+                vo.setType("고객서비스");
+            } else if (vo.getCate2().equals("safeDeal")) {
+                vo.setType("안전거래");
+            } else if (vo.getCate2().equals("xproduct")) {
+                vo.setType("위해상품");
+            } else {
+                vo.setType("이벤트당첨");
+            }
+        }
+        return dao.insertCs(vo);
+    }
+
+    /**
+     * 고객센터 글 수정
+     * @param vo
+     */
+    public int updateCs(CsVO vo) {
+        return dao.updateCs(vo);
+    }
+
+    /**
+     * 고객센터 답변 수정
+     * @param vo
+     */
+    public int updateComment(CsVO vo) {
+        return dao.updateComment(vo);
+    }
+
+    /**
+     * 고객센터 글 삭제
+     * @param csNo
+     */
+    public int deleteCs(String csNo) {
+        return dao.deleteCs(csNo);
+    }
+
+    /////////////////////////// 파일 업로드 메서드 ///////////////////////////
 
     // 프로퍼티 벨류 값을 uploadPath에 대입
     @Value("${spring.servlet.multipart.location}")
@@ -131,55 +243,4 @@ public class AdminService {
         product.setDetail(names.get(3));
     }
 
-    /////////////////////////// 관리자 고객센터 게시판 불러오기 ///////////////////////////
-    public List<CsVO> selectCsAdmins(Model m, SearchCondition sc) {
-
-        int totalCnt = dao.countCsAdmin(sc); // 전체 게시물 갯수
-
-        int totalPage = (int)Math.ceil(totalCnt/(double)sc.getPageSize()); // 전체 페이지 수
-        if(sc.getPage() > totalPage) sc.setPage(totalPage);
-        PageHandler pageHandeler = new PageHandler(totalCnt, sc); // 페이징 처리
-
-        List<CsVO> articles = dao.selectCsAdmins(sc);
-//        System.out.println(" = " + );
-
-        m.addAttribute("articles", articles);
-        m.addAttribute("ph", pageHandeler);
-
-        return articles;
-    }
-
-    public int deleteCs(String csNo) {
-        return dao.deleteCs(csNo);
-    }
-
-    public CsVO selectCsAdmin(int csNo) {
-        return dao.selectCsAdmin(csNo);
-    }
-
-    public int updateComment(CsVO vo) {
-        return dao.updateComment(vo);
-    }
-
-    public int updateCs(CsVO vo) {
-        return dao.updateCs(vo);
-    }
-
-    public int insertCs(CsVO vo, @AuthenticationPrincipal UserVO user) {
-        vo.setUid(user.getUid());
-        vo.setRegip(user.getRegip());
-
-        if(vo.getType() == null) {
-            if (vo.getCate2().equals("service")) {
-                vo.setType("고객서비스");
-            } else if (vo.getCate2().equals("safeDeal")) {
-                vo.setType("안전거래");
-            } else if (vo.getCate2().equals("xproduct")) {
-                vo.setType("위해상품");
-            } else {
-                vo.setType("이벤트당첨");
-            }
-        }
-        return dao.insertCs(vo);
-    }
 }

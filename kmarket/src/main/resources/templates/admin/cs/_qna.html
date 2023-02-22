@@ -19,10 +19,10 @@
                 <option value="travel">여행/숙박/항공</option>
                 <option value="safeDeal">안전거래</option>
             </select>
-            <select name="type" class="type">
+            <select name="type" id="type" class="type">
                 <option value="">2차 선택</option>
             </select>
-            <a th:href="@{/admin/cs/list(cate1=${cate1})}">&nbsp 전체 보기</a>
+            <a th:href="@{/admin/cs/list(cate1=${cate1})}">&nbsp 초기화</a>
         </div>
         <table>
             <tr>

@@ -35,6 +35,7 @@ public class OrderVO {
     private String thumb1;
     private String cate1;
     private String cate2;
+    private String sellerUid;
 
     public String getThumb1() {
         return cate1 + "/" + cate2 + "/" + thumb1;
