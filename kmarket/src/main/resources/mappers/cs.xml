@@ -58,4 +58,8 @@
     <select id="selectfaqtypes" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
         SELECT DISTINCT `type` FROM `km_cs` WHERE `cate2`=#{cate2};
     </select>
+    <select id="selecttermspolicy" parameterType="kr.co.kmarket.vo.TermspolicyVO" resultType="kr.co.kmarket.vo.TermspolicyVO">
+        SELECT * FROM `km_termspolicy`
+        WHERE `cate`=#{cate};
+    </select>
 </mapper>
