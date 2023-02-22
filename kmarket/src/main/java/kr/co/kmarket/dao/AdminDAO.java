@@ -18,17 +18,18 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface AdminDAO {
-    public int insertProductAdmin(ProductVO product);
+    public List<CsVO> selectLatest(String cate1);
+    public void insertProductAdmin(ProductVO product);
     public List<ProductVO> selectProductAdmin(SearchCondition sc);
     public int countProductAdmin(SearchCondition sc);
-    public int deleteProduct(String prodNo);
     public int modifyProduct(ProductVO product);
+    public int deleteProduct(String prodNo);
 
     public int insertCs(CsVO vo);
     public List<CsVO> selectCsAdmins(SearchCondition sc);
-    public CsVO selectCsAdmin(int csNo);
-    public int updateComment(CsVO vo);
-    public int updateCs(CsVO vo);
     public int countCsAdmin(SearchCondition sc);
+    public CsVO selectCsAdmin(int csNo);
+    public int updateCs(CsVO vo);
+    public int updateComment(CsVO vo);
     public int deleteCs(String csNo);
 }
