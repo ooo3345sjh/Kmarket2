@@ -29,7 +29,6 @@
         <if test="sort == 'score'">ORDER BY `score` DESC LIMIT #{start}, 10;</if>
         <if test="sort == 'review'">ORDER BY `review` DESC LIMIT #{start}, 10;</if>
         <if test="sort == 'rdate'">ORDER BY `rdate` DESC LIMIT #{start}, 10;</if>
-
     </select>
 
 </mapper>
