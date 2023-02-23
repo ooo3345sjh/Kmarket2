@@ -3,6 +3,8 @@ package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.dao.UserDAO;
+import kr.co.kmarket.vo.OrderVO;
+import kr.co.kmarket.vo.ReviewVO;
 import kr.co.kmarket.vo.UserVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +47,14 @@ public class MyService {
         map.put("csLog", myDAO.selectCsLog(uid));
 
         return map;
+    }
+
+    public int writeReview(ReviewVO reviewVO){
+        return myDAO.insertReview(reviewVO);
+    }
+
+    public OrderVO getDetailOrder(String ordNo){
+        return myDAO.selectOrderAndOrderItem(ordNo);
     }
 
 
