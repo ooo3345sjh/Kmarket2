@@ -5,6 +5,7 @@ import kr.co.kmarket.repository.CsRepo;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
+import kr.co.kmarket.vo.TermspolicyVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,8 @@ public class CsService {
             List<CsVO> articles =  dao.selectarticles(sc); 			  // 게시물 조회
             m.addAttribute("ph", pageHandler);
             m.addAttribute("articles", articles);
+      }
+      public List<TermspolicyVO> selecttermspolicy (TermspolicyVO terms){
+            return dao.selecttermspolicy(terms);
       }
 }

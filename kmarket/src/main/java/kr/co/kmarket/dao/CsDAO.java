@@ -2,6 +2,7 @@ package kr.co.kmarket.dao;
 
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
+import kr.co.kmarket.vo.TermspolicyVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +21,5 @@ public interface CsDAO {
       public int countAll(SearchCondition sc);
       public List<CsVO> selectfaqtypes(SearchCondition sc);
       public void insertqna(CsVO qna);
+      public List<TermspolicyVO> selecttermspolicy(TermspolicyVO terms);
 }

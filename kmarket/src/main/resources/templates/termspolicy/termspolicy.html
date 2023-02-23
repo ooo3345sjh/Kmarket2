@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/termspolicy_layout">
+<th:block layout:fragment="main">
+    <th:block th:switch="${terms1.cate}">
+        <th:block th:case="buyer">
+        <section class="buyer">
+        </th:block>
+        <th:block th:case="seller">
+            <section class="seller">
+        </th:block>
+        <th:block th:case="finance">
+            <section class="finance">
+        </th:block>
+        <th:block th:case="location">
+            <section class="location">
+        </th:block>
+        <th:block th:case="privacy">
+            <section class="privacy">
+        </th:block>
+    </th:block>
+      <nav>
+        <h1>KMARKET 서비스 이용약관</h1>
+        <ul>
+          <li th:classappend="${terms1.cate}=='buyer'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='buyer')}">구매회원 약관</a></li>
+          <li th:classappend="${terms1.cate}=='seller'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='seller')}">판매회원 약관</a></li>
+          <li th:classappend="${terms1.cate}=='finance'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='finance')}">전자금융거래 약관</a></li>
+          <li th:classappend="${terms1.cate}=='location'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='location')}">위치정보이용 약관</a></li>
+          <li th:classappend="${terms1.cate}=='privacy'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='privacy')}">개인정보수집 방침</a></li>
+        </ul>
+      </nav>
+      <article>
+          <th:block th:switch="${terms1.cate}">
+            <th:block th:case="buyer">
+                <h2>구매회원 이용약관</h2>
+            </th:block>
+            <th:block th:case="seller">
+                <h2>판매회원 이용약관</h2>
+            </th:block>
+            <th:block th:case="finance">
+                <h2>전자금융거래 이용약관</h2>
+            </th:block>
+            <th:block th:case="location">
+                <h2>위치정보 이용약관</h2>
+            </th:block>
+            <th:block th:case="privacy">
+                  <h2>개인정보처리방침</h2>
+            </th:block>
+          </th:block>
+        <th:block th:each="terms:${terms}">
+        <p>
+          <span class="tit">[[${terms.title}]]</span>
+          <span class="content">[[${terms.content}]]</span>
+        </p>
+        </th:block>
+      </article>
+    </section>
+</th:block>
