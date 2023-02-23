@@ -81,7 +81,7 @@ public class UserService {
         int result = getDuplicateEmailCount((String)map.get("email"));
         map.put("result", result);
 
-        if(result == 0) emailService.send(map);
+        if(result == 0) emailService.emailAuth(map);
     }
 
     public UserVO findByNameAndEmail(String name, String email){
@@ -99,7 +99,7 @@ public class UserService {
         int result = findByNameAndEmail(name, email) != null? 1:0;
         map.put("result", result);
         
-        if(result == 1) emailService.send(map);
+        if(result == 1) emailService.emailAuth(map);
     }
 
     public void findPw_EmailAuth (Map map){
@@ -109,7 +109,7 @@ public class UserService {
         int result = findByUidAndEmail(uid, email) != null? 1:0;
         map.put("result", result);
 
-        if(result == 1) emailService.send(map);
+        if(result == 1) emailService.emailAuth(map);
     }
 
     public int resetPw(String uid, String pass){
