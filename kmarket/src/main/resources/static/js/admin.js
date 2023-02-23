@@ -445,12 +445,78 @@ $(function () {
 
 // cs 등록화면 취소하기
 $(function () {
-		const url = new URL(window.location.href); // URL 객체 생성
-		const urlParams = url.searchParams; // URLSearchParams 객체
-		cate1 = urlParams.get('cate1') // type value 값을 가져온다.
+    const url = new URL(window.location.href); // URL 객체 생성
+    const urlParams = url.searchParams; // URLSearchParams 객체
+    cate1 = urlParams.get('cate1') // type value 값을 가져온다.
 
-		$('input[name=cancel]').click(function () {
-			location.href='/kmarket/admin/cs/list?cate1=' + cate1;
-		})
-	})
+    $('input[name=cancel]').click(function () {
+        location.href='/kmarket/admin/cs/list?cate1=' + cate1;
+    })
+})
+
+/* config banner */
+$(function() {
+    $("#tabs").tabs();
+
+    // 팝업 닫기
+    $('.btnClose').click(function(){
+        $(this).closest('.popup').removeClass('on');
+    });
+
+    // 배너등록 팝업 띄우기
+    $('.btnRegister').click(function(e){
+        e.preventDefault();
+        $('#bannerRegister').addClass('on');
+    });
+});
+
+// banner 등록 클릭 시
+$('#btnSubmit').click(function() {
+    alert('submit');
+    var dateFrom = document.getElementById('dateFrom'); // 시작일
+    var dateTo = document.getElementById('dateTo'); // 종료일
+    var today = new Date(); // 오늘 날짜
+
+    dateFrom = new Date(dateFrom.value);
+    var fromYear = dateFrom.getFullYear();
+    var fromMonth = dateFrom.getMonth() + 1;
+    var fromDay = dateFrom.getDate();
+
+    //날짜 지정을 하지 않았을 때 NaN이 발생하여 0으로 처리
+    if (isNaN(fromYear) || isNaN(fromMonth) || isNaN(fromDay)){
+        fromYear  = 0;
+        fromMonth = 0;
+        fromDay   = 0;
+    }
+
+    dateFrom = fromYear +'/'+ fromMonth +'/'+fromDay;
+
+    dateTo = new Date(dateTo.value);
+    var toYear  = dateTo.getFullYear();
+    var toMonth = dateTo.getMonth() + 1;
+    var toDay   = dateTo.getDate();
+
+    //날짜 지정을 하지 않았을 때 NaN이 발생하여 0으로 처리
+    if (isNaN(toYear) || isNaN(toMonth) || isNaN(toDay)){
+        toYear  = 0;
+        toMonth = 0;
+        toDay   = 0;
+    }
+
+    dateTo = toYear +'/'+ toMonth +'/'+toDay;
+
+    //오늘날짜 날짜 형식으로 지정
+    var todayYear  = today.getFullYear(); 	//2020
+    var todayMonth = today.getMonth() + 1;  //06
+    var todayDay   = today.getDate();  		//11
+    today = todayYear +'/'+ todayMonth +'/'+todayDay;  // 2020/06/11 (형식 지정은 본인 자유)
+
+    //날짜 조회 시, 시작일이 오늘 날짜보다는 크고, 종료일이 시작일보다는 커야하기 때문에 조건을 걸어줌
+    if(dateFrom >= today && dateTo >= dateFrom){
+        return true;
+    } else {
+        alert("배너 노출 날짜 형식이 잘못되었습니다.");
+        return false;
+    }
+});
 

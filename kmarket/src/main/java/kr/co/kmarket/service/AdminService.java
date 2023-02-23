@@ -3,6 +3,7 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.AdminDAO;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.BannerVO;
 import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.UserVO;
@@ -205,6 +206,35 @@ public class AdminService {
         return dao.deleteCs(csNo);
     }
 
+    public void insertBanner(BannerVO vo) {
+        // 이미지 저장
+        String path = new File("banner/").getAbsolutePath();
+        System.out.println("path = " + path);
+        String oName = vo.getFile().getOriginalFilename();
+        System.out.println("oName = " + oName);
+        try {
+            vo.getFile().transferTo(new File(path, oName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        vo.setImage(oName);
+        dao.insertBanner(vo);
+    }
+
+    public void selectBanner(Model m){
+        List<BannerVO> main1 = dao.selectBanner1();
+        List<BannerVO> main2 = dao.selectBanner2();
+        List<BannerVO> product1 = dao.selectBanner3();
+        List<BannerVO> member1 = dao.selectBanner4();
+        List<BannerVO> my1 = dao.selectBanner5();
+        m.addAttribute("main1", main1);
+        m.addAttribute("main2", main2);
+        m.addAttribute("product1", product1);
+        m.addAttribute("member1", member1);
+        m.addAttribute("my1", my1);
+    }
+
+
     /////////////////////////// 파일 업로드 메서드 ///////////////////////////
 
     // 프로퍼티 벨류 값을 uploadPath에 대입
@@ -242,5 +272,4 @@ public class AdminService {
         product.setThumb3(names.get(2));
         product.setDetail(names.get(3));
     }
-
 }

@@ -1,6 +1,7 @@
 package kr.co.kmarket.dao;
 
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.BannerVO;
 import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,10 @@ public interface AdminDAO {
     public int updateCs(CsVO vo);
     public int updateComment(CsVO vo);
     public int deleteCs(String csNo);
+    public int insertBanner(BannerVO vo);
+    public List<BannerVO> selectBanner1();
+    public List<BannerVO> selectBanner2();
+    public List<BannerVO> selectBanner3();
+    public List<BannerVO> selectBanner4();
+    public List<BannerVO> selectBanner5();
 }

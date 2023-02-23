@@ -129,6 +129,38 @@
         delete from `km_cs` where `csNo` = #{csNo};
     </delete>
 
+    <!-- config banner -->
+    <insert id="insertBanner" keyProperty="bannerNo">
+        insert into `km_banner` set
+            bannerName = #{bannerName},
+            width = #{width},
+            height = #{height},
+            color = #{color},
+            link = #{link},
+            position = #{position},
+            dateBegin = #{dateBegin},
+            dateEnd = #{dateEnd},
+            timeBegin = #{timeBegin},
+            timeEnd = #{timeEnd},
+            image = #{image};
+    </insert>
+
+    <select id="selectBanner1" resultType="kr.co.kmarket.vo.BannerVO">
+        select * from `km_banner` where `position` = 'MAIN1';
+    </select>
+    <select id="selectBanner2" resultType="kr.co.kmarket.vo.BannerVO">
+        select * from `km_banner` where `position` = 'MAIN2';
+    </select>
+    <select id="selectBanner3" resultType="kr.co.kmarket.vo.BannerVO">
+        select * from `km_banner` where `position` = 'PRODUCT1';
+    </select>
+    <select id="selectBanner4" resultType="kr.co.kmarket.vo.BannerVO">
+        select * from `km_banner` where `position` = 'MEMBER1';
+    </select>
+    <select id="selectBanner5" resultType="kr.co.kmarket.vo.BannerVO">
+        select * from `km_banner` where `position` = 'MY1';
+    </select>
+
     <!-- ///////////////////////////////// include ///////////////////////////////// -->
 
     <!-- 검색 조건 -->
