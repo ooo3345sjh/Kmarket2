@@ -69,4 +69,27 @@ public interface ProductDAO {
                                         @Param("start") int start);
 
 
+    /**
+     * product review total 값 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @return
+     */
+    public int getCountTotalForReview(@Param("prodNo") int prodNo);
+
+
+    /**
+     * product 상품 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @return
+     */
+    public ProductVO selectProduct(int prodNo);
+
+    /**
+     * product 상품 조회수
+     * 2023/02/22 /라성준
+     * @param prodNo
+     */
+    public void updateProductHit(int prodNo);
 }

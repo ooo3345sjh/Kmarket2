@@ -3659,8 +3659,7 @@ footer > div > div > p > span {
     display: table;
     width: auto;
     height: auto;
-    margin: 0 auto;
-    margin-top: 200px;
+    margin: 100px auto;
     background: #fff;
 
 }
@@ -3896,6 +3895,15 @@ footer > div > div > p > span {
 .jq-shadow {
     -webkit-filter: drop-shadow( -2px -2px 2px #888 );
     filter: drop-shadow( -2px -2px 2px #888 );
+}
+
+#popReview .productName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 420px;
+    width: auto;
+    display: inline-block;
 }
 
 

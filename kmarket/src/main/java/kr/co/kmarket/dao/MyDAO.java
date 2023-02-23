@@ -20,4 +20,6 @@ public interface MyDAO {
     List<PointVO> selectPointLog(@Param(value = "uid") String uid);
     List<CsVO> selectCsLog(@Param(value = "uid") String uid);
     List<ReviewVO> selectReviewLog(@Param(value = "uid") String uid);
+    int insertReview(ReviewVO reviewVO);
+    OrderVO selectOrderAndOrderItem(@Param(value = "ordNo") String ordNo);
 }

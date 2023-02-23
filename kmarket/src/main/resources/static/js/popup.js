@@ -77,39 +77,61 @@ $(function(){
         e.preventDefault();
 
         const type = $('input[name=kind]:checked', '#popQuestion').val(); // 문의유형
-        const titleVal = title.text(); // 제목
-        const contentVal = content.text(); // 내용
-        console.log(title.children().eq(0).val());
+
+        console.log(type);
+        if(type === undefined) {
+            alert("문의유형을 선택해주세요."); 
+            return;
+        } 
+        if(title.val() == "") {
+            alert("제목을 입력해주세요.");
+            return;
+        }
+        if(content.val() == ""){
+            alert("내용을 입력해주세요.");
+            return;
+        }
 
         let jsonData = {
-            "type":type,
-            "email":email.text(),
-            "title":titleVal,
-            "content":contentVal
+            "email": email.text(),
+            "title": "["+ type + "]" + title.val(),
+            "content":content.val()
         }
-        console.log(jsonData);
 
-        /*
-        ajaxAPI("my/home/sendEmail"+sellerUid, null, "post").then((response) => {
+        $(".btnClose").trigger("click");
+        alert("문의 이메일을 전송했습니다.");
+        ajaxAPI("my/home/sendEmail", jsonData, "post").then((response) => {
 
-            if (response == null || response.sellerInfo == null)
-            alert('Request fail...');
+            if (response == null || response.status == 0)
+                alert('Request fail...');
 
             else {
-
 
             }
 
         }).catch((errorMsg) => {
             console.log(errorMsg)
-        });*/
+        });
 
     });
 
     // 주문상세 팝업 띄우기
     $('.latest .info .orderNo > a').click(function(e){
         e.preventDefault();
-        $('#popOrder').addClass('on');
+        const ordNo = $(this).text();
+        ajaxAPI("my/home/detailOrder?ordNo="+ordNo, null, "get").then((response) => {
+
+            if (response == null || response.status == 0)
+                alert('Request fail...');
+
+            else {
+                $('#popOrder').addClass('on');
+            }
+
+        }).catch((errorMsg) => {
+            console.log(errorMsg)
+        });
+
     });
 
     // 수취확인 팝업 띄우기
@@ -119,11 +141,50 @@ $(function(){
     });
 
     // 상품평 작성 팝업 띄우기
+    let prodNo;
     $('.latest .confirm > .review').click(function(e){
         e.preventDefault();
+        prodNo = $(this).closest("table").find('tr:eq(1)').data("prodno");
+        const prodName = $(this).closest("tr").find('li.prodName a').text();
+
+        $("#popReview .productName").text(prodName);
         $('#popReview').addClass('on');
     });
 
+    let rating = 0;
+    $('#popReview .btnPositive').click(function (e){
+        e.preventDefault();
+        let review = $(this).closest("form").find("textarea[name=review]").val();
+
+        if(rating == 0){
+            alert("만족도를 선택해주세요.");
+            return;
+        }
+        if(review == ""){
+            alert("내용을 선택해주세요.");
+            return;
+        }
+        let jsonData = {
+            "rating":rating,
+            "content":review,
+            "prodNo":prodNo
+        }
+        ajaxAPI("my/home/review/write", jsonData, "post").then((response) => {
+
+            if (response == null || response.result == 0)
+                alert('Request fail...');
+
+            else {
+                alert("리뷰등록에 성공했습니다.")
+                $(".btnClose").trigger("click");
+            }
+
+        }).catch((errorMsg) => {
+            console.log(errorMsg)
+        });
+
+
+    })
     // 팝업 닫기
     $('.btnClose').click(function(e){
         e.preventDefault();
@@ -139,7 +200,8 @@ $(function(){
         minRating: 1,
         ratedColors: ['#ffa400', '#ffa400', '#ffa400', '#ffa400', '#ffa400'],
         callback: function(currentRating, $el){
-            alert('rated ' + currentRating);
+            // alert('rated ' + currentRating);
+            rating = currentRating;
             console.log('DOM element ', $el);
         }
     });

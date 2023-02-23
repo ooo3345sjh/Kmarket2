@@ -32,4 +32,25 @@
         <if test="sort == 'rdate'">ORDER BY `rdate` DESC LIMIT #{start}, 10;</if>
     </select>
 
+    <select id="getCountTotalForReview" resultType="int">
+        SELECT COUNT(`revNo`) FROM `km_product_review` WHERE `prodNo` = #{prodNo};
+    </select>
+
+    <select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` where `prodNo`=#{prodNo};
+    </select>
+
+    <select id="selectReviews" resultType="kr.co.kmarket.vo.ReviewVO">
+        SELECT * FROM `km_product_review` WHERE `prodNo`= #{prodNo}
+        ORDER BY `revNo` DESC LIMIT #{start},5;
+    </select>
+
+    <update id="updateProductHit">
+        UPDATE `km_product` SET `hit` = `hit`+ 1 WHERE `prodNo`=#{prodNo};
+    </update>
+
+
+
+
+
 </mapper>

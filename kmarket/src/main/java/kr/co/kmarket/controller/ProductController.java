@@ -83,15 +83,50 @@ public class ProductController {
         return "product/order";
     }
 
+    /**
+     * product view
+     * 2023/02/22 /라성준
+     * @param cate1
+     * @param cate2
+     * @param prodNo
+     * @param model
+     * @param pg
+     * @return
+     */
     @GetMapping("product/view")
-    public String view(int cate1, int cate2, int prodNo,  Model model, String pg) {
+    public String view(int cate1, int cate2, int prodNo, Model model, String pg){
+
+        // 카테고리 이름 가져오기
         Product_cate2VO cateName = service.getCateName(cate1, cate2);
-        //ProductVO product = service.selectProduct(prodNo);
-        //List<ReviewVO> reviews = service.selectReviews(prodNo);
+
+        // 상품 가져오기
+        ProductVO product = service.selectProduct(prodNo);
+
+        // 출력갯수
+        int count = 5;
+        // 현재 페이지
+        int currentPage = service.getCurrentPage(pg);
+        // 페이지 시작값
+        int start = service.getLimitStart(currentPage, count);
+        // 전체 게시물 갯수
+        int total = service.getCountTotalForReview(prodNo);
+        // 페이지 마지막 번호
+        int lastPageNum = service.getLastPageNum(total, count);
+        // 페이지 그룹 start, end
+        int[] pageGroup = service.getPageGroupNum(currentPage, lastPageNum);
+
+        // 리뷰 가져오기
+        List<ReviewVO> reviews = service.selectReviews(prodNo, start);
 
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("cateName", cateName);
+        model.addAttribute("product", product);
+        model.addAttribute("reviews", reviews);
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPageNum", lastPageNum);
+        model.addAttribute("pageGroup", pageGroup);
 
         return "product/view";
     }

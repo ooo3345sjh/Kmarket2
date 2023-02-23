@@ -9,7 +9,7 @@
         </a>
         <article class="latest">
             <h3>최근주문내역</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/my/ordered}" class="more">더보기</a>
             <table border="0">
                 <tr>
                     <th>날짜</th>
@@ -17,7 +17,7 @@
                     <th>상태</th>
                     <th>확인/신청</th>
                 </tr>
-                <tr th:each="orderLog:${map.orderLog}">
+                <tr th:each="orderLog:${map.orderLog}" th:data-prodNo="${orderLog.prodNo}">
                     <td class="date">
                         [[${#strings.substring(orderLog.ordDate, 0, 10)}]]
                     </td>
@@ -32,11 +32,11 @@
                             <li class="prodName">
                                 <a href="#">[[${orderLog.prodName}]]</a>
                             </li>
-                            <li>
+                            <li class="orderNo">
                                 수량:
                                 <span class="prodCount">[[${orderLog.ordCount}]]</span>
                                 개 / 주문번호 :
-                                <span class="ordNo">[[${orderLog.ordNo}]]</span>
+                                <a href="#" class="ordNo">[[${orderLog.ordNo}]]</a>
                             </li>
                             <li class="prodPrice">[[${#numbers.formatInteger(orderLog.ordPrice, 1, 'COMMA')}]]원</li>
                         </ul>
@@ -53,7 +53,7 @@
         </article>
         <article class="point">
             <h3>포인트적립내역</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/my/point}" class="more">더보기</a>
             <table border="0">
                 <table border="0">
                     <tr>
@@ -87,7 +87,7 @@
         </article>
         <article class="review">
             <h3>상품평</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/my/review}" class="more">더보기</a>
             <table border="0">
                 <tr>
                     <th>번호</th>
@@ -111,7 +111,7 @@
         </article>
         <article class="qna">
             <h3>문의내역</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/my/qna}" class="more">더보기</a>
             <table border="0">
                 <tr>
                     <th>번호</th>
@@ -142,11 +142,11 @@
             <div>
                 <div class="address">
                     <span>기본 배송지설정</span>
-                    <a href="#" class="setting">변경</a>
+                    <a th:href="@{/my/info}" class="setting">변경</a>
                 </div>
                 <div class="email">
                     <span>email 설정</span>
-                    <a href="#" class="setting">변경</a>
+                    <a th:href="@{/my/info}" class="setting">변경</a>
                     <p>
                         <span>abc123@gmail.com</span><br/>
                         (최종수정일 <span>2021-12-10</span>)
@@ -154,7 +154,7 @@
                 </div>
                 <div class="hp">
                     <span>휴대폰 설정</span>
-                    <a href="#" class="setting">변경</a>
+                    <a th:href="@{/my/info}" class="setting">변경</a>
                     <p>
                         <span>abc123@gmail.com</span><br/>
                         (최종수정일 <span>2021-12-10</span>)
@@ -166,13 +166,5 @@
     </section>
 </th:block>
 <th:block layout:fragment="script">
-    <script>
-        $(function(){
-
-
-
-
-        })
-    </script>
 </th:block>
 </html>
