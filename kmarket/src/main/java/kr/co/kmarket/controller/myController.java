@@ -1,11 +1,16 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.service.EmailService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.UserService;
+import kr.co.kmarket.vo.OrderVO;
+import kr.co.kmarket.vo.ReviewVO;
 import kr.co.kmarket.vo.UserVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +31,7 @@ public class myController {
 
     private UserService userService;
     private MyService myService;
+    private EmailService emailService;
 
     /**
      * @apiNote 마이페이지 > 홈
@@ -159,13 +165,55 @@ public class myController {
      * @apiNote 마이페이지 > 홈 > 최근주문내역 > 판매자 정보 > 문의하기에서 등록하기 버튼 클릭
      */
     @ResponseBody
-    @GetMapping("/home/sendEmail")
-    public Map qnaSendToSeller(@RequestBody Map map){
+    @PostMapping("/home/sendEmail")
+    public Map qnaSendToSeller(@RequestBody Map map, @AuthenticationPrincipal UserVO user){
         log.info("myController Post qnaSendToSeller start...");
 
-        log.info(map.toString());
+        String toEmail = (String)map.get("email");
+        String title = (String)map.get("title");
+        String content = (String)map.get("content");
+        toEmail = "ooo3345@naver.com";
 
+        int status = emailService.qnaSendToSeller(toEmail, user.getEmail(), title, content);
+        map.put("status", status);
         return map;
     }
+
+    /**
+     * @apiNote 마이페이지 > 홈 > 최근주문내역 > 상품평쓰기
+     */
+    @ResponseBody
+    @PostMapping("/home/review/write")
+    public Map reviewWrite(@RequestBody ReviewVO reviewVO,
+                           @AuthenticationPrincipal UserVO user)
+    {
+        log.info("myController Post reviewWrite start...");
+
+        WebAuthenticationDetails wd = (WebAuthenticationDetails)SecurityContextHolder
+                                        .getContext().getAuthentication().getDetails();
+        reviewVO.setRegip(wd.getRemoteAddress());
+        reviewVO.setUid(user.getUid());
+        log.info(reviewVO.toString());
+        int result = myService.writeReview(reviewVO);
+        Map map = new HashMap();
+        map.put("result", result);
+        return map;
+    }
+
+    /**
+     * @apiNote 마이페이지 > 홈 > 최근주문내역 > 주문상세
+     */
+    @ResponseBody
+    @GetMapping("/home/detailOrder")
+    public Map detailOrder(@RequestParam String ordNo)
+    {
+        log.info("myController GET detailOrder start...");
+        log.info(ordNo);
+        OrderVO orderVO = myService.getDetailOrder(ordNo);
+        log.info(orderVO.toString());
+        Map map = new HashMap();
+        return map;
+    }
+
 
 }

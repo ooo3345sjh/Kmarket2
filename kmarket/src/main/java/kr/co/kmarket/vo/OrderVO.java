@@ -32,10 +32,12 @@ public class OrderVO {
     // 추가 필드
     private String company;
     private String prodName;
+    private String prodNo;
     private String thumb1;
     private String cate1;
     private String cate2;
     private String sellerUid;
+    private OrderItemVO orderItemVO;
 
     public String getThumb1() {
         return cate1 + "/" + cate2 + "/" + thumb1;
