@@ -6,6 +6,7 @@ import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.Product_cate2VO;
 import kr.co.kmarket.vo.ReviewVO;
 import kr.co.kmarket.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2023/02/10
  * @author 라성준
  */
+@Slf4j
 @Controller
 public class ProductController {
 
@@ -86,48 +88,37 @@ public class ProductController {
     /**
      * product view
      * 2023/02/22 /라성준
-     * @param cate1
-     * @param cate2
-     * @param prodNo
-     * @param model
-     * @param pg
+
      * @return
      */
     @GetMapping("product/view")
-    public String view(int cate1, int cate2, int prodNo, Model model, String pg){
+    public String view(ProductVO vo, Model model){
 
         // 카테고리 이름 가져오기
-        Product_cate2VO cateName = service.getCateName(cate1, cate2);
+        ProductVO cateName = service.getCateNamekdm(vo);
 
         // 상품 가져오기
-        ProductVO product = service.selectProduct(prodNo);
+        ProductVO product = service.selectProductkdm(vo);
 
         // 출력갯수
-        int count = 5;
-        // 현재 페이지
-        int currentPage = service.getCurrentPage(pg);
-        // 페이지 시작값
-        int start = service.getLimitStart(currentPage, count);
-        // 전체 게시물 갯수
-        int total = service.getCountTotalForReview(prodNo);
-        // 페이지 마지막 번호
-        int lastPageNum = service.getLastPageNum(total, count);
-        // 페이지 그룹 start, end
-        int[] pageGroup = service.getPageGroupNum(currentPage, lastPageNum);
+//        int count = 5;
+//        // 현재 페이지
+//        int currentPage = service.getCurrentPage(pg);
+//        // 페이지 시작값
+//        int start = service.getLimitStart(currentPage, count);
+//        // 전체 게시물 갯수
+//        int total = service.getCountTotalForReview(prodNo);
+//        // 페이지 마지막 번호
+//        int lastPageNum = service.getLastPageNum(total, count);
+//        // 페이지 그룹 start, end
+//        int[] pageGroup = service.getPageGroupNum(currentPage, lastPageNum);
 
         // 리뷰 가져오기
-        List<ReviewVO> reviews = service.selectReviews(prodNo, start);
-
-        model.addAttribute("cate1", cate1);
-        model.addAttribute("cate2", cate2);
-        model.addAttribute("cateName", cateName);
-        model.addAttribute("product", product);
+        List<ReviewVO> reviews = service.selectReviewskdm(vo);
+        log.info(reviews.toString());
+        model.addAttribute("product",product);
+        model.addAttribute("cateName",cateName);
         model.addAttribute("reviews", reviews);
-
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("lastPageNum", lastPageNum);
-        model.addAttribute("pageGroup", pageGroup);
-
         return "product/view";
     }
 

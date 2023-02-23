@@ -3,7 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>
     <link rel="shortcut icon" type="image/x-icon" th:href='@{/images/favicon.ico}'>
     <link rel="stylesheet"
@@ -18,7 +17,7 @@
 <body>
 <div id="wrapper">
     <th:block th:replace="fragments/_header::main_header"></th:block>
-    <main id="product">
+    <main id="termsPolicy">
         <th:block th:replace="fragments/_aside::main_aside"></th:block>
         <th:block layout:fragment="main"></th:block>
     </main>
