@@ -124,7 +124,7 @@ public class CsController {
     public String termspolicy(Model m, TermspolicyVO terms){
         List<TermspolicyVO> termspolicy = service.selecttermspolicy(terms);
         m.addAttribute("terms",termspolicy);
-        m.addAttribute("terms1",terms);
+        m.addAttribute("cate",terms);
         return "termspolicy/termspolicy";
     }
 }

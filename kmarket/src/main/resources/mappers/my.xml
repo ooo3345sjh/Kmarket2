@@ -30,11 +30,34 @@
 	 	작성자 : 서정현
 	 	용도 : 마이페이지 홈 최근주문내역 조회
 	 -->
-	<select id="selectOrderLog" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
+	<select id="selectOrderLogLimit5" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
+		<include refid="selectOrderLogSql"/>
+		LIMIT 5
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 전체주문내역 조회
+	 -->
+	<select id="selectOrderLog" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.OrderVO">
+		<include refid="selectOrderLogSql"/>
+		LIMIT #{offset}, 10;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 전체주문내역 총 갯수 조회
+	 -->
+	<select id="countOrderLog" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="int">
+		SELECT COUNT(*) FROM `km_product_order`
+		WHERE `uid`=#{uid}
+	</select>
+
+	<sql id="selectOrderLogSql">
 		SELECT
-			o.*,
-			s.company as company,
-			p.prodNo, p.prodName, p.thumb1, p.cate1, p.cate2, s.uid as 'sellerUid'
+		o.*,
+		s.company as company,
+		p.prodNo, p.prodName, p.thumb1, p.cate1, p.cate2, s.uid as 'sellerUid'
 		FROM `km_product_order` as o
 		JOIN `km_product_order_item` as oi
 		ON o.`ordNo` = oi.`ordNo`
@@ -47,8 +70,7 @@
 
 		WHERE o.`uid`=#{uid}
 		ORDER BY o.`ordDate` DESC
-		LIMIT 5
-	</select>
+	</sql>
 
 	<!--
 	 	작성자 : 서정현
@@ -111,7 +133,7 @@
 		SELECT * FROM `km_product_order` o
 		JOIN `km_product_order_item` oi ON o.`ordNo` = oi.`ordNo`
 		JOIN `km_product` p ON p.`prodNo` = oi.`prodNo`
-		WHERE o.`ordNo`=#{ordNo}
+		WHERE o.`ordNo`=#{ordNo} AND p.`prodNo`=#{prodNo}
 	</select>
 
 	<resultMap id="selectJoinOrderAndOrderItem" type="kr.co.kmarket.vo.OrderVO">
@@ -124,16 +146,59 @@
 		<result column="recipAddr2" property="recipAddr2"/>
 		<result column="company" property="company"/>
 		<result column="prodName" property="prodName"/>
+		<result column="ordState" property="ordState"/>
 		<!-- 연관 관계 매핑 -->
 		<association property="orderItemVO" javaType="kr.co.kmarket.vo.OrderItemVO">
-			<id column="prodNo" property="prodNo"/>
+			<id column="orditmNo" property="orditmNo"/>
+			<result column="prodNo" property="prodNo"/>
 			<result column="price" property="price"/>
 			<result column="count" property="count"/>
 			<result column="discount" property="discount"/>
 			<result column="point" property="point"/>
 			<result column="delivery" property="delivery"/>
 			<result column="total" property="total"/>
-
 		</association>
 	</resultMap>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 주문내역에서 상품 수취확인
+	 -->
+	<update id="updateOrdState">
+		UPDATE `km_product_order` SET `ordState` = '구매확정' WHERE `ordNo`=#{ordNo}
+	</update>
+
+
+	<sql id="latestDay">
+		<!-- 최근 하루 -->
+		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW();
+	</sql>
+
+	<sql id="fifteenDaysAgo">
+		<!-- 최근 일주일 -->
+		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW();
+	</sql>
+	<sql id="latestMonth">
+		<!-- 최근 한달 -->
+		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW();
+	</sql>
+	<sql id="searchDate">
+		<!-- 날짜 지정 -->
+		`ordDate` BETWEEN #{start} AND #{end};
+	</sql>
+	<sql id="searchMonth">
+		<!-- 월별 조건 -->
+		DATE_FORMAT(`ordDate`,'%Y-%m') = DATE_FORMAT(NOW(),#{month});
+	</sql>
+
+
+
+
+	<!-- test -->
+	<insert id="test1">
+		INSERT INTO `km_product_order` (`ordNo`, `uid`, `ordCount`, `ordPrice`, `ordDiscount`, `ordDelivery`, `savePoint`, `usedPoint`, `ordTotPrice`, `recipName`, `recipHp`, `recipZip`, `recipAddr1`, `recipAddr2`, `ordPayment`, `ordComplete`, `ordDate`, `ordState`) VALUES (#{ordNo}, 'sjh940520', 5, 69500, 0, 0, 0, 8500, 61000, '서정현', '010-1234-2222', '05831', '서울 송파구 가락동 102-24', '101호', 3, 1, '2023-02-22 00:45:33', '구매확정');
+	</insert>
+	<insert id="test2">
+		INSERT INTO `km_product_order_item` (`prodNo`, `ordNo`, `count`, `price`, `discount`, `point`, `delivery`, `total`) VALUES (1002380, #{ordNo}, 3, 10800, 0, 0, 0, 10800);
+	</insert>
 </mapper>
