@@ -5,6 +5,7 @@ import kr.co.kmarket.repository.ProductRepo;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @since 2023/02/08
  * @author 라성준
  */
+@Slf4j
 @Service
 public class ProductService {
 
@@ -45,7 +47,10 @@ public class ProductService {
      * @author 라성준
      * @since 2023/02/08
      */
-    public void selectProduct() {
+    public ProductVO selectProductkdm(ProductVO vo) {
+        // 조회수 + 1
+        dao.updateProductHitkdm(vo);
+        return dao.selectProductkdm(vo);
     }
 
     /**
@@ -66,6 +71,14 @@ public class ProductService {
      */
     public int updateProduct(ProductVO vo) {
         return dao.updateProduct(vo);
+    }
+    public ProductVO getCateNamekdm(ProductVO vo){
+        return dao.getCateNamekdm(vo);
+
+    }
+    public List<ReviewVO> selectReviewskdm(ProductVO vo){
+        log.info("selectreview....");
+        return dao.selectReviewskdm(vo);
     }
 
     /**

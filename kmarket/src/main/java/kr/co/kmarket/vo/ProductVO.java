@@ -23,6 +23,8 @@ public class ProductVO {
     private int prodNo;
     private Integer cate1;
     private int cate2;
+    private String c1Name;
+    private String c2Name;
     private String prodName;
     private String descript;
     private String company;

@@ -186,9 +186,9 @@
                     <h1>상품보기</h1>
                     <p>
                         HOME >
-                        <span>패션·의류·뷰티</span>
+                        <span>[[${cateName.c1Name}]]</span>
                         >
-                        <strong>남성의류</strong>
+                        <strong>[[${cateName.c2Name}]]</strong>
                     </p>
                 </nav>
                 <!-- 상품 전체 정보 내용 -->
@@ -207,7 +207,7 @@
                         <nav>
                             <h3>[[${product.prodName}]]</h3>
                             <p>[[${product.descript}]]</p>
-                            <h5 class="rating start4">
+                            <h5 class="rating star4">
                                 <a href="#">상품평보기</a>
                             </h5>
                         </nav>
@@ -369,21 +369,8 @@
 
                             </p>
                         </li>
+                        </th:block>
                     </ul>
-                    <div class="paging">
-                        <span th:if="${pageGroup[0]>1}" class="prev">
-                            <a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo},pg=${pageGroup[0]-1})}"><&nbsp;이전</a>
-                        </span>
-                        <span class="num">
-                            <th:block th:each="num:${#numbers.sequence(pageGroup[0], pageGroup[1])}">
-                                <a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo},pg=${num})}"
-                                   th:class="${num == currentPage ? 'on':'off'}">[[${num}]]</a>
-                            </th:block>
-                        </span>
-                        <span th:if="${pageGroup[1]<lastPageNum}" class="next">
-                            <a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo},pg=${pageGroup[1]+1})}">다음&nbsp;></a>
-                        </span>
-                    </div>
                 </article>
             </section>
             <!-- 상품 상세페이지 끝 -->

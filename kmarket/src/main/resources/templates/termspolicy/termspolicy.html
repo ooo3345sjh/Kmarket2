@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/termspolicy_layout">
 <th:block layout:fragment="main">
-    <th:block th:switch="${terms1.cate}">
+    <th:block th:switch="${cate.cate}">
         <th:block th:case="buyer">
         <section class="buyer">
         </th:block>
@@ -23,15 +23,15 @@
       <nav>
         <h1>KMARKET 서비스 이용약관</h1>
         <ul>
-          <li th:classappend="${terms1.cate}=='buyer'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='buyer')}">구매회원 약관</a></li>
-          <li th:classappend="${terms1.cate}=='seller'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='seller')}">판매회원 약관</a></li>
-          <li th:classappend="${terms1.cate}=='finance'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='finance')}">전자금융거래 약관</a></li>
-          <li th:classappend="${terms1.cate}=='location'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='location')}">위치정보이용 약관</a></li>
-          <li th:classappend="${terms1.cate}=='privacy'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='privacy')}">개인정보수집 방침</a></li>
+          <li th:classappend="${cate.cate}=='buyer'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='buyer')}">구매회원 약관</a></li>
+          <li th:classappend="${cate.cate}=='seller'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='seller')}">판매회원 약관</a></li>
+          <li th:classappend="${cate.cate}=='finance'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='finance')}">전자금융거래 약관</a></li>
+          <li th:classappend="${cate.cate}=='location'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='location')}">위치정보이용 약관</a></li>
+          <li th:classappend="${cate.cate}=='privacy'?'on':''"><a th:href="@{/termspolicy/termspolicy(cate='privacy')}">개인정보수집 방침</a></li>
         </ul>
       </nav>
       <article>
-          <th:block th:switch="${terms1.cate}">
+          <th:block th:switch="${cate.cate}">
             <th:block th:case="buyer">
                 <h2>구매회원 이용약관</h2>
             </th:block>
@@ -51,7 +51,7 @@
         <th:block th:each="terms:${terms}">
         <p>
           <span class="tit">[[${terms.title}]]</span>
-          <span class="content">[[${terms.content}]]</span>
+          <span class="content" style="white-space: pre-line;">[[${terms.content}]]</span>
         </p>
         </th:block>
       </article>

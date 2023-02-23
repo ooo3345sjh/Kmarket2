@@ -3943,7 +3943,7 @@ footer > div > div > p > span {
   width: 112px;
   height: 93px;
   font-size: 0;
-  background-image: url('../img/terms_sprites.png');
+  background-image: url('../images/terms_sprites.png');
   margin-left: 10px;
 }
 #termsPolicy > section > nav > ul > li:nth-child(1) > a {background-position: 0 -150px;}
@@ -3982,4 +3982,10 @@ footer > div > div > p > span {
 #termsPolicy > section > article > p > .content {
   font-family: '돋움';
   color: #888;
+}
+.help {
+  display: block;
+  font-size: 30px;
+  font-family: '굴림';
+  font-weight: bold;
 }
