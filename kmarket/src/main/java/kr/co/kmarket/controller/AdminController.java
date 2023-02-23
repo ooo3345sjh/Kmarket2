@@ -2,6 +2,7 @@ package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.AdminService;
 import kr.co.kmarket.utils.SearchCondition;
+import kr.co.kmarket.vo.BannerVO;
 import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.ProductVO;
 import kr.co.kmarket.vo.UserVO;
@@ -188,4 +189,18 @@ public class AdminController {
         return map;
     }
 
+    // 배너관리 화면
+    @GetMapping("/config/banner")
+    public String banner(Model m) {
+        service.selectBanner(m);
+        return "admin/config/banner";
+    }
+
+    @PostMapping("/config/banner")
+    public String banner(BannerVO vo) {
+        log.info("bannerController...");
+        System.out.println("vo = " + vo);
+        service.insertBanner(vo);
+        return "admin/config/banner";
+    }
 }
