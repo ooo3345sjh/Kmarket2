@@ -5,9 +5,12 @@ import kr.co.kmarket.repository.ProductRepo;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -19,53 +22,69 @@ import java.util.stream.Collectors;
  * @since 2023/02/08
  * @author 라성준
  */
+@Slf4j
 @Service
 public class ProductService {
 
 
     @Autowired
-   private ProductDAO dao;
+    private ProductDAO dao;
 
 
     /**
      * product insert service
-     * @since 2023/02/08
+     *
      * @author 라성준
+     * @since 2023/02/08
      */
-    public void insertProduct(ProductVO vo){
+    public void insertProduct(ProductVO vo) {
         dao.insertProduct(vo);
     }
 
     /**
      * product select service
-     * @since 2023/02/08
+     *
      * @author 라성준
+     * @since 2023/02/08
      */
-    public void selectProduct () {
+    public ProductVO selectProductkdm(ProductVO vo) {
+        // 조회수 + 1
+        dao.updateProductHitkdm(vo);
+        return dao.selectProductkdm(vo);
     }
 
     /**
      * product list service
-     * @since 2023/02/09
+     *
      * @author 라성준
+     * @since 2023/02/09
      */
-    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start, String search){
+    public List<ProductVO> selectProducts(int cate1, int cate2, String sort, int start, String search) {
         return dao.selectProducts(cate1, cate2, sort, start, search);
     }
 
     /**
      * product update service
-     * @since 2023/02/08
+     *
      * @author 라성준
+     * @since 2023/02/08
      */
     public int updateProduct(ProductVO vo) {
         return dao.updateProduct(vo);
     }
+    public ProductVO getCateNamekdm(ProductVO vo){
+        return dao.getCateNamekdm(vo);
+
+    }
+    public List<ReviewVO> selectReviewskdm(ProductVO vo){
+        log.info("selectreview....");
+        return dao.selectReviewskdm(vo);
+    }
 
     /**
-     * @since 2023/02/10
-     * @author 라성준
      * @throws Exception
+     * @author 라성준
+     * @since 2023/02/10
      */
     public Map<String, List<ProductVO>> selectCate() throws Exception {
         List<ProductVO> cateList = dao.selectCate();
@@ -90,17 +109,19 @@ public class ProductService {
     /**
      * product catename 가져오기
      * 2023/02/21 /라성준
+     *
      * @param cate1
      * @param cate2
      * @return
      */
-    public Product_cate2VO getCateName(int cate1, int cate2){
+    public Product_cate2VO getCateName(int cate1, int cate2) {
         return dao.getCateName(cate1, cate2);
     }
 
     /**
      * product 상품 갯수
      * 2023/02/21 /라성준
+     *
      * @param cate1
      * @param cate2
      * @return
@@ -112,17 +133,19 @@ public class ProductService {
     /**
      * page start
      * 2023/02/21 /라성준
+     *
      * @param currentPage
      * @param count
      * @return
      */
     public int getLimitStart(int currentPage, int count) {
-        return (currentPage - 1) * count ;
+        return (currentPage - 1) * count;
     }
 
     /**
      * page group
      * 2023/02/21 /라성준
+     *
      * @param currentPage
      * @param lastPage
      * @return
@@ -133,7 +156,7 @@ public class ProductService {
         int groupStart = (groupCurrent - 1) * 10 + 1;
         int groupEnd = groupCurrent * 10;
 
-        if(groupEnd > lastPage) {
+        if (groupEnd > lastPage) {
             groupEnd = lastPage;
         }
 
@@ -145,13 +168,14 @@ public class ProductService {
     /**
      * current page
      * 2023/02/21 /라성준
+     *
      * @param pg
      * @return
      */
     public int getCurrentPage(String pg) {
         int currentPage = 1;
 
-        if(pg != null) {
+        if (pg != null) {
             currentPage = Integer.parseInt(pg);
         }
         return currentPage;
@@ -160,6 +184,7 @@ public class ProductService {
     /**
      * last page
      * 2023/02/21 /라성준
+     *
      * @param total
      * @param count
      * @return
@@ -168,13 +193,13 @@ public class ProductService {
 
         int lastPage = 0;
 
-        if(total % count == 0) {
+        if (total % count == 0) {
             lastPage = (total / count);
-        }else {
+        } else {
             lastPage = (total / count) + 1;
         }
 
-        if(lastPage == 0){
+        if (lastPage == 0) {
             lastPage = 1;
         }
 
@@ -184,6 +209,7 @@ public class ProductService {
     /**
      * product review 가져오기
      * 2023/02/22 /라성준
+     *
      * @param prodNo
      * @param start
      * @return
@@ -192,7 +218,28 @@ public class ProductService {
         return dao.selectReviews(prodNo, start);
     }
 
+    /**
+     * product review 값 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @return
+     */
+    public int getCountTotalForReview(@Param("prodNo") int prodNo) {
+        return dao.getCountTotalForReview(prodNo);
 
+
+    }
+
+    @Transactional
+    public ProductVO selectProduct(int prodNo){
+
+        ProductVO product = dao.selectProduct(prodNo);
+
+        // 조회수 + 1
+        dao.updateProductHit(prodNo);
+
+        return product;
+    }
 }
 
 

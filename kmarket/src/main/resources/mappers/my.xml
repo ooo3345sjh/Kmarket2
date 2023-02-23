@@ -31,7 +31,10 @@
 	 	용도 : 마이페이지 홈 최근주문내역 조회
 	 -->
 	<select id="selectOrderLog" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
-		SELECT o.*, s.company as company, p.prodName, p.thumb1, p.cate1, p.cate2, s.uid as 'sellerUid'
+		SELECT
+			o.*,
+			s.company as company,
+			p.prodNo, p.prodName, p.thumb1, p.cate1, p.cate2, s.uid as 'sellerUid'
 		FROM `km_product_order` as o
 		JOIN `km_product_order_item` as oi
 		ON o.`ordNo` = oi.`ordNo`
@@ -84,4 +87,53 @@
 		ORDER BY `rdate` DESC
 		LIMIT 5
 	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 주문 상품 리뷰 작성
+	 -->
+	<insert id="insertReview" parameterType="kr.co.kmarket.vo.ReviewVO">
+		INSERT INTO `km_product_review` SET
+			`prodNo`=#{prodNo},
+			`uid`=#{uid},
+			`content`=#{content},
+			`rating`=#{rating},
+			`regip`=#{regip},
+			`rdate`=NOW()
+	</insert>
+
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 주문내역에서 상품의 주문 번호 클릭시 주문 상품의 정보 표시
+	 -->
+	<select id="selectOrderAndOrderItem" resultMap="selectJoinOrderAndOrderItem">
+		SELECT * FROM `km_product_order` o
+		JOIN `km_product_order_item` oi ON o.`ordNo` = oi.`ordNo`
+		JOIN `km_product` p ON p.`prodNo` = oi.`prodNo`
+		WHERE o.`ordNo`=#{ordNo}
+	</select>
+
+	<resultMap id="selectJoinOrderAndOrderItem" type="kr.co.kmarket.vo.OrderVO">
+		<id column="ordNo" property="ordNo"/>
+		<result column="ordDate" property="ordDate"/>
+		<result column="recipName" property="recipName"/>
+		<result column="recipHp" property="recipHp"/>
+		<result column="recipZip" property="recipZip"/>
+		<result column="recipAddr1" property="recipAddr1"/>
+		<result column="recipAddr2" property="recipAddr2"/>
+		<result column="company" property="company"/>
+		<result column="prodName" property="prodName"/>
+		<!-- 연관 관계 매핑 -->
+		<association property="orderItemVO" javaType="kr.co.kmarket.vo.OrderItemVO">
+			<id column="prodNo" property="prodNo"/>
+			<result column="price" property="price"/>
+			<result column="count" property="count"/>
+			<result column="discount" property="discount"/>
+			<result column="point" property="point"/>
+			<result column="delivery" property="delivery"/>
+			<result column="total" property="total"/>
+
+		</association>
+	</resultMap>
 </mapper>

@@ -14,6 +14,7 @@
     </select>
 
 
+
     <select id="getCountTotal" resultType="int">
         SELECT COUNT(`prodNo`) FROM `km_product` WHERE <if test="cate1 != 0">`cate1`=#{cate1}</if>
         <if test="cate2 != 0"> AND `cate2`=#{cate2}</if>
@@ -31,5 +32,41 @@
         <if test="sort == 'review'">ORDER BY `review` DESC LIMIT #{start}, 10;</if>
         <if test="sort == 'rdate'">ORDER BY `rdate` DESC LIMIT #{start}, 10;</if>
     </select>
+
+    <select id="getCountTotalForReview" resultType="int">
+        SELECT COUNT(`revNo`) FROM `km_product_review` WHERE `prodNo` = #{prodNo};
+    </select>
+
+    <select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` where `prodNo`=#{prodNo};
+    </select>
+
+    <select id="selectReviews" resultType="kr.co.kmarket.vo.ReviewVO">
+        SELECT * FROM `km_product_review` WHERE `prodNo`= #{prodNo}
+        ORDER BY `revNo` DESC LIMIT #{start},5;
+    </select>
+
+    <update id="updateProductHit">
+        UPDATE `km_product` SET `hit` = `hit`+ 1 WHERE `prodNo`=#{prodNo};
+    </update>
+
+    <update id="updateProductHitkdm">
+        UPDATE `km_product` SET `hit` = `hit`+ 1 WHERE `prodNo`=#{prodNo};
+    </update>
+    <select id="selectProductkdm" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` where `prodNo`=#{prodNo};
+    </select>
+    <select id="selectReviewskdm" parameterType="kr.co.kmarket.vo.ProductVO" resultType="kr.co.kmarket.vo.ReviewVO">
+        SELECT * FROM `km_product_review` WHERE `prodNo`= #{prodNo}
+        ORDER BY `revNo` DESC LIMIT 5;
+    </select>
+    <select id="getCateNamekdm" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT a.c1Name, b.c2Name FROM `km_product_cate1` AS a
+        JOIN `km_product_cate2` AS b
+        ON a.cate1 = b.cate1 WHERE b.cate1=#{cate1}
+        AND b.cate2= #{cate2};
+    </select>
+
+
 
 </mapper>

@@ -6,9 +6,9 @@
       <div>
         <ul>
           <li><a th:href="@{company/index}">회사소개</a></li>
-          <li><a href="#">서비스이용약관</a></li>
-          <li><a href="#">개인정보처리방침</a></li>
-          <li><a href="#">전자금융거래약관</a></li>
+          <li><a th:href="@{/termspolicy/termspolicy(cate='buyer')}">서비스이용약관</a></li>
+          <li><a th:href="@{/termspolicy/termspolicy(cate='privacy')}">개인정보처리방침</a></li>
+          <li><a th:href="@{/termspolicy/termspolicy(cate='finance')}">전자금융거래약관</a></li>
         </ul>
       </div>
       <div>

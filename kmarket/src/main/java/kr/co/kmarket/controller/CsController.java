@@ -5,6 +5,7 @@ import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.CsVO;
 
+import kr.co.kmarket.vo.TermspolicyVO;
 import kr.co.kmarket.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -118,5 +119,12 @@ public class CsController {
         red.addAttribute("cate1",qna.getCate1());
         red.addAttribute("cate2",qna.getCate2());
         return "redirect:/cs/qna/list";
+    }
+    @GetMapping("termspolicy/termspolicy")
+    public String termspolicy(Model m, TermspolicyVO terms){
+        List<TermspolicyVO> termspolicy = service.selecttermspolicy(terms);
+        m.addAttribute("terms",termspolicy);
+        m.addAttribute("cate",terms);
+        return "termspolicy/termspolicy";
     }
 }

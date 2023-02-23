@@ -67,6 +67,32 @@ public interface ProductDAO {
      */
     public List<ReviewVO> selectReviews(@Param("prodNo") int prodNo,
                                         @Param("start") int start);
+    public List<ReviewVO> selectReviewskdm(ProductVO vo);
+
+    /**
+     * product review total 값 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @return
+     */
+    public int getCountTotalForReview(@Param("prodNo") int prodNo);
 
 
+    /**
+     * product 상품 가져오기
+     * 2023/02/22 /라성준
+     * @param prodNo
+     * @return
+     */
+    public ProductVO selectProduct(int prodNo);
+    public ProductVO selectProductkdm(ProductVO vo);
+    public ProductVO getCateNamekdm(ProductVO vo);
+
+    /**
+     * product 상품 조회수
+     * 2023/02/22 /라성준
+     * @param prodNo
+     */
+    public void updateProductHit(int prodNo);
+    public void updateProductHitkdm(ProductVO vo);
 }
