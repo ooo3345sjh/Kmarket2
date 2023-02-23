@@ -19,7 +19,7 @@ $(function(){
     }
 
     // 판매자 정보 팝업 띄우기
-    $('.latest .info .company > a').click(function(e){
+    $('.info .company > a').click(function(e){
         e.preventDefault();
 
         // 판매자 정보 가져오는 AJAX
@@ -116,15 +116,38 @@ $(function(){
     });
 
     // 주문상세 팝업 띄우기
-    $('.latest .info .orderNo > a').click(function(e){
+    $('.info .orderNo > a').click(function(e){
         e.preventDefault();
-        const ordNo = $(this).text();
-        ajaxAPI("my/home/detailOrder?ordNo="+ordNo, null, "get").then((response) => {
 
-            if (response == null || response.status == 0)
+        const ordNo = $(this).text();
+        prodNo = $(".latest table").find('tr:eq(1)').data("prodno");
+        const queryString = "?ordNo="+ordNo+"&prodNo="+prodNo;
+
+
+        ajaxAPI("my/home/detailOrder"+queryString, null, "get").then((response) => {
+
+            if (response == null || response.orderLog == null)
                 alert('Request fail...');
 
             else {
+                const orderLog = response.orderLog;
+                $("#popOrder .order .date").text(orderLog.ordDate.substr(0, 10));
+                $("#popOrder .order .ordNo").text(orderLog.ordNo);
+                $("#popOrder .order .company").text(orderLog.company);
+                $("#popOrder .order .prodName").text(orderLog.prodName);
+                $("#popOrder .order .prodCount").text(orderLog.orderItemVO.count);
+                $("#popOrder .order .prodPrice").text(orderLog.orderItemVO.price.toLocaleString('ko-KR') + "원");
+                $("#popOrder .order .price").children(":eq(1)").text(orderLog.orderItemVO.price.toLocaleString('ko-KR') + "원");
+                $("#popOrder .order .discount").children(":eq(1)").text(
+                        (orderLog.orderItemVO.discountPrice>0?
+                            "-"+orderLog.orderItemVO.discountPrice.toLocaleString('ko-KR'):orderLog.orderItemVO.discountPrice.toLocaleString('ko-KR')) + "원"
+                );
+                $("#popOrder .order .delivery").children(":eq(1)").text(orderLog.orderItemVO.delivery.toLocaleString('ko-KR') + "원");
+                $("#popOrder .order .total").children(":eq(1)").text(orderLog.orderItemVO.total.toLocaleString('ko-KR') + "원");
+                $("#popOrder .order .status").text(orderLog.ordState);
+                $("#popOrder .delivery .name").text(orderLog.recipName);
+                $("#popOrder .delivery .hp").text(orderLog.recipHp);
+                $("#popOrder .delivery .address").text(orderLog.addr);
                 $('#popOrder').addClass('on');
             }
 
@@ -135,14 +158,37 @@ $(function(){
     });
 
     // 수취확인 팝업 띄우기
-    $('.latest .confirm > .receive').click(function(e){
+    let ordNo;
+    $('.confirm > .receive').click(function(e){
         e.preventDefault();
+        ordNo = $(".ordNo", $(this).closest("tr")).text();
         $('#popReceive').addClass('on');
     });
 
+    // 수취확인 버튼 클릭
+    $("#popReceive .btnConfirm").click(function(e){
+        e.preventDefault();
+
+        let jsonData = {"ordNo": ordNo}
+         ajaxAPI("my/ordered/receive", jsonData, "post").then((response) => {
+
+            if (response == null || response.result == 0)
+                alert('Request fail...');
+
+            else {
+                 alert("구매확정 되었습니다.")
+                 $(".btnClose").trigger("click");
+            }
+
+        }).catch((errorMsg) => {
+            console.log(errorMsg)
+        });
+
+    })
+
     // 상품평 작성 팝업 띄우기
     let prodNo;
-    $('.latest .confirm > .review').click(function(e){
+    $('.confirm > .review').click(function(e){
         e.preventDefault();
         prodNo = $(this).closest("table").find('tr:eq(1)').data("prodno");
         const prodName = $(this).closest("tr").find('li.prodName a').text();

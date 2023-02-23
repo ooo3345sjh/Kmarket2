@@ -216,7 +216,7 @@
                     <tbody>
                         <tr th:each="product, i:${products}">
                             <td><a th:href="@{/product/view(cate1=${cate1},cate2=${cate2},prodNo=${product.prodNo})}" class="thumb">
-                                    <img th:src="@{/file/} + ${product.thumb1}" alt="상품이미지">
+                                    <img th:src="|@{/file/}${cate1}/${cate2}/${product.thumb1}|" alt="상품이미지">
                                 </a>
                             </td>
                             <td>

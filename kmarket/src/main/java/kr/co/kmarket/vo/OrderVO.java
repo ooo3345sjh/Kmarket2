@@ -42,4 +42,7 @@ public class OrderVO {
     public String getThumb1() {
         return cate1 + "/" + cate2 + "/" + thumb1;
     }
+    public String getAddr(){
+        return "[" + recipZip.substring(0, 3) + "**] " + recipAddr1 + " " + recipAddr2;
+    }
 }

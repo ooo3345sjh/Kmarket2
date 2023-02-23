@@ -3111,6 +3111,15 @@ footer > div > div > p > span {
     background: url('../images/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
 }
+
+#my > .ordered .prodName a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 350px;
+    width: auto;
+    display: inline-block;
+}
 /* my - point(포인트내역) */
 #my > .point > section > article > .byDate {
     width: 100%;
@@ -3902,6 +3911,15 @@ footer > div > div > p > span {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 420px;
+    width: auto;
+    display: inline-block;
+}
+
+#popOrder .order .prodName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
     width: auto;
     display: inline-block;
 }
