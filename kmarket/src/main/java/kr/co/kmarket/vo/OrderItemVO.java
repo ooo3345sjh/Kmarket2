@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OrderItemVO {
+    private int orditmNo;
     private int prodNo;
     private String ordNo;
     private int count;
@@ -18,4 +19,5 @@ public class OrderItemVO {
     private int point;
     private int delivery;
     private int total;
+    private int discountPrice;
 }

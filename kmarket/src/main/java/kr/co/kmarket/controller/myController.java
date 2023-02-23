@@ -3,6 +3,7 @@ package kr.co.kmarket.controller;
 import kr.co.kmarket.service.EmailService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.UserService;
+import kr.co.kmarket.utils.SearchCondition;
 import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ReviewVO;
 import kr.co.kmarket.vo.UserVO;
@@ -12,9 +13,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,12 +91,17 @@ public class myController {
      * @apiNote 마이페이지 > 전체주문내역
      */
     @GetMapping("/ordered")
-    public String ordered(Model m, @AuthenticationPrincipal UserVO user){
-        log.info("myController Get info start...");
+    @Transactional(rollbackFor = Exception.class)
+    public String ordered(SearchCondition sc, Model m, @AuthenticationPrincipal UserVO user){
+        log.info("myController Get ordered start...");
 
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        sc.setUid(user.getUid());
+        myService.getOrderLog(user.getUid(), sc, m);
+
+        m.addAttribute("nowMonth", LocalDate.now().getMonthValue());
         m.addAttribute("user", user);
         m.addAttribute("type", "ordered");
         return "my/ordered";
@@ -205,13 +213,30 @@ public class myController {
      */
     @ResponseBody
     @GetMapping("/home/detailOrder")
-    public Map detailOrder(@RequestParam String ordNo)
+    public Map detailOrder(
+            @RequestParam(value = "ordNo") String ordNo,
+            @RequestParam(value = "prodNo") String prodNo
+                           )
     {
         log.info("myController GET detailOrder start...");
         log.info(ordNo);
-        OrderVO orderVO = myService.getDetailOrder(ordNo);
+        log.info(prodNo);
+        OrderVO orderVO = myService.getDetailOrder(ordNo, prodNo);
         log.info(orderVO.toString());
         Map map = new HashMap();
+        map.put("orderLog", orderVO);
+        return map;
+    }
+
+    /**
+     * @apiNote 주문내역 > 각 상품 목록 > 수취확인 클릭
+     */
+    @ResponseBody
+    @PostMapping("/ordered/receive")
+    public Map productReceived (@RequestBody Map map){
+        log.info("myController Post productReceived start...");
+        int result = myService.updateOrdState((String)map.get("ordNo"));
+        map.put("result", result);
         return map;
     }
 
