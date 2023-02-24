@@ -10,7 +10,7 @@
                     <a th:href="@{/join}">회원가입</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <a sec:authorize="hasAnyRole('ROLE_5','ROLE_2')" th:href="@{/admin/}">관리자</a>
+                    <a sec:authorize="hasAnyRole('ROLE_3','ROLE_2')" th:href="@{/admin/}">관리자</a>
                     <a th:href="@{/my/home}">마이페이지</a>
                     <a th:href="@{/logout}">로그아웃</a>
                     <a th:href="@{/product/cart}">

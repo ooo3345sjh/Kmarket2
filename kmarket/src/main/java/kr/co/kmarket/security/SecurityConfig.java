@@ -49,7 +49,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			
 			// 인가(접근권한) 설정
 			.authorizeHttpRequests(req -> req
-					.mvcMatchers("/user/**", "/", "/auth", "/cs/**", "/admin/**", "/file/**").permitAll()
+					.mvcMatchers("/user/**", "/", "/auth", "/cs/**", "/admin/**", "/file/**", "/product/**").permitAll()
 					.anyRequest().authenticated()
 			)
 
