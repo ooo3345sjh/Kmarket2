@@ -34,8 +34,8 @@ class MyServiceTest {
     @Test
     @DisplayName("2. 이번달 값 구하기")
     void test_2(){
-        for(int i=5;i>=0;i--){
-            System.out.println("LocalDate.now().minusMonths(i).getMonthValue() = " + LocalDate.now().minusMonths(0).getMonthValue());
+        for(int i=5;i>0;i--){
+            System.out.println("LocalDate.now().minusMonths(i).getMonthValue() = " + LocalDate.now().minusMonths(i).getMonthValue());
         }
     }
 

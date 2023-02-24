@@ -16,37 +16,35 @@
                     <th>문의일</th>
                     <th>상태</th>
                 </tr>
-                <tr>
-                    <td>3</td>
+                <tr th:each="qna,i:${qnaList}">
+                    <td>[[${i.count}]]</td>
                     <td>고객센터</td>
-                    <td>주문/결제</td>
-                    <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</tdclass=>
-                    <td>2023.02.02</tdass=>
-                    <td class="notAnswerYet">검토중</td>
+                    <td>[[${qna.type}]]</td>
+                    <td>[[${qna.title}]]</td>
+                    <td>[[${#strings.substring(qna.rdate, 0, 10)}]]</td>
+                    <td>
+                        <span th:class="${#strings.isEmpty(qna.comment)? 'notAnswerYet':'answered'}"
+                              th:text="${#strings.isEmpty(qna.comment)? '검토중':'답변완료'}">
+                            검토중
+                        </span>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>고객센터</td>
-                    <td>주문/결제</td>
-                    <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</tdclass=>
-                    <td>2023.01.22</tdass=>
-                    <td class="notAnswerYet">검토중</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>판매자게시판</td>
-                    <td>배송</td>
-                    <td>배송기간이 보통 얼마나 걸리나요?</tdclass=>
-                    <td>2023.01.02</tdass=>
-                    <td class="answered">답변완료</td>
-                </tr>
+
             </table>
             <p class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <th:block th:if="${ph.showPrev}">
+                    <a th:href="@{/my/qna} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">이전</a>
+                </th:block>
+
+                <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}" th:if="${ph.endPage ne 0}">
+                    <a  th:href="@{/my/qna} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num on':'num'}">
+                        [[${num}]]
+                    </a>
+                </th:block>
+
+                <th:block th:if="${ph.showNext}">
+                    <a th:href="@{/my/qna} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음</a>
+                </th:block>
             </p>
         </article>
     </section>

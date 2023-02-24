@@ -32,6 +32,8 @@
 	 -->
 	<select id="selectOrderLogLimit5" parameterType="String" resultType="kr.co.kmarket.vo.OrderVO">
 		<include refid="selectOrderLogSql"/>
+		WHERE o.`uid`=#{uid}
+		ORDER BY o.`ordDate` DESC
 		LIMIT 5
 	</select>
 
@@ -41,6 +43,23 @@
 	 -->
 	<select id="selectOrderLog" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.OrderVO">
 		<include refid="selectOrderLogSql"/>
+		WHERE o.`uid`=#{uid}
+		<if test="periodType == 'week'">
+			AND o.`ordDate` <include refid="latestWeek"/>
+		</if>
+		<if test="periodType == 'fifteen'">
+			AND o.`ordDate` <include refid="latestFifteenDay"/>
+		</if>
+		<if test="periodType == 'month'">
+			AND o.`ordDate` <include refid="latestMonth"/>
+		</if>
+		<if test="periodType == 'fiveMonth'">
+			AND DATE_FORMAT(o.`ordDate`,'%Y-%m') = <include refid="searchMonth"/>
+		</if>
+		<if test="periodType == 'calen'">
+			AND o.`ordDate` <include refid="searchDate"/>
+		</if>
+		ORDER BY o.`ordDate` DESC
 		LIMIT #{offset}, 10;
 	</select>
 
@@ -49,8 +68,23 @@
 	 	용도 : 전체주문내역 총 갯수 조회
 	 -->
 	<select id="countOrderLog" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="int">
-		SELECT COUNT(*) FROM `km_product_order`
-		WHERE `uid`=#{uid}
+		SELECT COUNT(*) FROM `km_product_order` o
+		WHERE o.`uid`=#{uid}
+		<if test="periodType == 'week'">
+			AND o.`ordDate` <include refid="latestWeek"/>
+		</if>
+		<if test="periodType == 'fifteen'">
+			AND o.`ordDate` <include refid="latestFifteenDay"/>
+		</if>
+		<if test="periodType == 'month'">
+			AND o.`ordDate` <include refid="latestMonth"/>
+		</if>
+		<if test="periodType == 'fiveMonth'">
+			AND DATE_FORMAT(o.`ordDate`,'%Y-%m') = <include refid="searchMonth"/>
+		</if>
+		<if test="periodType == 'calen'">
+			AND o.`ordDate` <include refid="searchDate"/>
+		</if>
 	</select>
 
 	<sql id="selectOrderLogSql">
@@ -68,9 +102,57 @@
 		JOIN `km_member_seller` as s
 		ON p.`seller` = s.`uid`
 
-		WHERE o.`uid`=#{uid}
-		ORDER BY o.`ordDate` DESC
 	</sql>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 포인트내역 조회
+	 -->
+	<select id="selectPointLogs" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.PointVO">
+		SELECT * FROM `km_member_point`
+		WHERE `uid`=#{uid}
+		<if test="periodType == 'week'">
+			AND `pointDate` <include refid="latestWeek"/>
+		</if>
+		<if test="periodType == 'fifteen'">
+			AND `pointDate` <include refid="latestFifteenDay"/>
+		</if>
+		<if test="periodType == 'month'">
+			AND `pointDate` <include refid="latestMonth"/>
+		</if>
+		<if test="periodType == 'fiveMonth'">
+			AND DATE_FORMAT(`pointDate`,'%Y-%m') = <include refid="searchMonth"/>
+		</if>
+		<if test="periodType == 'calen'">
+			AND `pointDate` <include refid="searchDate"/>
+		</if>
+		ORDER BY `pointDate` DESC
+		LIMIT #{offset}, 10;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 포인트내역 갯수 조회
+	 -->
+	<select id="countPointLog" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="int">
+		SELECT COUNT(*) FROM `km_member_point`
+		WHERE `uid`=#{uid}
+		<if test="periodType == 'week'">
+			AND `pointDate` <include refid="latestWeek"/>
+		</if>
+		<if test="periodType == 'fifteen'">
+			AND `pointDate` <include refid="latestFifteenDay"/>
+		</if>
+		<if test="periodType == 'month'">
+			AND `pointDate` <include refid="latestMonth"/>
+		</if>
+		<if test="periodType == 'fiveMonth'">
+			AND DATE_FORMAT(`pointDate`,'%Y-%m') = <include refid="searchMonth"/>
+		</if>
+		<if test="periodType == 'calen'">
+			AND `pointDate` <include refid="searchDate"/>
+		</if>
+	</select>
 
 	<!--
 	 	작성자 : 서정현
@@ -136,6 +218,104 @@
 		WHERE o.`ordNo`=#{ordNo} AND p.`prodNo`=#{prodNo}
 	</select>
 
+
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 주문내역에서 상품 수취확인
+	 -->
+	<update id="updateOrdState">
+		UPDATE `km_product_order` SET `ordState` = '구매확정' WHERE `ordNo`=#{ordNo}
+	</update>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 쿠폰 내역 조회
+	 -->
+	<select id="selectCoupon" resultType="kr.co.kmarket.vo.CouponVO">
+		SELECT * FROM `km_member_coupon`
+		WHERE `uid`=#{uid}
+		ORDER BY `couponDate` DESC;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 리뷰 내역 조회
+	 -->
+	<select id="selectReview" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.ReviewVO">
+		SELECT r.*, p.prodName FROM `km_product_review` r
+		JOIN `km_product` p
+		ON r.`prodNo`=p.`prodNO`
+		WHERE r.`uid`=#{uid}
+		ORDER BY `rdate` DESC
+		LIMIT #{offset}, 10;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 리뷰 내역 갯수 조회
+	 -->
+	<select id="countReview" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="int">
+		SELECT COUNT(*) FROM `km_product_review`
+		WHERE `uid`=#{uid}
+		ORDER BY `rdate` DESC;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 문의 내역 조회
+	 -->
+	<select id="selectQna" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs`
+		WHERE `uid`=#{uid}
+		ORDER BY `rdate` DESC
+		LIMIT #{offset}, 10;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 문의 내역 갯수 조회
+	 -->
+	<select id="countQna" parameterType="kr.co.kmarket.utils.SearchCondition" resultType="int">
+		SELECT COUNT(*) FROM `km_cs`
+		WHERE `uid`=#{uid}
+		ORDER BY `rdate` DESC;
+	</select>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 나의 정보 조회
+	 -->
+	<select id="selectInfo_g" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_general`
+		WHERE `uid`=#{uid} ;
+	</select>
+	<select id="selectInfo_s" resultType="kr.co.kmarket.vo.UserVO">
+		SELECT * FROM `km_member_seller`
+		WHERE `uid`=#{uid} ;
+	</select>
+
+	<!-- 최근 15일 -->
+	<sql id="latestFifteenDay">
+		BETWEEN DATE_ADD(NOW(), INTERVAL -15 DAY ) AND NOW()
+	</sql>
+	<!-- 최근 일주일 -->
+	<sql id="latestWeek">
+		BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW()
+	</sql>
+	<!-- 최근 한달 -->
+	<sql id="latestMonth">
+		BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+	</sql>
+	<!-- 월별 조건 -->
+	<sql id="searchMonth">
+		DATE_FORMAT(NOW(), #{month})
+	</sql>
+	<!-- 날짜 지정 -->
+	<sql id="searchDate">
+		BETWEEN #{dateStart} AND #{dateEnd}
+	</sql>
+
 	<resultMap id="selectJoinOrderAndOrderItem" type="kr.co.kmarket.vo.OrderVO">
 		<id column="ordNo" property="ordNo"/>
 		<result column="ordDate" property="ordDate"/>
@@ -159,38 +339,6 @@
 			<result column="total" property="total"/>
 		</association>
 	</resultMap>
-
-	<!--
-	 	작성자 : 서정현
-	 	용도 : 주문내역에서 상품 수취확인
-	 -->
-	<update id="updateOrdState">
-		UPDATE `km_product_order` SET `ordState` = '구매확정' WHERE `ordNo`=#{ordNo}
-	</update>
-
-
-	<sql id="latestDay">
-		<!-- 최근 하루 -->
-		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW();
-	</sql>
-
-	<sql id="fifteenDaysAgo">
-		<!-- 최근 일주일 -->
-		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW();
-	</sql>
-	<sql id="latestMonth">
-		<!-- 최근 한달 -->
-		`ordDate` BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW();
-	</sql>
-	<sql id="searchDate">
-		<!-- 날짜 지정 -->
-		`ordDate` BETWEEN #{start} AND #{end};
-	</sql>
-	<sql id="searchMonth">
-		<!-- 월별 조건 -->
-		DATE_FORMAT(`ordDate`,'%Y-%m') = DATE_FORMAT(NOW(),#{month});
-	</sql>
-
 
 
 
