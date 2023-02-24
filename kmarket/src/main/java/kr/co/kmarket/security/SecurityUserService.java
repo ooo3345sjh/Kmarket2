@@ -35,6 +35,10 @@ public class SecurityUserService implements UserDetailsService {
 				user = userDAO.selectGeneralUser(username);
 			}
 
+
+			if(user.getWdate() != null && !"".equals(user.getWdate())){
+				throw new UsernameNotFoundException("탈퇴한 회원입니다.");
+			}
 			return user;
 		}
 

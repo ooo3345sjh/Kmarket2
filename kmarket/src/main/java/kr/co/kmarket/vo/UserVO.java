@@ -19,8 +19,10 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Entity;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -45,6 +47,7 @@ public class UserVO implements UserDetails {
     private String regip;
     private String wdate;
     private String rdate;
+    private Date birth;
 
     private String company;
     private String ceo;
@@ -103,5 +106,10 @@ public class UserVO implements UserDetails {
     public boolean isEnabled() {
         // 계정 활성화 여부(true: 활성화, false: 비활성화)
         return true;
+    }
+
+    public String getBirth(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+        return format.format(birth);
     }
 }

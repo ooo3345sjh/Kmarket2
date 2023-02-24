@@ -120,8 +120,10 @@ $(function(){
         e.preventDefault();
 
         const ordNo = $(this).text();
-        prodNo = $(".latest table").find('tr:eq(1)').data("prodno");
+        prodNo = $("table").find('tr:eq(1)').data("prodno");
         const queryString = "?ordNo="+ordNo+"&prodNo="+prodNo;
+
+        console.log(queryString);
 
 
         ajaxAPI("my/home/detailOrder"+queryString, null, "get").then((response) => {
@@ -131,6 +133,7 @@ $(function(){
 
             else {
                 const orderLog = response.orderLog;
+                $("#popOrder .order #thumb").attr("src",$(".thumb > img", $(this).closest("td")).attr("src"));
                 $("#popOrder .order .date").text(orderLog.ordDate.substr(0, 10));
                 $("#popOrder .order .ordNo").text(orderLog.ordNo);
                 $("#popOrder .order .company").text(orderLog.company);

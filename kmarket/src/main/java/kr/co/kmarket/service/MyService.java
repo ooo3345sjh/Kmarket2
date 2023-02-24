@@ -149,4 +149,20 @@ public class MyService {
         }
         return user;
     }
+
+    public int modifyEmail(String uid, String email){
+        return myDAO.updateEmail(uid, email);
+    }
+
+    public int modifyHp(String uid, String hp){
+        return myDAO.updateHp(uid, hp);
+    }
+
+    public int modifyAddr(String uid, String zip, String addr1, String addr2){
+        return myDAO.updateAddr(uid, zip, addr1, addr2);
+    }
+
+    public int userRemove(String uid){
+        return myDAO.deleteUser(uid);
+    }
 }

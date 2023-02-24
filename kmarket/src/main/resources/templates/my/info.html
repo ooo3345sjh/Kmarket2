@@ -24,14 +24,14 @@
                 </tr>
                 <tr>
                     <td>생년월일</td>
-                    <td th:text="${user.rdate}">1983년 05월 03일</td>
+                    <td th:text="${user.birth}">1983년 05월 03일</td>
                 </tr>
                 <tr>
                     <td>E-mail</td>
                     <td>
-                        <input type="text" name="email1" value="chakh101">@
-                        <input type="text" name="email2" value="naver.com">
-                        <select>
+                        <input type="text" name="email1" th:value="${#strings.arraySplit(user.email,'@')[0]}">@
+                        <input type="text" name="email2"  th:value="${#strings.arraySplit(user.email,'@')[1]}">
+                        <select id="select">
                             <option>직접입력</option>
                             <option>naver.com</option>
                             <option>daum.net</option>
@@ -46,9 +46,9 @@
                     <td>휴대폰</td>
                     <td>
                         <p class="hp">
-                            <input type="text" name="hp1" value="010"/>-
-                            <input type="text" name="hp2" value="1234"/>-
-                            <input type="text" name="hp3" value="1001"/>
+                            <input type="text" name="hp1" th:value="${#strings.arraySplit(user.hp,'-')[0]}"/>-
+                            <input type="text" name="hp2" th:value="${#strings.arraySplit(user.hp,'-')[1]}"/>-
+                            <input type="text" name="hp3" th:value="${#strings.arraySplit(user.hp,'-')[2]}"/>
                             <button id="btnChangeHp">수정하기</button>
                         </p>
                     </td>
@@ -56,11 +56,11 @@
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" name="zip"/>
+                        <input type="text" name="zip" id="zip" th:value="${user.zip}" disabled/>
                         <button id="btnFindZip">주소검색</button>
                         <p class="address">
-                            <input type="text" name="addr1"/>
-                            <input type="text" name="addr2"/>
+                            <input type="text" name="addr1" id="addr1" th:value="${user.addr1}" disabled/>
+                            <input type="text" name="addr2" id="addr2" th:value="${user.addr2}"/>
                         </p>
                     </td>
                 </tr>
@@ -74,5 +74,119 @@
             <button id="btnInfoChange">수정하기</button>
         </article>
     </section>
+</th:block>
+<th:block layout:fragment="script">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <script>
+        $(function(){
+            $("#select").change(function(){
+                let option = $("#select option:selected").val();
+                $('input[name=email2]').val(option);
+            });
+
+            $('#btnChangeHp').click(function(){
+                if(!confirm('정말 수정하시겠습니까?')) return;
+
+                let hp1 = $('input[name=hp1]').val();
+                let hp2 = $('input[name=hp2]').val();
+                let hp3 = $('input[name=hp3]').val();
+
+                let jsonData = {
+                    "hp": hp1 + "-" + hp2 + "-" + hp3
+                }
+
+                ajaxAPI("my/info/modify/hp", jsonData, "POST").then((response) => {
+
+                    if (response == null || response.result == 0)
+                        alert('Request fail...');
+
+                    else {
+                         alert("전화번호 수정완료 되었습니다.")
+                    }
+
+                }).catch((errorMsg) => {
+                    console.log(errorMsg)
+                });
+
+            });
+
+            $('#btnChangeEmail').click(function(){
+                if(!confirm('정말 수정하시겠습니까?')) return;
+                let email1 = $('input[name=email1]').val();
+                let email2 = $('input[name=email2]').val();
+
+                let jsonData = {
+                    "email": email1 + "@" + email2
+                }
+
+                ajaxAPI("my/info/modify/email", jsonData, "POST").then((response) => {
+
+                    if (response == null || response.result == 0)
+                        alert('Request fail...');
+
+                    else {
+                         alert("이메일 수정완료 되었습니다.")
+                    }
+
+                }).catch((errorMsg) => {
+                    console.log(errorMsg)
+                });
+
+            });
+
+            $("#btnFindZip").click(function(){
+                postcode();
+
+            })
+
+             $('#btnInfoChange').click(function(){
+               if(!confirm('정말 수정하시겠습니까?')) return;
+                 let zip = $('input[name=zip]').val();
+                 let addr1 = $('input[name=addr1]').val();
+                 let addr2 = $('input[name=addr2]').val();
+
+                 let jsonData = {
+                    "zip": zip,
+                    "addr1": addr1,
+                    "addr2": addr2
+                 }
+
+                ajaxAPI("my/info/modify/addr", jsonData, "POST").then((response) => {
+
+                    if (response == null || response.result == 0)
+                        alert('Request fail...');
+
+                    else {
+                         alert("수정완료 되었습니다.")
+                    }
+
+                }).catch((errorMsg) => {
+                    console.log(errorMsg)
+                });
+             });
+
+             $("#btnWithdraw").click(function(){
+
+                if(!confirm('정말 탈퇴하시겠습니까?')) return;
+
+                let jsonData = {"uid":"uid"}
+                ajaxAPI("my/info/user/remove", jsonData, "POST").then((response) => {
+
+                    if (response == null || response.result == 0)
+                        alert('Request fail...');
+
+                    else {
+                         alert("회원탈퇴 되었습니다.")
+                         location.href = contextPath + "logout";
+                    }
+
+                }).catch((errorMsg) => {
+                    console.log(errorMsg)
+                });
+
+             });
+        });
+    </script>
 </th:block>
 </html>

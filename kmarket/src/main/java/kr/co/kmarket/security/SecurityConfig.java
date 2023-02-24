@@ -34,6 +34,9 @@ public class SecurityConfig implements WebMvcConfigurer {
 	private ResourceLoader resourceLoader;
 	@Autowired
 	private SecurityUserService service;
+	@Autowired
+	private AuthFailureHandler handler;
+
 
 
 	UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
@@ -56,6 +59,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 					.loginPage("/user/login").permitAll()
 					.loginProcessingUrl("/user/login")
 					.defaultSuccessUrl("/")
+					.failureHandler(handler)
 			)
 
 			// 자동 로그인 설정

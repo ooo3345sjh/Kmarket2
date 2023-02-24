@@ -97,6 +97,54 @@ public class myController {
     }
 
     /**
+     * @apiNote 마이페이지 > 나의 정보 > 이메일 수정
+     */
+    @ResponseBody
+    @PostMapping("/info/modify/email")
+    public Map modifyEmail(@RequestBody Map map, @AuthenticationPrincipal UserVO user){
+        log.info("myController POST  modifyEmail start...");
+        log.info(map.toString());
+        map.put("result", myService.modifyEmail(user.getUid(), (String)map.get("email")));
+        return map;
+    }
+
+    /**
+     * @apiNote 마이페이지 > 나의 정보 > 전화번호 수정
+     */
+    @ResponseBody
+    @PostMapping("/info/modify/hp")
+    public Map modifyHp(@RequestBody Map map, @AuthenticationPrincipal UserVO user){
+        log.info("myController POST  modifyHp start...");
+        log.info(map.toString());
+        map.put("result", myService.modifyHp(user.getUid(), (String)map.get("hp")));
+        return map;
+    }
+
+    /**
+     * @apiNote 마이페이지 > 나의 정보 > 주소 수정
+     */
+    @ResponseBody
+    @PostMapping("/info/modify/addr")
+    public Map modifyAddr(@RequestBody Map map, @AuthenticationPrincipal UserVO user){
+        log.info("myController POST  modifyAddr start...");
+        log.info(map.toString());
+        map.put("result", myService.modifyAddr(user.getUid(), (String)map.get("zip"), (String)map.get("addr1"), (String)map.get("addr2")));
+        return map;
+    }
+
+    /**
+     * @apiNote 마이페이지 > 나의 정보 > 회원 탈퇴
+     */
+    @ResponseBody
+    @PostMapping("/info/user/remove")
+    public Map userRemove(@RequestBody Map map, @AuthenticationPrincipal UserVO user){
+        log.info("myController POST  userRemove start...");
+        log.info(map.toString());
+        map.put("result", myService.userRemove(user.getUid()));
+        return map;
+    }
+
+    /**
      * @apiNote 마이페이지 > 전체주문내역
      */
     @GetMapping("/ordered")
