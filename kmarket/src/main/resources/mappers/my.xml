@@ -282,6 +282,45 @@
 		ORDER BY `rdate` DESC;
 	</select>
 
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 나의 정보 > 이메일 수정
+	 -->
+	<update id="updateEmail">
+		UPDATE `km_member_general` SET `email`=#{email} WHERE `uid`=#{uid}
+	</update>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 나의 정보 > 전화번호 수정
+	 -->
+	<update id="updateHp">
+		UPDATE `km_member_general` SET `hp`=#{hp} WHERE `uid`=#{uid}
+	</update>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 나의 정보 > 주소 수정
+	 -->
+	<update id="updateAddr">
+		UPDATE `km_member_general` SET
+			`zip`=#{zip},
+			`addr1`=#{addr1},
+			`addr2`=#{addr2}
+		WHERE `uid`=#{uid}
+	</update>
+
+	<!--
+	 	작성자 : 서정현
+	 	용도 : 나의 정보 > 회원 탈퇴
+	 -->
+	<update id="deleteUser">
+		UPDATE `km_member_general` SET
+		`wdate`=now()
+		WHERE `uid`=#{uid}
+	</update>
+
 	<!--
 	 	작성자 : 서정현
 	 	용도 : 나의 정보 조회

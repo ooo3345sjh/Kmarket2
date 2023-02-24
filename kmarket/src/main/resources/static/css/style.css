@@ -3120,6 +3120,9 @@ footer > div > div > p > span {
     width: auto;
     display: inline-block;
 }
+
+
+
 /* my - point(포인트내역) */
 #my > .point > section > article > .byDate {
     width: 100%;
@@ -3854,6 +3857,10 @@ footer > div > div > p > span {
     padding: 26px;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+.popup  .order #thumb {
+    width:80px;
 }
 
 .btnPositive {

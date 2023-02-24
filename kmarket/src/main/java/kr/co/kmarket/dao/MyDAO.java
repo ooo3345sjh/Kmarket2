@@ -35,6 +35,16 @@ public interface MyDAO {
     int updateOrdState(@Param(value = "ordNo") String ordNo);
     UserVO selectInfo_g(@Param(value = "uid") String uid);
     UserVO selectInfo_s(@Param(value = "uid") String uid);
+    int updateEmail(@Param(value = "uid") String uid, @Param(value = "email") String email);
+    int updateHp(@Param(value = "uid") String uid, @Param(value = "hp") String hp);
+    int updateAddr(
+            @Param(value = "uid") String uid,
+            @Param(value = "zip") String zip,
+            @Param(value = "addr1") String addr1,
+            @Param(value = "addr2") String addr2
+    );
+
+    int deleteUser(@Param(value = "uid") String uid);
     int test1(@Param(value = "ordNo") String ordNo);
     int test2(@Param(value = "ordNo") String ordNo);
 }
