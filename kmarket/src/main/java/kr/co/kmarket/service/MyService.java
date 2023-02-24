@@ -5,21 +5,18 @@ import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.dao.UserDAO;
 import kr.co.kmarket.utils.PageHandler;
 import kr.co.kmarket.utils.SearchCondition;
-import kr.co.kmarket.vo.OrderItemVO;
-import kr.co.kmarket.vo.OrderVO;
-import kr.co.kmarket.vo.ReviewVO;
-import kr.co.kmarket.vo.UserVO;
+import kr.co.kmarket.vo.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -77,7 +74,8 @@ public class MyService {
     }
 
     public void getOrderLog(String uid, SearchCondition sc, Model m){
-        int total = myDAO.countOrderLog(uid);
+
+        int total = myDAO.countOrderLog(sc);
         PageHandler ph = new PageHandler(total, sc);
         List<OrderVO> list = myDAO.selectOrderLog(sc);
 
@@ -87,13 +85,68 @@ public class MyService {
         m.addAttribute("orderList", list);
     }
 
-    public void getNavMonth(){
-        LocalDate.now().getMonthValue();
+    public void getPointLog(String uid, SearchCondition sc, Model m){
+
+        int total = myDAO.countPointLog(sc);
+        PageHandler ph = new PageHandler(total, sc);
+        List<PointVO> list = myDAO.selectPointLogs(sc);
+
+        log.info(ph.toString());
+        log.info(list.toString());
+        m.addAttribute("ph", ph);
+        m.addAttribute("pointList", list);
     }
 
+    public List getNavMonth(){
+        List months = new ArrayList();
 
+        for(int i=1;i<=5;i++){
+            months.add(LocalDate.now().minusMonths(i).getYear() + "-" +LocalDate.now().minusMonths(i).getMonthValue());
+        }
+        return months;
+    }
 
+    public String getMinDate(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -1);
 
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormatter.format(cal.getTime());
+    }
 
+    public List<CouponVO> getCouponList(String uid){
+        return myDAO.selectCoupon(uid);
+    }
 
+    public void getReviewList(SearchCondition sc, Model m){
+        int total = myDAO.countReview(sc);
+        PageHandler ph = new PageHandler(total, sc);
+        List<ReviewVO> list = myDAO.selectReview(sc);
+
+        log.info(ph.toString());
+        log.info(list.toString());
+        m.addAttribute("ph", ph);
+        m.addAttribute("reviewList", list);
+    }
+
+    public void getQnaList(SearchCondition sc, Model m){
+        int total = myDAO.countQna(sc);
+        PageHandler ph = new PageHandler(total, sc);
+        List<CsVO> list = myDAO.selectQna(sc);
+
+        log.info(ph.toString());
+        log.info(list.toString());
+        m.addAttribute("ph", ph);
+        m.addAttribute("qnaList", list);
+    }
+
+    public UserVO getInfo(String uid){
+        UserVO user = null;
+        user = myDAO.selectInfo_g(uid);
+
+        if(user == null){
+            myDAO.selectInfo_s(uid);
+        }
+        return user;
+    }
 }

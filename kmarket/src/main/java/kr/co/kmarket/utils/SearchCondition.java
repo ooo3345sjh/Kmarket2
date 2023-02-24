@@ -24,6 +24,10 @@ public class SearchCondition {
     private int type; // 상품 조회를 위한 사용자 타입, 아이디
     private String uid;
     private String csType;
+    private String periodType; // 마이페이지 기간별 조회 타입
+    private String dateStart; // 마이페이지 기간별 조회 직접 범위 지정시
+    private String dateEnd; // 마이페이지 기간별 조회 직접 범위 지정시
+    private String month; // 마이페이지 기간별 조회 n월 선택시
 
     public String getQueryString(Integer page){
         // ?page=1&pageSize=10&option="T"&keyword="title"
@@ -33,6 +37,17 @@ public class SearchCondition {
     public String getQueryString(Integer page, Integer no){
         // ?page=1&pageSize=10&option="T"&keyword="title"
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
+
+        if(periodType != null){
+            builder.queryParam("periodType", periodType);
+            if ("calen".equals(periodType)) {
+                builder.queryParam("dateStart", dateStart)
+                        .queryParam("dateEnd", dateEnd);
+            }
+            if ("fiveMonth".equals(periodType)) {
+                builder.queryParam("month", month);
+            }
+        }
 
         if (page != null && page != 0)
             builder.queryParam("page", page);
@@ -71,6 +86,16 @@ public class SearchCondition {
 
     public void setPage(Integer page) {
         this.page = page == 0 ? 1:page;
+    }
+
+    public String getMonth() {
+        if(month != null &&month.length() == 6){
+            String MM = "0"+ month.substring(month.lastIndexOf("-")+1);
+            String YY = month.substring(0, month.lastIndexOf("-"));
+            System.out.println("YY + \"-\" + MM = " + YY + "-" + MM);
+            return YY + "-" + MM;
+        }
+        return month;
     }
 
 }

@@ -16,8 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +70,12 @@ public class myController {
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        // 오늘 날짜 가장 빠른 정시의 밀리세컨드
+        Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
+        m.addAttribute("startOfToday", startOfToday.toEpochMilli());
+
         m.addAttribute("user", user);
+        m.addAttribute("couponList", myService.getCouponList(user.getUid()));
         m.addAttribute("type", "coupon");
         return "my/coupon";
     }
@@ -82,6 +90,7 @@ public class myController {
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        m.addAttribute("userInfo", myService.getInfo(user.getUid()));
         m.addAttribute("user", user);
         m.addAttribute("type", "info");
         return "my/info";
@@ -101,22 +110,60 @@ public class myController {
         sc.setUid(user.getUid());
         myService.getOrderLog(user.getUid(), sc, m);
 
-        m.addAttribute("nowMonth", LocalDate.now().getMonthValue());
+        log.info(myService.getMinDate());
+        m.addAttribute("months", myService.getNavMonth());
+        m.addAttribute("minDate", myService.getMinDate());
         m.addAttribute("user", user);
         m.addAttribute("type", "ordered");
         return "my/ordered";
     }
 
     /**
+     * @apiNote 마이페이지 > 기간별조회
+     */
+    @GetMapping("/period/{menu}")
+    @Transactional(rollbackFor = Exception.class)
+    public String period(SearchCondition sc,
+                         Model m,
+                         @PathVariable String menu,
+                         @AuthenticationPrincipal UserVO user)
+    {
+        log.info("myController Get period start...");
+        log.info(sc.toString());
+        // 마이페이지 요약 정보 데이터 조회
+        user = myService.getNavInfo(user.getUid());
+
+        sc.setUid(user.getUid());
+        if("ordered".equals(menu)){
+            myService.getOrderLog(user.getUid(), sc, m);
+            m.addAttribute("type", "ordered");
+        }
+        else if("point".equals(menu)) {
+            myService.getPointLog(user.getUid(), sc, m);
+            m.addAttribute("type", "point");
+        }
+
+        m.addAttribute("months", myService.getNavMonth());
+        m.addAttribute("minDate", myService.getMinDate());
+        m.addAttribute("user", user);
+        return "my/"+menu;
+    }
+
+    /**
      * @apiNote 마이페이지 > 포인트내역
      */
     @GetMapping("/point")
-    public String point(Model m, @AuthenticationPrincipal UserVO user){
+    public String point(SearchCondition sc, Model m, @AuthenticationPrincipal UserVO user){
         log.info("myController Get info start...");
 
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        sc.setUid(user.getUid());
+        myService.getPointLog(user.getUid(), sc, m);
+
+        m.addAttribute("months", myService.getNavMonth());
+        m.addAttribute("minDate", myService.getMinDate());
         m.addAttribute("user", user);
         m.addAttribute("type", "point");
         return "my/point";
@@ -126,12 +173,14 @@ public class myController {
      * @apiNote 마이페이지 > 문의하기
      */
     @GetMapping("/qna")
-    public String qna(Model m, @AuthenticationPrincipal UserVO user){
+    public String qna(Model m, SearchCondition sc,@AuthenticationPrincipal UserVO user){
         log.info("myController Get info start...");
 
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        sc.setUid(user.getUid());
+        myService.getQnaList(sc, m);
         m.addAttribute("user", user);
         m.addAttribute("type", "qna");
         return "my/qna";
@@ -141,12 +190,14 @@ public class myController {
      * @apiNote 마이페이지 > 나의 리뷰
      */
     @GetMapping("/review")
-    public String review(Model m, @AuthenticationPrincipal UserVO user){
+    public String review(Model m, SearchCondition sc, @AuthenticationPrincipal UserVO user){
         log.info("myController Get info start...");
 
         // 마이페이지 요약 정보 데이터 조회
         user = myService.getNavInfo(user.getUid());
 
+        sc.setUid(user.getUid());
+        myService.getReviewList(sc, m);
         m.addAttribute("user", user);
         m.addAttribute("type", "review");
         return "my/review";

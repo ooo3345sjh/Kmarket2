@@ -11,19 +11,28 @@
             <div class="byDate">
                 <span class="tit">기간별조회</span>
                 <ul class="date_3ea">
-                    <li><a th:href="@{/my/searchPeriod/week}"><em>1</em>주일</a></li>
-                    <li><a th:href="@{/my/searchPeriod/fifteen}"><em>15</em>일</a></li>
-                    <li><a th:href="@{/my/searchPeriod/month}" class="on"><em>1</em>개월</a></li>
+                    <li><a href="#" th:class="|search ${ph.sc.periodType=='week'? 'on':''}|" data-type="week"><em>1</em>주일</a></li>
+                    <li><a href="#" th:class="|search ${ph.sc.periodType=='fifteen'? 'on':''}|" data-type="fifteen"><em>15</em>일</a></li>
+                    <li><a href="#" th:class="|search ${ph.sc.periodType=='month'? 'on':''}|" data-type="month"><em>1</em>개월</a></li>
                 </ul>
                 <ul class="date_5ea">
-                    <th:block th:each="num:${#numbers.sequence(nowMonth-5, nowMonth)}">
-                        <li ><a href="#"><em>[[${num}]]</em>월</a></li>
+                    <th:block th:each="month:${months}">
+                        <li ><a href="#" th:class="|search ${ph.sc.periodType=='fiveMonth' and #strings.equals(month, param.month)? 'on':''}|"
+                                data-type="fiveMonth" th:data-month="${month}">
+                            <em>[[${#strings.substring(month, 5)}]]</em>월</a>
+                        </li>
                     </th:block>
                 </ul>
                 <p>
-                    <input type="date" name="begin"><span>~</span><input type="date" name="end">
+                    <input type="date" name="begin" th:value="${ph.sc.dateStart}"
+                           th:max="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+                           th:min="${minDate}"
+                    >~
+                    <input type="date" name="end"  th:value="${ph.sc.dateEnd}"
+                           th:max="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+                           th:min="${minDate}">
                 </p>
-                <button class="btnConfirm">조회하기</button>
+                <button class="btnConfirm search" data-type="calen">조회하기</button>
             </div>
 
             <table border="0">
@@ -33,7 +42,7 @@
                     <th>상태</th>
                     <th>확인/신청</th>
                 </tr>
-                <tr th:each="order:${orderList}" th:data-prodNo="${order.prodNo}">
+                <tr th:each="order:${orderList}" th:data-prodNo="${order.prodNo}" th:if="${ph.endPage ne 0}">
                     <td class="date">
                         [[${#strings.substring(order.ordDate, 0, 10)}]]
                     </td>
@@ -65,6 +74,9 @@
                         <a href="#" class="exchange">교환신청</a>
                     </td>
                 </tr>
+                <tr th:if="${ph.endPage eq 0}">
+                    <td colspan="6">해당 기간에 주문내역이 없습니다.</td>
+                </tr>
             </table>
             <p class="page">
 
@@ -72,7 +84,7 @@
                     <a th:href="@{/my/ordered} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">이전</a>
                 </th:block>
 
-                <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}">
+                <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}" th:if="${ph.endPage ne 0}">
                     <a  th:href="@{/my/ordered} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num on':'num'}">
                         [[${num}]]
                     </a>
@@ -85,5 +97,30 @@
             </p>
         </article>
     </section>
+</th:block>
+<th:block layout:fragment="script">
+    <script>
+        $(function(){
+
+            $('.search').click(function (e){
+                e.preventDefault();
+                const periodType = $(this).data('type');
+                const url = contextPath + "my/period/ordered?periodType="+periodType;
+                if(periodType === "fiveMonth"){
+                    const month = $(this).data('month');
+                    location.href = url+"&month="+month;
+                }
+
+                else if(periodType === "calen"){
+                    let dateStart = $('input[name=begin]').val();
+                    let dateEnd = $('input[name=end]').val();
+                    location.href = url+"&dateStart="+dateStart+"&dateEnd="+dateEnd;
+                }
+
+                else
+                    location.href = url;
+            });
+        });
+    </script>
 </th:block>
 </html>

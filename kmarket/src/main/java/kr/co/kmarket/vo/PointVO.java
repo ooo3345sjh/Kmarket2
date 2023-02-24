@@ -15,4 +15,5 @@ public class PointVO {
     private String ordNo;
     private int point;
     private String pointDate;
+    private String endDate;
 }
