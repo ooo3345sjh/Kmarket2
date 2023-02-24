@@ -15,48 +15,28 @@
                     <th>평점</th>
                     <th>작성일</th>
                 </tr>
-                <tr>
-                    <td class="no">5</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star1">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">4</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star2">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">3</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star3">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">2</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star4">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">1</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star5">평점</span></td>
-                    <td class="date">2024-12-12</td>
+                <tr th:each="review,i:${reviewList}">
+                    <td class="no">[[${i.count}]]</td>
+                    <td class="prodName"><a href="#">[[${review.prodName}]]</a></td>
+                    <td class="content">[[${review.content}]]</td>
+                    <td class="score"><span th:class="|rating star${review.rating}|">평점</span></td>
+                    <td class="date">[[${#strings.substring(review.rdate, 0, 10)}]]</td>
                 </tr>
             </table>
             <p class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <th:block th:if="${ph.showPrev}">
+                    <a th:href="@{/my/review} + ${ph.sc.getQueryString(ph.beginPage-1)}" class="prev">이전</a>
+                </th:block>
+
+                <th:block th:each="num:${#numbers.sequence(ph.beginPage, ph.endPage)}" th:if="${ph.endPage ne 0}">
+                    <a  th:href="@{/my/review} + ${ph.sc.getQueryString(num)}" th:class="${num == ph.sc.page ? 'num on':'num'}">
+                        [[${num}]]
+                    </a>
+                </th:block>
+
+                <th:block th:if="${ph.showNext}">
+                    <a th:href="@{/my/review} + ${ph.sc.getQueryString(ph.endPage+1)}" class="next">다음</a>
+                </th:block>
             </p>
         </article>
     </section>

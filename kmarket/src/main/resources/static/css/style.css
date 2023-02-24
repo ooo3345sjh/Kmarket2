@@ -2985,7 +2985,7 @@ footer > div > div > p > span {
 }
 #my > .ordered > section > article > .byDate > p > span {display: inline-block;}
 #my > .ordered > section > article > .byDate input[type=date] {
-    width: 85px;
+    width: 83px;
     border: none;
 }
 
@@ -3471,6 +3471,15 @@ footer > div > div > p > span {
 #my > .review > section > article > .page > .next {
     background: url('../images/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
+}
+#my > .review .prodName {text-align: left; width: 400px;}
+#my > .review .prodName a{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 350px;
+    width: auto;
+    display: inline-block;
 }
 
 /* my - qna(문의하기) */
